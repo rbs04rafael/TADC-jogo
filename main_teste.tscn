@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://d3ippjuve8364"]
+
+[ext_resource type="PackedScene" uid="uid://ds65dnni6c6q5" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.tscn" id="1_10w5d"]
+[ext_resource type="PackedScene" uid="uid://dx1ysr1jx1xm2" path="res://Personagens/teste.tscn" id="2_iu5he"]
+
+[sub_resource type="Environment" id="Environment_iu5he"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.16745724, 0.16745724, 0.16745724, 1)
+ambient_light_energy = 0.75
+
+[node name="MainTeste" type="Node3D" unique_id=1179031640]
+
+[node name="Node3D" parent="." unique_id=355003223 instance=ExtResource("1_10w5d")]
+transform = Transform3D(1.0009731, -0.003823589, -0.0019677118, 0.0038197767, 1.0009732, -0.0019424154, 0.0019751024, 0.0019349001, 1.0009786, -0.20595741, 0, 0.10447502)
+
+[node name="NodePomni" parent="." unique_id=1240626457 instance=ExtResource("2_iu5he")]
+transform = Transform3D(0.24872366, 0.96560323, 0.07580814, 0, 0.078267746, -0.9969324, -0.96857446, 0.24796067, 0.019467039, -36.36344, 3.2588663, -35.187653)
+
+[node name="Camera3D" type="Camera3D" parent="NodePomni" unique_id=1087541388]
+transform = Transform3D(0.26211625, 0.054493293, -0.96349657, 0.9630553, 0.049167715, 0.26477706, 0.061801482, -0.99730283, -0.039592408, -5.3663387, 1.4594879, -0.9833331)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="NodePomni" unique_id=1028024672]
+transform = Transform3D(1, 1.1920929e-07, -5.5879354e-09, -1.1920929e-07, 1, 2.3283064e-09, 5.5879354e-09, -1.8626451e-09, 1, -0.4520111, 0.17984009, 0.4120822)
+light_energy = 2.261
+light_specular = 0.0
+omni_range = 3.701095
+omni_attenuation = -0.287
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1789278780]
+environment = SubResource("Environment_iu5he")

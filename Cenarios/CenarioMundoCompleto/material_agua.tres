@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://td6r7gqyrx7m"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h1li0"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c8lno"]
+noise = SubResource("FastNoiseLite_h1li0")
+seamless = true
+as_normal_map = true
+
+[resource]
+transparency = 1
+albedo_color = Color(0.22745098, 1, 1, 0.5921569)
+roughness = 0.05
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_c8lno")
+proximity_fade_enabled = true
+proximity_fade_distance = 2.0

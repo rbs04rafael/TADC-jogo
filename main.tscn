@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d3snuwg65s516"]
+
+[ext_resource type="PackedScene" uid="uid://c7i2dx8lopoai" path="res://Cenarios/CenarioQuarto/quarto_pomni.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://j1neolaj6k2" path="res://Pomnis Room V2.blend" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dx1ysr1jx1xm2" path="res://Personagens/teste.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node3D" unique_id=674687253]
+
+[node name="Pomnis Room V2" parent="." unique_id=1342857396 instance=ExtResource("1_h2yge")]
+
+[node name="QuartoPomni" parent="." unique_id=1914086142 instance=ExtResource("1_0xm2m")]
+visible = false
+
+[node name="OmniLight3D" type="OmniLight3D" parent="QuartoPomni" unique_id=370042948]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.125534, 0)
+shadow_enabled = true
+shadow_bias = 5.205
+
+[node name="Node3D" parent="." unique_id=285898477 instance=ExtResource("2_h2yge")]
+transform = Transform3D(-0.03138261, 0.9953903, 0.09062814, -0.008951539, 0.09038927, -0.9958659, -0.99946713, -0.032063976, 0.0060736416, -0.14472651, 0.97228456, 0.47037342)
+
+[node name="Camera3D" type="Camera3D" parent="Node3D" unique_id=132859329]
+transform = Transform3D(-0.06293443, 0.081196524, -0.99470955, 0.9935337, 0.09947031, -0.05474061, 0.0944993, -0.9917226, -0.086931616, -3.2897465, -0.048727855, -0.6039796)
