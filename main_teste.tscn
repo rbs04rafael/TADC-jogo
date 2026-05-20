@@ -3,12 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://ds65dnni6c6q5" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.tscn" id="1_10w5d"]
 [ext_resource type="PackedScene" uid="uid://dx1ysr1jx1xm2" path="res://Personagens/teste.tscn" id="2_iu5he"]
 
-[sub_resource type="Environment" id="Environment_iu5he"]
-background_mode = 1
-ambient_light_source = 2
-ambient_light_color = Color(0.16745724, 0.16745724, 0.16745724, 1)
-ambient_light_energy = 0.75
-
 [node name="MainTeste" type="Node3D" unique_id=1179031640]
 
 [node name="Node3D" parent="." unique_id=355003223 instance=ExtResource("1_10w5d")]
@@ -26,6 +20,3 @@ light_energy = 2.261
 light_specular = 0.0
 omni_range = 3.701095
 omni_attenuation = -0.287
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1789278780]
-environment = SubResource("Environment_iu5he")

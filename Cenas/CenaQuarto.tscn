@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://d3snuwg65s516"]
+
+[ext_resource type="PackedScene" uid="uid://c7i2dx8lopoai" path="res://Cenarios/CenarioQuarto/QuartoPomni.tscn" id="1_mm2aj"]
+[ext_resource type="PackedScene" uid="uid://ufby7umh4kjy" path="res://Personagens/Pomni.tscn" id="2_mm2aj"]
+
+[sub_resource type="Environment" id="Environment_qvuxn"]
+background_mode = 1
+background_color = Color(0.21955594, 0.7064805, 0.839543, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.36398733, 0.40197387, 0.44310692, 1)
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+
+[node name="Main" type="Node3D" unique_id=674687253]
+
+[node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_mm2aj")]
+transform = Transform3D(0.19404735, 0, 0.46080974, 0, 0.5, 0, -0.46080974, 0, 0.19404735, -0.15451646, 0.1146642, -0.16422117)
+speed = 2.5
+
+[node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=722270404]
+transform = Transform3D(0.38809475, 0, -0.9216196, 0, 1, 0, 0.9216196, 0, 0.38809475, -2.5773382, 1.2482505, 1.1013777)
+
+[node name="QuartoPomni" parent="." unique_id=1914086142 instance=ExtResource("1_mm2aj")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=75383859]
+environment = SubResource("Environment_qvuxn")

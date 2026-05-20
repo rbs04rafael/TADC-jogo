@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d3ippjuve8364"]
+
+[ext_resource type="PackedScene" uid="uid://hd0h34b4estt" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.tscn" id="1_dlyin"]
+[ext_resource type="PackedScene" uid="uid://ufby7umh4kjy" path="res://Personagens/Pomni.tscn" id="2_dlyin"]
+
+[node name="MainMundoCompleto" type="Node3D" unique_id=1179031640]
+
+[node name="MundoCompleto" parent="." unique_id=355003223 instance=ExtResource("1_dlyin")]
+transform = Transform3D(1.0009824, 0, 0, 0, 1.0009824, 0, 0, 0, 1.0009824, 0, 0, 0)
+metadata/_edit_group_ = true
+
+[node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_dlyin")]
+transform = Transform3D(0.52438724, 0, 0.85148, 0, 1, 0, -0.85148, 0, 0.52438724, -8.180082, 2.1730704, -35.016438)
+axis_lock_angular_z = true
+
+[node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=1003186009]
+transform = Transform3D(0.5243871, 0, -0.8514798, 0, 1, 0, 0.8514798, 0, 0.5243871, -2.9262848, 1.2482505, 1.7324772)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=661843212]
+transform = Transform3D(0.99999994, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 0.99999994, -0.8644695, 1.4450073, 0.5869541)
