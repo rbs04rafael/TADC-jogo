@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="Trabalho_CG"
-config/features=PackedStringArray("4.6", "Forward Plus")
 run/main_scene="res://Cenas/Intro.tscn"
+config/features=PackedStringArray("4.6", "Forward Plus")
 
 [input]
 

@@ -2517,7 +2517,7 @@ script = ExtResource("1_5pbcl")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=994774031]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85422695, 0.08504319)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85422695, 0)
 shape = SubResource("CapsuleShape3D_rpf3c")
 
 [node name="Pomni" type="Node3D" parent="." unique_id=687766971]

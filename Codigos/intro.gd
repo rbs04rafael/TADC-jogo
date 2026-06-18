@@ -12,7 +12,7 @@ func _ready():
 	
 	# 1. Carregar a imagem de fundo em tela cheia (imagem_intro.png)
 	background = TextureRect.new()
-	var tex = load("res://imagem_intro.png")
+	var tex = load("res://Assets/UI/imagem_intro.png")
 	if tex:
 		background.texture = tex
 		background.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -42,7 +42,7 @@ func _ready():
 	
 	# 3. Preparar o player de vídeo OGV
 	video_player = VideoStreamPlayer.new()
-	var stream = load("res://video_tela_inicial.ogv")
+	var stream = load("res://Assets/Video/video_tela_inicial.ogv")
 	video_player.stream = stream
 	video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
 	video_player.expand = true # Estica para caber na tela

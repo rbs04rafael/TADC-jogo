@@ -1,18 +1,20 @@
 [gd_scene format=4 uid="uid://hd0h34b4estt"]
 
-[ext_resource type="Texture2D" uid="uid://b6ajilagry2yj" path="res://Cenarios/CenarioMundoCompleto/Cenario_gravelly_sand_diff_1k.jpg" id="1_rwvwc"]
-[ext_resource type="Texture2D" uid="uid://lbjbhw2m5q0q" path="res://Moon.png" id="1_s4vs7"]
-[ext_resource type="Texture2D" uid="uid://lpfw0gusm20a" path="res://Cenarios/CenarioMundoCompleto/Cenario_gravelly_sand_rough_1k.png" id="2_lsiv6"]
-[ext_resource type="Texture2D" uid="uid://cjqvg03i3akgx" path="res://Cenarios/CenarioMundoCompleto/Cenario_gravelly_sand_nor_gl_1k.jpg" id="3_x2mmi"]
-[ext_resource type="Texture2D" uid="uid://ht5x21dpmnt3" path="res://Cenarios/CenarioMundoCompleto/textures/MadeiraArvore.jpg" id="4_ymqpg"]
-[ext_resource type="Texture2D" uid="uid://l8w2e5x75pm6" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital_360_F_340926618_DOFTvHoy8R9yr6ftIWcqek9kgX4i4Wz7.jpg" id="8_dedem"]
+[ext_resource type="Texture2D" uid="uid://b6ajilagry2yj" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_gravelly_sand_diff_1k.jpg" id="1_rwvwc"]
+[ext_resource type="Texture2D" uid="uid://lbjbhw2m5q0q" path="res://Assets/Texturas/Moon.png" id="1_s4vs7"]
+[ext_resource type="Texture2D" uid="uid://lpfw0gusm20a" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_gravelly_sand_rough_1k.png" id="2_lsiv6"]
+[ext_resource type="Texture2D" uid="uid://cjqvg03i3akgx" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_gravelly_sand_nor_gl_1k.jpg" id="3_x2mmi"]
+[ext_resource type="Texture2D" uid="uid://ht5x21dpmnt3" path="res://Cenarios/CenarioMundoCompleto/Texturas/MadeiraArvore.jpg" id="4_ymqpg"]
+[ext_resource type="Texture2D" uid="uid://l8w2e5x75pm6" path="res://Cenarios/CenarioMundoCompleto/Texturas/CenarioCircoDigital_360_F_340926618_DOFTvHoy8R9yr6ftIWcqek9kgX4i4Wz7.jpg" id="8_dedem"]
 [ext_resource type="Script" uid="uid://dmgaup7arxhms" path="res://Codigos/area_3d.gd" id="9_6txre"]
-[ext_resource type="Material" uid="uid://td6r7gqyrx7m" path="res://Cenarios/CenarioMundoCompleto/material_agua.tres" id="9_qsfl4"]
-[ext_resource type="Texture2D" uid="uid://byh6tf4x8g3co" path="res://Cenarios/CenarioMundoCompleto/Cenario_marble_01_diff_1k.jpg" id="11_tvatf"]
-[ext_resource type="Texture2D" uid="uid://0yfs5ww1j1xi" path="res://Cenarios/CenarioMundoCompleto/Cenario_marble_01_rough_1k.png" id="12_ww08b"]
-[ext_resource type="Shader" uid="uid://deb4jo05ac0jl" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.gdshader" id="13_6txre"]
-[ext_resource type="Texture2D" uid="uid://dqyxcneqjxtmi" path="res://Cenarios/CenarioMundoCompleto/Cenario_marble_01_nor_gl_1k.jpg" id="13_jb8ss"]
+[ext_resource type="Material" uid="uid://td6r7gqyrx7m" path="res://Cenarios/CenarioMundoCompleto/Texturas/material_agua.tres" id="9_qsfl4"]
+[ext_resource type="Texture2D" uid="uid://byh6tf4x8g3co" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_diff_1k.jpg" id="11_tvatf"]
+[ext_resource type="Texture2D" uid="uid://0yfs5ww1j1xi" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_rough_1k.png" id="12_ww08b"]
+[ext_resource type="Shader" uid="uid://deb4jo05ac0jl" path="res://Cenarios/CenarioMundoCompleto/Shaders/CenarioCircoDigital.gdshader" id="13_6txre"]
+[ext_resource type="Texture2D" uid="uid://dqyxcneqjxtmi" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_nor_gl_1k.jpg" id="13_jb8ss"]
 [ext_resource type="Script" uid="uid://lhlp1bafc6oj" path="res://Codigos/portal_torre.gd" id="14_0mo70"]
+[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/Farol.tscn" id="ExtResource_farol"]
+[ext_resource type="PackedScene" uid="uid://be7b5jwa47868" path="res://Personagens/Morcego/morcego.tscn" id="ExtResource_morcego"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bsbx7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -6517,6 +6519,13 @@ size = Vector2(0.8, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_jfbhi"]
 size = Vector3(1.6621857, 2.600974, 0.3779831)
 
+[sub_resource type="Curve3D" id="Curve3D_bbt2m"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -68.75321, -9.352523, 48.87764, 0, 0, 0, 0, 0, 0, -67.325745, -8.601778, 50.453316, 0, 0, 0, 0, 0, 0, -7.952343, -8.530663, 51.04619),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
 [node name="Node3D" type="Node3D" unique_id=355003223]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1571548630]
@@ -8415,5 +8424,26 @@ script = ExtResource("14_0mo70")
 transform = Transform3D(0.96543366, 0, 0.26065618, 0, 1, 0, -0.26065618, 0, 0.96543366, -0.2656536, -0.22573996, 0.085941315)
 shape = SubResource("BoxShape3D_jfbhi")
 
+[node name="Farol" parent="." unique_id=991785726 instance=ExtResource("ExtResource_farol")]
+transform = Transform3D(-0.5628617, 0.8265499, 0.0016516633, 0.6366065, 0.43223757, 0.63867277, 0.52718055, 0.3605353, -0.76947635, -47.359264, 22.877348, -79.87311)
+
+[node name="EixoGiratório" parent="Farol" index="0" unique_id=1916366233 node_paths=PackedStringArray("alvo_do_farol")]
+alvo_do_farol = NodePath("../../CaminhoPedraLago/PathFollow3D")
+
+[node name="LuzDoFarol" parent="Farol/EixoGiratório" index="0" unique_id=196209871]
+transform = Transform3D(0.98068833, -0.07138491, -0.18208255, 0.11280801, 0.9669936, 0.22846809, 0.15976325, -0.24459657, 0.9563727, 0.8592911, 1.8478088, -1.3255653)
+
+[node name="morcego" parent="Farol/EixoGiratório/LuzDoFarol" index="0" unique_id=2056158783 instance=ExtResource("ExtResource_morcego")]
+transform = Transform3D(-0.6087187, 0.7751089, 0.16931562, 0.5074411, 0.21630976, 0.8340944, 0.6098894, 0.59364665, -0.524994, 1.9292374, 1.3457794, -32.220707)
+
+[node name="CaminhoPedraLago" type="Path3D" parent="." unique_id=1720563349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.36924, 10.071396, -102.34979)
+curve = SubResource("Curve3D_bbt2m")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="CaminhoPedraLago" unique_id=1663217860]
+transform = Transform3D(-0.741081, -0.2235437, -0.6330766, -1.4900749e-08, 0.9429364, -0.33295262, 0.6713747, -0.24675336, -0.6988066, -68.75321, -9.352523, 48.87764)
+
 [connection signal="body_entered" from="CaminhoEntrandoNoFarol/Area3D" to="CaminhoEntrandoNoFarol/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="Torre/Porta/PortalTorre" to="Torre/Porta/PortalTorre" method="_on_body_entered"]
+
+[editable path="Farol"]

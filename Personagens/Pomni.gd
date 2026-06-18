@@ -7,6 +7,9 @@ extends CharacterBody3D
 @export var acceleration: float = 20.0
 @export var friction: float = 15
 
+var max_pulos: int = 2
+var pulos_dados: int = 0
+
 var vida: float = 100.0
 var vida_maxima: float = 100.0
 var regenerando: bool = true
@@ -31,12 +34,35 @@ var trilho_atual: PathFollow3D = null # Guarda o carrinho que a Pomni está usan
 # Gravidade
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+# --- SISTEMA DE CURVA (Desacoplado da física) ---
+var angulo_movimento: float = 0.0  # Ângulo atual de movimento em radianos
+var fazendo_curva: bool = false
+
+# Pivô da câmera — criado em _ready() para orbitar sem rotacionar o CharacterBody3D
+var _camera_pivot: Node3D = null
+
 # --- REFERÊNCIAS DE NÓS ---
 @onready var animation_player: AnimationPlayer = $Pomni/AnimationPlayer
 @onready var visual_model: Node3D = $Pomni
 
+
+
 func _ready():
 	z_inicial = global_position.z
+	safe_margin = 0.01
+	floor_block_on_wall = false
+	
+	# Configurar pivô da câmera
+	var cam = get_node_or_null("Camera3D")
+	if cam:
+		_camera_pivot = Node3D.new()
+		_camera_pivot.name = "CameraPivot"
+		add_child(_camera_pivot)
+		# Salvar transform local da câmera antes de reparentar
+		var cam_local_transform = cam.transform
+		cam.get_parent().remove_child(cam)
+		_camera_pivot.add_child(cam)
+		cam.transform = cam_local_transform
 	
 	# Criar Interface de Vida visível via código usando Corações
 	var canvas = CanvasLayer.new()
@@ -47,8 +73,8 @@ func _ready():
 	hbox.add_theme_constant_override("separation", 10)
 	canvas.add_child(hbox)
 	
-	var tex_vazio = load("res://coração sem vida.png")
-	var tex_cheio = load("res://coração com vida.png")
+	var tex_vazio = load("res://Assets/UI/coração sem vida.png")
+	var tex_cheio = load("res://Assets/UI/coração com vida.png")
 	
 	for i in range(qtd_coracoes):
 		var tpb = TextureProgressBar.new()
@@ -138,6 +164,65 @@ func _input(event: InputEvent) -> void:
 			esta_correndo = true
 		ultimo_click_esquerda = tempo_atual
 
+# ==========================================
+# SISTEMA DE CURVA — Rotaciona apenas a câmera, nunca o CharacterBody3D
+# ==========================================
+func iniciar_curva(novo_angulo_y: float, duracao: float):
+	if fazendo_curva:
+		return
+	fazendo_curva = true
+	
+	# Desbloqueia os eixos durante a curva para evitar bugs de transição
+	axis_lock_linear_x = false
+	axis_lock_linear_z = false
+	
+	# Calcula o caminho mais curto para o angulo_movimento
+	var diff_mov = fposmod(novo_angulo_y - angulo_movimento + PI, TAU) - PI
+	var angulo_mov_continuo = angulo_movimento + diff_mov
+	
+	# Atualiza o ângulo de movimento para a nova direção
+	var tween_angulo = create_tween()
+	tween_angulo.tween_property(self, "angulo_movimento", angulo_mov_continuo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	# Rotaciona o pivô da câmera pelo caminho mais curto
+	if _camera_pivot:
+		var diff_cam = fposmod(novo_angulo_y - _camera_pivot.rotation.y + PI, TAU) - PI
+		var cam_alvo_continuo = _camera_pivot.rotation.y + diff_cam
+		var tween_cam = create_tween()
+		tween_cam.tween_property(_camera_pivot, "rotation:y", cam_alvo_continuo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	# Rotaciona o modelo visual pelo caminho mais curto
+	var tween_visual = create_tween()
+	var angulo_visual_alvo = novo_angulo_y + PI/2
+	var diff_vis = fposmod(angulo_visual_alvo - visual_model.global_rotation.y + PI, TAU) - PI
+	var vis_alvo_continuo = visual_model.global_rotation.y + diff_vis
+	tween_visual.tween_property(visual_model, "global_rotation:y", vis_alvo_continuo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	# Passa o novo ângulo para o callback atualizar as travas de eixo
+	tween_visual.tween_callback(func(): _finalizar_curva(angulo_mov_continuo))
+
+func _finalizar_curva(angulo_final: float):
+	fazendo_curva = false
+	
+	# Normaliza o ângulo (ajusta para ficar entre 0 e 2*PI)
+	var angulo_norm = fposmod(angulo_final, TAU)
+	
+	# Define a tolerância para checar o ângulo
+	var epsilon = 0.1
+	
+	# Se estiver movendo no eixo Z (90 graus ou 270/-90 graus)
+	if abs(angulo_norm - PI/2) < epsilon or abs(angulo_norm - 3*PI/2) < epsilon:
+		axis_lock_linear_x = true
+		axis_lock_linear_z = false
+	# Se estiver movendo no eixo X (0 graus ou 180 graus)
+	elif abs(angulo_norm) < epsilon or abs(angulo_norm - PI) < epsilon or abs(angulo_norm - TAU) < epsilon:
+		axis_lock_linear_x = false
+		axis_lock_linear_z = true
+	else:
+		# Se por algum motivo o ângulo for diagonal, deixa ambos soltos
+		axis_lock_linear_x = false
+		axis_lock_linear_z = false
+
 func _physics_process(delta: float) -> void:
 	if is_on_path and trilho_atual != null:
 		handle_path_movement(delta)
@@ -145,13 +230,8 @@ func _physics_process(delta: float) -> void:
 		apply_gravity(delta)
 		handle_jump()
 		handle_movement(delta)
-		
-		# Trava a posição no eixo Z para o formato 2.5D padrão
-		velocity.z = 0.0
-		global_position.z = z_inicial
-		
 		move_and_slide()
-		
+			
 	update_animations()
 
 func apply_gravity(delta: float) -> void:
@@ -159,35 +239,48 @@ func apply_gravity(delta: float) -> void:
 		velocity.y -= gravity * delta
 
 func handle_jump() -> void:
-	if Input.is_action_just_pressed("move_up") and is_on_floor():
-			velocity.y = jump_velocity
+	if is_on_floor():
+		pulos_dados = 0
+	elif pulos_dados == 0:
+		pulos_dados = 1 # Gastar o primeiro pulo se cair de uma borda
+		
+	if Input.is_action_just_pressed("move_up") and pulos_dados < max_pulos:
+		velocity.y = jump_velocity
+		pulos_dados += 1
+		
+		# Reinicia a animação se for o segundo pulo
+		if pulos_dados > 1:
+			animation_player.stop()
+			animation_player.play("Jumping", 0.1)
 
 func handle_movement(delta: float) -> void:
-	var direction := Input.get_axis("move_left", "move_right")
+	var input_axis := Input.get_axis("move_left", "move_right")
 	
 	if Input.is_physical_key_pressed(KEY_SHIFT):
 		esta_correndo = true
 	
-	if direction == 0:
+	if input_axis == 0:
 		esta_correndo = false
 	
 	var current_speed = run_speed if esta_correndo else speed
 	
-	if direction != 0:
-		# Aceleração
-		velocity.x = move_toward(velocity.x, direction * current_speed, acceleration * delta)
+	# Calcula a direção de movimento baseada no ângulo armazenado
+	var dir_x = cos(angulo_movimento) * input_axis
+	var dir_z = -sin(angulo_movimento) * input_axis
+	
+	if input_axis != 0:
+		# Aplica velocidade diretamente para evitar que move_and_slide absorva micro-movimentos
+		velocity.x = dir_x * current_speed
+		velocity.z = dir_z * current_speed
 		
-		# Direção que a Pomni estará virada
-		var rotacao_alvo = 0.0
-		if direction == 1:
-			rotacao_alvo = 0
-		if direction == -1:
-			rotacao_alvo = PI + 0.7
-			
-		visual_model.rotation.y = lerp_angle(visual_model.rotation.y, rotacao_alvo, 8 * delta)	
+		# Rotação visual do modelo baseada na direção de input + ângulo da curva (absoluto/global)
+		var rotacao_alvo = angulo_movimento + PI/2
+		if input_axis == -1:
+			rotacao_alvo = angulo_movimento - PI/2
+		visual_model.global_rotation.y = lerp_angle(visual_model.global_rotation.y, rotacao_alvo, 8 * delta)
 	else:
-		# Desaceleração (atrito)
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
+		velocity.z = move_toward(velocity.z, 0, friction * delta)
 
 func handle_path_movement(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
@@ -200,31 +293,23 @@ func handle_path_movement(delta: float) -> void:
 	var current_speed = run_speed if esta_correndo else speed
 	
 	if direction != 0:
-		# Empurra o carrinho pelo caminho 3D
 		trilho_atual.progress += direction * current_speed * delta
-		
-		# Verifica se chegou ao final do caminho
 		if trilho_atual.progress_ratio >= 1.0:
 			sair_do_caminho()
 			return
-		
-		# Rotação visual continua respondendo ao botão apertado
 		var rotacao_caminho = trilho_atual.global_rotation.y
 		var rotacao_alvo = rotacao_caminho - PI - 1
-		
 		if direction == -1:
 			rotacao_alvo = rotacao_alvo - PI
-				
 		visual_model.rotation.y = lerp_angle(visual_model.rotation.y, rotacao_alvo, 8 * delta)
 	
 	global_position = trilho_atual.global_position
 	global_position.y += 1.0 
-	
-	# 2. Mantemos apenas a velocidade falsa no eixo X para a animação tocar
 	velocity.x = direction * current_speed
 	velocity.y = 0.0
-	
+
 func update_animations() -> void:
+	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	if not is_on_floor() and not is_on_path:
 		if velocity.y > 0.0:
 			if animation_player.current_animation != "Jumping":
@@ -232,7 +317,7 @@ func update_animations() -> void:
 		else:
 			if animation_player.current_animation != "Falling":
 				animation_player.play("Falling", 0.7)
-	elif abs(velocity.x) > 0.1:
+	elif horizontal_speed > 0.1:
 		if esta_correndo:
 			if animation_player.current_animation != "Walk":
 				animation_player.play("Walk", 0.2)

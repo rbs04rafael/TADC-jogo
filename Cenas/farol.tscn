@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cyrmxq73nrw5b"]
 
-[ext_resource type="Script" uid="uid://cpayees3l5kbr" path="res://eixo_giratório.gd" id="1_ou0u5"]
+[ext_resource type="Script" uid="uid://cpayees3l5kbr" path="res://Codigos/eixo_giratório.gd" id="1_ou0u5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0ebj"]
 size = Vector3(15.0, 15.0, 150.0)
