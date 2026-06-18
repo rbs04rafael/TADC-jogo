@@ -13,7 +13,7 @@
 [ext_resource type="Shader" uid="uid://deb4jo05ac0jl" path="res://Cenarios/CenarioMundoCompleto/Shaders/CenarioCircoDigital.gdshader" id="13_6txre"]
 [ext_resource type="Texture2D" uid="uid://dqyxcneqjxtmi" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_nor_gl_1k.jpg" id="13_jb8ss"]
 [ext_resource type="Script" uid="uid://lhlp1bafc6oj" path="res://Codigos/portal_torre.gd" id="14_0mo70"]
-[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/Farol.tscn" id="ExtResource_farol"]
+[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/farol.tscn" id="ExtResource_farol"]
 [ext_resource type="PackedScene" uid="uid://be7b5jwa47868" path="res://Personagens/Morcego/morcego.tscn" id="ExtResource_morcego"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bsbx7"]
@@ -6595,7 +6595,7 @@ mesh = SubResource("ArrayMesh_qh64m")
 surface_material_override/0 = SubResource("ShaderMaterial_6txre")
 
 [node name="ChaoMapa" type="MeshInstance3D" parent="The Grounds" unique_id=1803898447]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.48774, 2.4909525, -54.236782)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.388252, 2.5517673, -54.162018)
 mesh = SubResource("ArrayMesh_o0hax")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="The Grounds/ChaoMapa" unique_id=313106875]

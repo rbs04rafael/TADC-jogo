@@ -8,6 +8,7 @@
 [ext_resource type="Shader" uid="uid://qekpi8yofpsw" path="res://Assets/DentroFarol.gdshader" id="6_dg3k6"]
 [ext_resource type="Script" uid="uid://d37lgsgkowmcp" path="res://Codigos/zona_de_curva.gd" id="Script_Curva"]
 [ext_resource type="Script" uid="uid://d4a1rc1ykd686" path="res://Codigos/gerador_colisoes.gd" id="Script_Gerador"]
+[ext_resource type="Script" path="res://Codigos/ChaoMorteFarol.gd" id="Script_ChaoMorteFarol"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6rbrp"]
 resource_name = "Metal"
@@ -488,9 +489,10 @@ transform = Transform3D(-0.09202298, 0, -0.99575686, 0, 1, 0, 0.99575686, 0, -0.
 mesh = SubResource("PlaneMesh_sjkwv")
 surface_material_override/0 = SubResource("ShaderMaterial_x5iya")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Farol/ChaoBase" unique_id=371377763]
+[node name="AreaMorte" type="Area3D" parent="Farol/ChaoBase" unique_id=371377763]
+script = ExtResource("Script_ChaoMorteFarol")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoBase/StaticBody3D" unique_id=1447605518]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoBase/AreaMorte" unique_id=1447605518]
 shape = SubResource("ConvexPolygonShape3D_2msw6")
 
 [node name="ChaoCima" type="Node3D" parent="Farol" unique_id=1850838244]
@@ -559,6 +561,18 @@ transform = Transform3D(1.5151458, 0, 0, 0, 1.5151458, 0, 0, 0, 1.5151458, -1.99
 mesh = SubResource("ArrayMesh_pydjt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte1/Platform_0" unique_id=1734164403]
+transform = Transform3D(1.5151458, 0, 0, 0, 1.5151458, 0, 0, 0, 1.5151458, -1.9916546, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_roniq")
+
+[node name="Platform_3" type="StaticBody3D" parent="Parkour/Parte1" unique_id=561960839]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, -9.583222, 2, 3)
+metadata/_edit_group_ = true
+
+[node name="Couch (Chesterfield)" type="MeshInstance3D" parent="Parkour/Parte1/Platform_3" unique_id=1708624807]
+transform = Transform3D(1.5151458, 0, 0, 0, 1.5151458, 0, 0, 0, 1.5151458, -1.9916546, 0, 0)
+mesh = SubResource("ArrayMesh_pydjt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte1/Platform_3" unique_id=1654707718]
 transform = Transform3D(1.5151458, 0, 0, 0, 1.5151458, 0, 0, 0, 1.5151458, -1.9916546, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_roniq")
 
