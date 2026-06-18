@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://nelvwk87iu3p"]
+
+[ext_resource type="Script" uid="uid://ckexbs68veolq" path="res://Personagens/inimigo_teste.gd" id="1_qt3sc"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_gy4c1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qt3sc"]
+radius = 0.59472656
+height = 2.0430298
+
+[node name="InimigoTeste" type="CharacterBody3D" unique_id=2129184493]
+script = ExtResource("1_qt3sc")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=354845072]
+transform = Transform3D(1.0038913, 0, 0, 0, 1.0038913, 0, 0, 0, 1.0038913, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_gy4c1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1437636859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002532959, 0)
+shape = SubResource("CapsuleShape3D_qt3sc")

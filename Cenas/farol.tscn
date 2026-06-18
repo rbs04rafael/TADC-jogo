@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cyrmxq73nrw5b"]
+
+[ext_resource type="Script" uid="uid://cpayees3l5kbr" path="res://eixo_giratório.gd" id="1_ou0u5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g0ebj"]
+size = Vector3(15.0, 15.0, 150.0)
+
+[node name="Farol" type="Node3D" unique_id=991785726]
+
+[node name="EixoGiratório" type="Node3D" parent="." unique_id=1916366233]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4036808, 0, 0)
+script = ExtResource("1_ou0u5")
+
+[node name="LuzDoFarol" type="SpotLight3D" parent="EixoGiratório" unique_id=196209871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5837116, -0.16579008, 1.6463413)
+light_energy = 20.0
+shadow_enabled = true
+spot_range = 300.0
+spot_attenuation = 0.01
+spot_angle = 6.0
+
+[node name="ZonaDeAlarme" type="Area3D" parent="EixoGiratório" unique_id=936543606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23317236, 0.056583673, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EixoGiratório/ZonaDeAlarme" unique_id=1023095835]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8630185, 2.727968, -75.0)
+shape = SubResource("BoxShape3D_g0ebj")
+
+[connection signal="body_entered" from="EixoGiratório/ZonaDeAlarme" to="EixoGiratório" method="_on_zona_de_alarme_body_entered"]
+[connection signal="body_exited" from="EixoGiratório/ZonaDeAlarme" to="EixoGiratório" method="_on_zona_de_alarme_body_exited"]

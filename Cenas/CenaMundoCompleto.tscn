@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://d3ippjuve8364"]
+
+[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/farol.tscn" id="1_bbt2m"]
+[ext_resource type="PackedScene" uid="uid://hd0h34b4estt" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.tscn" id="1_dlyin"]
+[ext_resource type="PackedScene" uid="uid://ufby7umh4kjy" path="res://Personagens/Pomni.tscn" id="2_dlyin"]
+[ext_resource type="PackedScene" uid="uid://nelvwk87iu3p" path="res://Personagens/inimigo_teste.tscn" id="3_cy3ig"]
+[ext_resource type="PackedScene" uid="uid://be7b5jwa47868" path="res://morcego.tscn" id="5_0lpm0"]
+
+[sub_resource type="Curve3D" id="Curve3D_bbt2m"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -68.75321, -9.352523, 48.87764, 0, 0, 0, 0, 0, 0, -67.325745, -8.601778, 50.453316, 0, 0, 0, 0, 0, 0, -7.952343, -8.530663, 51.04619),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[node name="MainMundoCompleto" type="Node3D" unique_id=1179031640]
+
+[node name="Farol" parent="." unique_id=991785726 instance=ExtResource("1_bbt2m")]
+transform = Transform3D(-0.5628617, 0.8265499, 0.0016516633, 0.6366065, 0.43223757, 0.63867277, 0.52718055, 0.3605353, -0.76947635, -47.359264, 22.877348, -79.87311)
+
+[node name="EixoGiratório" parent="Farol" index="0" unique_id=1916366233 node_paths=PackedStringArray("alvo_do_farol")]
+alvo_do_farol = NodePath("../../\\/PathFollow3D")
+
+[node name="LuzDoFarol" parent="Farol/EixoGiratório" index="0" unique_id=196209871]
+transform = Transform3D(0.98068833, -0.07138491, -0.18208255, 0.11280801, 0.9669936, 0.22846809, 0.15976325, -0.24459657, 0.9563727, 0.8592911, 1.8478088, -1.3255653)
+
+[node name="morcego" parent="Farol/EixoGiratório/LuzDoFarol" index="0" unique_id=2056158783 instance=ExtResource("5_0lpm0")]
+transform = Transform3D(-0.6087187, 0.7751089, 0.16931562, 0.5074411, 0.21630976, 0.8340944, 0.6098894, 0.59364665, -0.524994, 1.9292374, 1.3457794, -32.220707)
+
+[node name="MundoCompleto" parent="." unique_id=355003223 instance=ExtResource("1_dlyin")]
+transform = Transform3D(1.0009824, 0, 0, 0, 1.0009824, 0, 0, 0, 1.0009824, 0.458704, -0.10455179, -0.33958244)
+metadata/_edit_group_ = true
+
+[node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_dlyin")]
+transform = Transform3D(0.52438724, 0, 0.85148, 0, 1, 0, -0.85148, 0, 0.52438724, -118.33212, 2.1929526, -52.210697)
+axis_lock_angular_z = true
+
+[node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=1003186009]
+transform = Transform3D(0.5243871, 0, -0.8514798, 0, 1, 0, 0.8514798, 0, 0.5243871, -5.5589256, 1.9570351, 3.353775)
+fov = 95.69609
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=661843212 groups=["luzes_perigo"]]
+transform = Transform3D(0.99999994, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 0.99999994, -0.8644695, 1.4450073, 0.5869541)
+
+[node name="InimigoTeste" parent="." unique_id=2129184493 instance=ExtResource("3_cy3ig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107.387436, 4.8102427, -54.190228)
+
+[node name="\\" type="Path3D" parent="." unique_id=1720563349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.36924, 10.071396, -102.34979)
+curve = SubResource("Curve3D_bbt2m")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="\\" unique_id=1663217860]
+transform = Transform3D(-0.741081, -0.2235437, -0.6330766, -1.4900749e-08, 0.9429364, -0.33295262, 0.6713747, -0.24675336, -0.6988066, -68.75321, -9.352523, 48.87764)
+
+[editable path="Farol"]
