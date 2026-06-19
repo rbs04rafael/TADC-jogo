@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://0yfs5ww1j1xi" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_rough_1k.png" id="3_rpbe6"]
 [ext_resource type="Texture2D" uid="uid://dqyxcneqjxtmi" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_nor_gl_1k.jpg" id="4_dg3k6"]
 [ext_resource type="PackedScene" uid="uid://ufby7umh4kjy" path="res://Personagens/Pomni.tscn" id="5_x5iya"]
-[ext_resource type="Shader" uid="uid://qekpi8yofpsw" path="res://Assets/DentroFarol.gdshader" id="6_dg3k6"]
+[ext_resource type="Shader" uid="uid://qekpi8yofpsw" path="res://Assets/Sharders/DentroFarol.gdshader" id="6_dg3k6"]
+[ext_resource type="Script" uid="uid://2ls8nkuodgdm" path="res://Codigos/ChaoMorteFarol.gd" id="Script_ChaoMorteFarol"]
 [ext_resource type="Script" uid="uid://d37lgsgkowmcp" path="res://Codigos/zona_de_curva.gd" id="Script_Curva"]
 [ext_resource type="Script" uid="uid://d4a1rc1ykd686" path="res://Codigos/gerador_colisoes.gd" id="Script_Gerador"]
-[ext_resource type="Script" path="res://Codigos/ChaoMorteFarol.gd" id="Script_ChaoMorteFarol"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6rbrp"]
 resource_name = "Metal"
@@ -209,7 +209,7 @@ shader_parameter/tamanho_dos_quadrados = 12.0
 data = PackedVector3Array(6, 0, 5, -6, 0, 5, 6, 0, -5, -6, 0, 5, -6, 0, -5, 6, 0, -5)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_roniq"]
-size = Vector2(5, 19)
+size = Vector2(6, 19)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t5pr2"]
 render_priority = 0
@@ -223,7 +223,7 @@ data = PackedVector3Array(2.5, 0, 9.5, -2.5, 0, 9.5, 2.5, 0, -9.5, -2.5, 0, 9.5,
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_u7qha"]
 lightmap_size_hint = Vector2i(42, 37)
-size = Vector2(8, 7)
+size = Vector2(8, 6)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u7qha"]
 render_priority = 0
@@ -508,7 +508,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_dg3k6")
 shape = SubResource("ConcavePolygonShape3D_dg3k6")
 
 [node name="ChaoCima2" type="MeshInstance3D" parent="Farol/ChaoCima" unique_id=2051795325]
-transform = Transform3D(-0.9991796, 0, 0.040497996, 0, 1, 0, -0.040497996, 0, -0.9991796, -37.181488, 32.48, -83.132065)
+transform = Transform3D(-0.9991796, 0, 0.040497996, 0, 1, 0, -0.040497996, 0, -0.9991796, -37.181488, 32.48, -82.98008)
 mesh = SubResource("PlaneMesh_x5iya")
 surface_material_override/0 = SubResource("ShaderMaterial_inwgv")
 
@@ -518,7 +518,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_inwgv")
 shape = SubResource("ConcavePolygonShape3D_inwgv")
 
 [node name="ChaoCima3" type="MeshInstance3D" parent="Farol/ChaoCima" unique_id=987966076]
-transform = Transform3D(-0.9991796, 0, 0.040497996, 0, 1, 0, -0.040497996, 0, -0.9991796, -33.789772, 32.48, -96.12944)
+transform = Transform3D(-0.9999903, 0, -0.0044331327, 0, 1, 0, 0.0044331327, 0, -0.9999903, -34.799335, 32.48, -96.12944)
 mesh = SubResource("PlaneMesh_roniq")
 surface_material_override/0 = SubResource("ShaderMaterial_t5pr2")
 
@@ -538,11 +538,11 @@ surface_material_override/0 = SubResource("ShaderMaterial_u7qha")
 shape = SubResource("ConcavePolygonShape3D_5e4x4")
 
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("5_x5iya")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.569809, 1.5043445, 3.0761359)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3163805, 3.0297709, 3.4542341)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=511490549]
-transform = Transform3D(0.9998646, 0, 0.016457677, 0, 1, 0, -0.016457677, 0, 0.9998646, 0.642622, 1.9570351, 4.995058)
+transform = Transform3D(0.9998646, -3.5461576e-09, 0.016457677, 0.0007637875, 0.9989225, -0.046402693, -0.016439943, 0.04640898, 0.9987872, 0.40158272, 1.2190638, 4.506035)
 fov = 100.12928
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=1381641655]
@@ -588,24 +588,24 @@ mesh = SubResource("ArrayMesh_yiaj3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1359745, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_t5pr2")
 
-[node name="Platform_2" type="StaticBody3D" parent="Parkour/Parte1" unique_id=355145544]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 2.2926054, 5.65205, 3)
+[node name="Bloco_Virada1" type="StaticBody3D" parent="Parkour/Parte1" unique_id=355145544]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 2.2926054, 4.5547647, 3)
 metadata/_edit_group_ = true
 
-[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte1/Platform_2" unique_id=1116236657]
+[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte1/Bloco_Virada1" unique_id=1116236657]
 transform = Transform3D(6.666666, 0, 0, 0, 6.666666, 0, 0, 0, 6.666666, 13.333332, 5.999998, 0)
 script = ExtResource("Script_Curva")
 
-[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte1/Platform_2/Curva_0_0" unique_id=827543608]
+[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte1/Bloco_Virada1/Curva_0_0" unique_id=827543608]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7849755, 1.2249403, 0.020564318)
 shape = SubResource("BoxShape3D_curva")
 
-[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte1/Platform_2" unique_id=105607105]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte1/Bloco_Virada1" unique_id=105607105]
+transform = Transform3D(5.257056, 0, 0, 0, 5.257056, 0, 0, 0, 5.257056, 38.493935, 20.847313, 0.92626)
 mesh = SubResource("ArrayMesh_x8eyr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte1/Platform_2" unique_id=1152068026]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte1/Bloco_Virada1" unique_id=1152068026]
+transform = Transform3D(5.257056, 0, 0, 0, 5.257056, 0, 0, 0, 5.257056, 38.493935, 20.847313, 0.92626)
 shape = SubResource("ConvexPolygonShape3D_u7qha")
 
 [node name="Platform_4" type="StaticBody3D" parent="Parkour/Parte1" unique_id=748698018]
@@ -620,47 +620,47 @@ mesh = SubResource("ArrayMesh_yiaj3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1359745, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_t5pr2")
 
-[node name="Platform_5" type="StaticBody3D" parent="Parkour/Parte1" unique_id=1069966817]
+[node name="Bloco_Virada2" type="StaticBody3D" parent="Parkour/Parte1" unique_id=1069966817]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 2.4197626, 9.510372, -8.114887)
 metadata/_edit_group_ = true
 
-[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte1/Platform_5" unique_id=1746206006]
+[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte1/Bloco_Virada2" unique_id=1746206006]
 transform = Transform3D(6.666666, 0, 0, 0, 6.666666, 0, 0, 0, 6.666666, 13.333332, 5.999998, 0)
 script = ExtResource("Script_Curva")
 
-[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte1/Platform_5/Curva_0_0" unique_id=972490953]
+[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte1/Bloco_Virada2/Curva_0_0" unique_id=972490953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7314773, 1.175786, 0.13148117)
 shape = SubResource("BoxShape3D_curva")
 
-[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte1/Platform_5" unique_id=1867763144]
+[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte1/Bloco_Virada2" unique_id=1867763144]
 transform = Transform3D(5.257056, 0, 0, 0, 5.257056, 0, 0, 0, 5.257056, 38.493935, 19.489487, 0.9262619)
 mesh = SubResource("ArrayMesh_x8eyr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte1/Platform_5" unique_id=1723668383]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte1/Bloco_Virada2" unique_id=1723668383]
 transform = Transform3D(5.257056, 0, 0, 0, 5.257056, 0, 0, 0, 5.257056, 38.493935, 19.489487, 0.9262619)
 shape = SubResource("ConvexPolygonShape3D_u7qha")
 
 [node name="Parte2" type="Node3D" parent="Parkour" unique_id=349208772]
 transform = Transform3D(-0.9977794, 0, -0.06660477, 0, 1, 0, 0.06660477, 0, -0.9977794, -0.96242595, 11.043782, -4.2222586)
 
-[node name="Platform_2" type="StaticBody3D" parent="Parkour/Parte2" unique_id=1837198641]
+[node name="Bloco_Virada3" type="StaticBody3D" parent="Parkour/Parte2" unique_id=1837198641]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.60068405, 3.8022327, 4.2477417)
 metadata/_edit_group_ = true
 
-[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte2/Platform_2" unique_id=1410917841]
+[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte2/Bloco_Virada3" unique_id=1410917841]
 transform = Transform3D(6.666666, 0, 0, 0, 6.666666, 0, 0, 0, 6.666666, 13.333332, 5.999998, 0)
 script = ExtResource("Script_Curva")
 
-[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte2/Platform_2/Curva_0_0" unique_id=355591135]
+[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte2/Bloco_Virada3/Curva_0_0" unique_id=355591135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7639332, 1.2249413, 0)
 shape = SubResource("BoxShape3D_curva")
 
-[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte2/Platform_2" unique_id=1350327273]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte2/Bloco_Virada3" unique_id=1350327273]
+transform = Transform3D(5.257056, 0, -2.9802322e-08, 0, 5.257056, 0, 2.9802322e-08, 0, 5.257056, 38.49393, 19.686676, 0.9262619)
 mesh = SubResource("ArrayMesh_x8eyr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte2/Platform_2" unique_id=921293094]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte2/Bloco_Virada3" unique_id=921293094]
+transform = Transform3D(5.257056, 0, -2.9802322e-08, 0, 5.257056, 0, 2.9802322e-08, 0, 5.257056, 38.49393, 19.686676, 0.9262619)
 shape = SubResource("ConvexPolygonShape3D_u7qha")
 
 [node name="Platform_3" type="StaticBody3D" parent="Parkour/Parte2" unique_id=1549706985]
@@ -676,7 +676,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4923115, 0, 2.6076698)
 shape = SubResource("ConvexPolygonShape3D_5e4x4")
 
 [node name="Platform_4" type="StaticBody3D" parent="Parkour/Parte2" unique_id=258648129]
-transform = Transform3D(-0.0354053, 0, -0.99937284, 0, 1, 0, 0.99937284, 0, -0.0354053, 5.313447, 8.079413, -3.78397)
+transform = Transform3D(-0.035405308, 0, -0.9993728, 0, 1, 0, 0.9993728, 0, -0.035405308, 5.671048, 8.079413, -3.760099)
 metadata/_edit_group_ = true
 
 [node name="Bench" type="MeshInstance3D" parent="Parkour/Parte2/Platform_4" unique_id=774816088]
@@ -687,24 +687,24 @@ mesh = SubResource("ArrayMesh_yiaj3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1359745, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_t5pr2")
 
-[node name="Platform_5" type="StaticBody3D" parent="Parkour/Parte2" unique_id=1122495772]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.1754365, 8.726249, -8.433629)
+[node name="Bloco_Virada4" type="StaticBody3D" parent="Parkour/Parte2" unique_id=1122495772]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.11887324, 8.726249, -8.413982)
 metadata/_edit_group_ = true
 
-[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte2/Platform_5" unique_id=798299985]
+[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte2/Bloco_Virada4" unique_id=798299985]
 transform = Transform3D(6.666666, 0, 0, 0, 6.666666, 0, 0, 0, 6.666666, 13.333332, 5.999998, 0)
 script = ExtResource("Script_Curva")
 
-[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte2/Platform_5/Curva_0_0" unique_id=710438357]
+[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte2/Bloco_Virada4/Curva_0_0" unique_id=710438357]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7639332, 1.2249413, 0)
 shape = SubResource("BoxShape3D_curva")
 
-[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte2/Platform_5" unique_id=373658346]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte2/Bloco_Virada4" unique_id=373658346]
+transform = Transform3D(5.257056, 0, -2.9802322e-08, 0, 5.257056, 0, 2.9802322e-08, 0, 5.257056, 38.49393, 20.49089, 0.9262581)
 mesh = SubResource("ArrayMesh_x8eyr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte2/Platform_5" unique_id=170832919]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte2/Bloco_Virada4" unique_id=170832919]
+transform = Transform3D(5.257056, 0, -2.9802322e-08, 0, 5.257056, 0, 2.9802322e-08, 0, 5.257056, 38.49393, 20.49089, 0.9262581)
 shape = SubResource("ConvexPolygonShape3D_u7qha")
 
 [node name="Parte3" type="Node3D" parent="Parkour" unique_id=2070659900]
@@ -722,48 +722,48 @@ mesh = SubResource("ArrayMesh_pydjt")
 transform = Transform3D(1.5151458, 0, 0, 0, 1.5151458, 0, 0, 0, 1.5151458, -1.9916546, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_roniq")
 
-[node name="Platform_2" type="StaticBody3D" parent="Parkour/Parte3" unique_id=1776172785]
-transform = Transform3D(0.15, 0, -2.2351742e-08, 0, 0.15, 0, 2.2351742e-08, 0, 0.15, -6.401547, 3.5028896, 2.668635)
+[node name="Bloco_Virada5" type="StaticBody3D" parent="Parkour/Parte3" unique_id=1776172785]
+transform = Transform3D(0.15, 0, -2.7939677e-08, 0, 0.15, 0, 2.7939677e-08, 0, 0.15, -6.4528623, 1.9607983, 3.1544309)
 metadata/_edit_group_ = true
 
-[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte3/Platform_2" unique_id=849396107]
+[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte3/Bloco_Virada5" unique_id=849396107]
 transform = Transform3D(6.666666, 0, 0, 0, 6.666666, 0, 0, 0, 6.666666, 13.333332, 5.999998, 0)
 script = ExtResource("Script_Curva")
 
-[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte3/Platform_2/Curva_0_0" unique_id=260817841]
+[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte3/Bloco_Virada5/Curva_0_0" unique_id=260817841]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7639332, 1.2249413, 0)
 shape = SubResource("BoxShape3D_curva")
 
-[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte3/Platform_2" unique_id=2037267860]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte3/Bloco_Virada5" unique_id=2037267860]
+transform = Transform3D(5.2570567, 0, -5.9604645e-08, 0, 5.2570567, 0, 5.9604645e-08, 0, 5.2570567, 38.493935, 20.843231, 0.9262581)
 mesh = SubResource("ArrayMesh_x8eyr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte3/Platform_2" unique_id=1048192077]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte3/Bloco_Virada5" unique_id=1048192077]
+transform = Transform3D(5.2570567, 0, -5.9604645e-08, 0, 5.2570567, 0, 5.9604645e-08, 0, 5.2570567, 38.493935, 20.843231, 0.9262581)
 shape = SubResource("ConvexPolygonShape3D_u7qha")
 
-[node name="Platform_5" type="StaticBody3D" parent="Parkour/Parte3" unique_id=1745770489]
-transform = Transform3D(0.15, 0, -2.6077032e-08, 0, 0.15, 0, 2.6077032e-08, 0, 0.15, -6.552986, 9.15727, -5.394292)
+[node name="Bloco_Virada6" type="StaticBody3D" parent="Parkour/Parte3" unique_id=1745770489]
+transform = Transform3D(0.15, 0, -2.7939677e-08, 0, 0.15, 0, 2.7939677e-08, 0, 0.15, -6.552986, 7.4296284, -5.3942914)
 metadata/_edit_group_ = true
 
-[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte3/Platform_5" unique_id=295138158]
+[node name="Curva_0_0" type="Area3D" parent="Parkour/Parte3/Bloco_Virada6" unique_id=295138158]
 transform = Transform3D(6.666666, 0, 0, 0, 6.666666, 0, 0, 0, 6.666666, 13.333332, 5.999998, 0)
 script = ExtResource("Script_Curva")
 
-[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte3/Platform_5/Curva_0_0" unique_id=1793625759]
+[node name="Collision" type="CollisionShape3D" parent="Parkour/Parte3/Bloco_Virada6/Curva_0_0" unique_id=1793625759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7639332, 1.2249413, 0)
 shape = SubResource("BoxShape3D_curva")
 
-[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte3/Platform_5" unique_id=197242795]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="Rubber Block (Saturated)" type="MeshInstance3D" parent="Parkour/Parte3/Bloco_Virada6" unique_id=197242795]
+transform = Transform3D(5.2570567, 0, -5.9604645e-08, 0, 5.2570567, 0, 5.9604645e-08, 0, 5.2570567, 38.493935, 20.659363, 0.9262638)
 mesh = SubResource("ArrayMesh_x8eyr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte3/Platform_5" unique_id=123657656]
-transform = Transform3D(5.2570567, 0, 0, 0, 5.2570567, 0, 0, 0, 5.2570567, 38.493935, 13.284422, 0.92626)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Parkour/Parte3/Bloco_Virada6" unique_id=123657656]
+transform = Transform3D(5.2570567, 0, -5.9604645e-08, 0, 5.2570567, 0, 5.9604645e-08, 0, 5.2570567, 38.493935, 20.659363, 0.9262638)
 shape = SubResource("ConvexPolygonShape3D_u7qha")
 
 [node name="Platform_4" type="StaticBody3D" parent="Parkour/Parte3" unique_id=263340232]
-transform = Transform3D(0, 0, 0.5, 0, 0.5, 0, -0.5, 0, 0, -2.1501207, 8.435289, -2.7965806)
+transform = Transform3D(0, 0, 0.5, 0, 0.5, 0, -0.5, 0, 0, -2.2009535, 7.8007565, -2.3153622)
 metadata/_edit_group_ = true
 
 [node name="Barrel" type="MeshInstance3D" parent="Parkour/Parte3/Platform_4" unique_id=1285094623]

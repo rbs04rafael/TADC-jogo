@@ -40,6 +40,8 @@ var fazendo_curva: bool = false
 
 # Pivô da câmera — criado em _ready() para orbitar sem rotacionar o CharacterBody3D
 var _camera_pivot: Node3D = null
+var _original_cam_pos: Vector3
+var _cam_ray: RayCast3D
 
 # --- REFERÊNCIAS DE NÓS ---
 @onready var animation_player: AnimationPlayer = $Pomni/AnimationPlayer
@@ -52,17 +54,32 @@ func _ready():
 	safe_margin = 0.01
 	floor_block_on_wall = false
 	
-	# Configurar pivô da câmera
+	# Configurar pivô da câmera e o sistema anti-colisão (RayCast3D)
 	var cam = get_node_or_null("Camera3D")
 	if cam:
 		_camera_pivot = Node3D.new()
 		_camera_pivot.name = "CameraPivot"
 		add_child(_camera_pivot)
-		# Salvar transform local da câmera antes de reparentar
+		
+		# Salva a posição original e local da câmera
 		var cam_local_transform = cam.transform
+		_original_cam_pos = cam_local_transform.origin
+		
+		# Reparenta a câmera
 		cam.get_parent().remove_child(cam)
 		_camera_pivot.add_child(cam)
 		cam.transform = cam_local_transform
+		
+		# Cria um RayCast3D para detectar paredes
+		_cam_ray = RayCast3D.new()
+		_cam_ray.name = "CameraRay"
+		_cam_ray.position = Vector3(0, 1.5, 0) # Raio sai do peito da Pomni
+		_cam_ray.target_position = _original_cam_pos - _cam_ray.position
+		
+		# O RayCast só precisa bater no cenário (Layer 1). A Pomni está na Layer 2, então ele ignora ela!
+		_cam_ray.collision_mask = 1
+		
+		_camera_pivot.add_child(_cam_ray)
 	
 	# Criar Interface de Vida visível via código usando Corações
 	var canvas = CanvasLayer.new()
@@ -167,14 +184,31 @@ func _input(event: InputEvent) -> void:
 # ==========================================
 # SISTEMA DE CURVA — Rotaciona apenas a câmera, nunca o CharacterBody3D
 # ==========================================
-func iniciar_curva(novo_angulo_y: float, duracao: float):
+func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float = -999.0, centro_alvo: Vector3 = Vector3(INF, INF, INF)):
 	if fazendo_curva:
 		return
 	fazendo_curva = true
 	
+	if angulo_camera_y == -999.0:
+		angulo_camera_y = novo_angulo_y
+	
 	# Desbloqueia os eixos durante a curva para evitar bugs de transição
 	axis_lock_linear_x = false
 	axis_lock_linear_z = false
+	
+	# Centraliza a Pomni no eixo perpendicular à NOVA direção para evitar que ela caia da beirada
+	if centro_alvo.x != INF:
+		var angulo_norm = fposmod(novo_angulo_y, TAU)
+		var epsilon = 0.1
+		var tween_pos = create_tween()
+		tween_pos.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS) # Roda junto com a física
+		
+		# Se a nova direção for no eixo Z (90 graus ou 270/-90 graus), o eixo lateral é o X
+		if abs(angulo_norm - PI/2) < epsilon or abs(angulo_norm - 3*PI/2) < epsilon:
+			tween_pos.tween_property(self, "global_position:x", centro_alvo.x, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		# Se a nova direção for no eixo X (0 graus ou 180 graus), o eixo lateral é o Z
+		elif abs(angulo_norm) < epsilon or abs(angulo_norm - PI) < epsilon or abs(angulo_norm - TAU) < epsilon:
+			tween_pos.tween_property(self, "global_position:z", centro_alvo.z, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
 	# Calcula o caminho mais curto para o angulo_movimento
 	var diff_mov = fposmod(novo_angulo_y - angulo_movimento + PI, TAU) - PI
@@ -184,14 +218,14 @@ func iniciar_curva(novo_angulo_y: float, duracao: float):
 	var tween_angulo = create_tween()
 	tween_angulo.tween_property(self, "angulo_movimento", angulo_mov_continuo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
-	# Rotaciona o pivô da câmera pelo caminho mais curto
+	# Rotaciona o pivô da câmera pelo caminho mais curto usando o ângulo da câmera
 	if _camera_pivot:
-		var diff_cam = fposmod(novo_angulo_y - _camera_pivot.rotation.y + PI, TAU) - PI
+		var diff_cam = fposmod(angulo_camera_y - _camera_pivot.rotation.y + PI, TAU) - PI
 		var cam_alvo_continuo = _camera_pivot.rotation.y + diff_cam
 		var tween_cam = create_tween()
 		tween_cam.tween_property(_camera_pivot, "rotation:y", cam_alvo_continuo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
-	# Rotaciona o modelo visual pelo caminho mais curto
+	# Rotaciona o modelo visual pelo caminho mais curto (usa o angulo_mov_continuo para acompanhar o movimento)
 	var tween_visual = create_tween()
 	var angulo_visual_alvo = novo_angulo_y + PI/2
 	var diff_vis = fposmod(angulo_visual_alvo - visual_model.global_rotation.y + PI, TAU) - PI
@@ -233,6 +267,19 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 			
 	update_animations()
+	
+	# Anti-clipping customizado da câmera
+	if _camera_pivot and _cam_ray:
+		var cam = _camera_pivot.get_node_or_null("Camera3D")
+		if cam:
+			# Força a atualização do raycast (necessário se o pivot moveu)
+			_cam_ray.force_raycast_update()
+			if _cam_ray.is_colliding():
+				# Move a câmera para o ponto de colisão com uma margem de segurança na normal
+				cam.global_position = _cam_ray.get_collision_point() + _cam_ray.get_collision_normal() * 0.25
+			else:
+				# Sem parede no caminho, volta para a posição original
+				cam.position = _original_cam_pos
 
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():

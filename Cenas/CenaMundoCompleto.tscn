@@ -11,11 +11,11 @@ transform = Transform3D(1.0009824, 0, 0, 0, 1.0009824, 0, 0, 0, 1.0009824, 0.458
 metadata/_edit_group_ = true
 
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_dlyin")]
-transform = Transform3D(0.52438724, 0, 0.85148, 0, 1, 0, -0.85148, 0, 0.52438724, -118.33212, 2.1929526, -52.210697)
+transform = Transform3D(0.52438724, 0, 0.85148, 0, 1, 0, -0.85148, 0, 0.52438724, -31.3675, 2.1929526, -52.860516)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=1003186009]
-transform = Transform3D(0.5243871, 0, -0.8514798, 0, 1, 0, 0.8514798, 0, 0.5243871, -5.5589256, 1.9570351, 3.353775)
+transform = Transform3D(0.5243871, 0, -0.8514798, 0, 1, 0, 0.8514798, 0, 0.5243871, -5.5589237, 2.27076, 3.3537827)
 fov = 95.69609
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=661843212 groups=["luzes_perigo"]]
