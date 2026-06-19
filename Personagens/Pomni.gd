@@ -22,6 +22,12 @@ var particulas_passos: CPUParticles3D
 var z_inicial
 var esta_correndo: bool = false
 
+# --- VARIÁVEIS DA LANTERNA ---
+var tem_lanterna: bool = false
+var lanterna_ligada: bool = false
+var ref_lanterna: Node3D = null
+var ref_spotlight: SpotLight3D = null
+
 # Variáveis para controle do tempo no double-tap
 var ultimo_click_esquerda: int = 0
 var ultimo_click_direita: int = 0
@@ -33,6 +39,11 @@ var trilho_atual: PathFollow3D = null # Guarda o carrinho que a Pomni está usan
 
 # Gravidade
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+# --- VARIÁVEIS DE ESCALADA ---
+var is_climbing: bool = false
+var escada_atual: Area3D = null
+var escada_pendente: Area3D = null
 
 # --- SISTEMA DE CURVA (Desacoplado da física) ---
 var angulo_movimento: float = 0.0  # Ângulo atual de movimento em radianos
@@ -57,6 +68,16 @@ func _ready():
 	z_inicial = global_position.z
 	safe_margin = 0.01
 	floor_block_on_wall = false
+	
+	# Busca a lanterna na mão da Pomni (adicionada pelo nosso script)
+	var skeleton = find_child("Skeleton3D", true, false)
+	if skeleton:
+		ref_lanterna = skeleton.find_child("Lanterna", true, false)
+		if ref_lanterna:
+			ref_spotlight = ref_lanterna.get_node_or_null("SpotLight3D")
+			ref_lanterna.visible = false
+			if ref_spotlight:
+				ref_spotlight.visible = false
 	
 	# Configurar pivô da câmera e o sistema anti-colisão (RayCast3D)
 	var cam = get_node_or_null("Camera3D")
@@ -204,6 +225,51 @@ func _input(event: InputEvent) -> void:
 			esta_correndo = true
 		ultimo_click_esquerda = tempo_atual
 
+	# Alternar lanterna (tecla F)
+	if event is InputEventKey and event.physical_keycode == KEY_F and event.pressed and not event.echo:
+		if tem_lanterna:
+			lanterna_ligada = not lanterna_ligada
+			if ref_spotlight:
+				ref_spotlight.visible = lanterna_ligada
+			print("Lanterna ligada: ", lanterna_ligada)
+			
+	# Atacar (Soco)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		socar()
+
+func socar() -> void:
+	# Aqui tocaria uma animação de soco. Por enquanto ativamos o hitbox.
+	print("Pomni desferiu um soco!")
+	var hitbox = find_child("HitboxSoco", true, false)
+	if hitbox:
+		# Ativa colisão rapidamente
+		var col = hitbox.find_child("CollisionShape3D", true, false)
+		if col:
+			col.disabled = false
+			# Verifica o que tem na área e aplica dano
+			var corpos = hitbox.get_overlapping_bodies()
+			for body in corpos:
+				if body.has_method("receber_dano") and body != self:
+					body.receber_dano(25)
+			
+			# Desativa logo depois (simulando a duração do soco)
+			await get_tree().create_timer(0.2).timeout
+			col.disabled = true
+
+func equipar_lanterna() -> void:
+	tem_lanterna = true
+	lanterna_ligada = true
+	if ref_lanterna:
+		ref_lanterna.visible = true
+	if ref_spotlight:
+		ref_spotlight.visible = true
+	print("Pomni equipou a lanterna!")
+	
+	# Emitimos um sinal ou chamamos um Singleton pra escurecer o mundo
+	if has_node("/root/Global"):
+		if get_node("/root/Global").has_method("ativar_modo_escuro"):
+			get_node("/root/Global").ativar_modo_escuro()
+
 # ==========================================
 # SISTEMA DE CURVA — Rotaciona apenas a câmera, nunca o CharacterBody3D
 # ==========================================
@@ -283,6 +349,8 @@ func _finalizar_curva(angulo_final: float):
 func _physics_process(delta: float) -> void:
 	if is_on_path and trilho_atual != null:
 		handle_path_movement(delta)
+	elif is_climbing:
+		handle_climbing(delta)
 	else:
 		apply_gravity(delta)
 		handle_jump()
@@ -290,19 +358,83 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 			
 	update_animations()
-	
+
 	# Anti-clipping customizado da câmera
 	if _camera_pivot and _cam_ray:
 		var cam = _camera_pivot.get_node_or_null("Camera3D")
 		if cam:
-			# Força a atualização do raycast (necessário se o pivot moveu)
 			_cam_ray.force_raycast_update()
 			if _cam_ray.is_colliding():
-				# Move a câmera para o ponto de colisão com uma margem de segurança na normal
 				cam.global_position = _cam_ray.get_collision_point() + _cam_ray.get_collision_normal() * 0.25
 			else:
-				# Sem parede no caminho, volta para a posição original
 				cam.position = _original_cam_pos
+
+func handle_climbing(delta: float) -> void:
+	# Reseta as velocidades horizontais para ela não escorregar
+	velocity.x = 0
+	velocity.z = 0
+	
+	# Entrada de Cima e Baixo para subir e descer a escada
+	var climb_dir = Input.get_axis("move_down", "move_up")
+	
+	if escada_atual:
+		var shape = null
+		for child in escada_atual.get_children():
+			if child is CollisionShape3D:
+				shape = child
+				break
+				
+		if shape and shape.shape is BoxShape3D:
+			# Limita a subida até o topo do CollisionShape3D
+			var max_y = shape.global_position.y + (shape.shape.size.y / 2.0) - 0.5
+			if global_position.y >= max_y and climb_dir > 0:
+				climb_dir = 0
+				
+	velocity.y = climb_dir * speed
+	
+	move_and_slide()
+	
+	# Se bater no chão ao descer, solta a escada (colisão natural restaurada!)
+	if is_on_floor() and climb_dir < 0:
+		sair_da_escada()
+		return
+	
+	if climb_dir != 0:
+		if animation_player.current_animation != "Walk":
+			animation_player.play("Walk", 0.2)
+	else:
+		if animation_player.current_animation != "Idle":
+			animation_player.play("Idle", 0.3)
+
+func entrar_na_escada(escada: Area3D) -> void:
+	if is_on_path:
+		escada_pendente = escada
+		return
+		
+	is_climbing = true
+	escada_atual = escada
+	velocity = Vector3.ZERO
+	
+	# Centraliza a Pomni exatamente no CollisionShape3D da escada
+	var shape = null
+	for child in escada.get_children():
+		if child is CollisionShape3D:
+			shape = child
+			break
+	if shape:
+		global_position.x = shape.global_position.x
+		global_position.z = shape.global_position.z
+		
+	print("Pomni começou a escalar a escada!")
+
+func sair_da_escada() -> void:
+	if is_on_path:
+		escada_pendente = null
+		return
+		
+	is_climbing = false
+	escada_atual = null
+	print("Pomni soltou a escada!")
 
 func apply_gravity(delta: float) -> void:
 	if na_agua:
@@ -405,7 +537,7 @@ func handle_path_movement(delta: float) -> void:
 		visual_model.rotation.y = lerp_angle(visual_model.rotation.y, rotacao_alvo, 8 * delta)
 	
 	global_position = trilho_atual.global_position
-	global_position.y += 1.0 
+	# Removemos o +1.0 para ela não flutuar
 	velocity.x = direction * current_speed
 	velocity.y = 0.0
 
@@ -444,6 +576,18 @@ func sair_do_caminho() -> void:
 	trilho_atual = null
 	# Atualiza o Z inicial para que ela assuma a nova profundidade onde o trilho terminou
 	z_inicial = global_position.z
+	
+	if escada_pendente != null:
+		var escada_temp = escada_pendente
+		escada_pendente = null
+		entrar_na_escada(escada_temp)
+	else:
+		# Se por algum motivo o evento da física falhou (comum em teletransportes ao longo de Path3D),
+		# forçamos a busca pela AreaEscada na cena!
+		var root = get_tree().get_root()
+		var area_escada = root.find_child("AreaEscada", true, false)
+		if area_escada:
+			entrar_na_escada(area_escada)
 
 func receber_dano(quantidade: float) -> void:
 	vida -= quantidade

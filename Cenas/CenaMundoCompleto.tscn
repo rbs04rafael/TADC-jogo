@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://d3ippjuve8364"]
 
-[ext_resource type="PackedScene" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.tscn" id="1_dlyin"]
-[ext_resource type="PackedScene" uid="uid://ufby7umh4kjy" path="res://Personagens/Pomni.tscn" id="2_dlyin"]
-[ext_resource type="PackedScene" uid="uid://nelvwk87iu3p" path="res://Personagens/inimigo_teste.tscn" id="3_cy3ig"]
+[ext_resource type="PackedScene" uid="uid://n1fxa5n8ma3y" path="res://Cenarios/CenarioMundoCompleto/CenarioCircoDigital.tscn" id="1_dlyin"]
+[ext_resource type="PackedScene" path="res://Personagens/Pomni.tscn" id="2_dlyin"]
 
 [node name="MainMundoCompleto" type="Node3D" unique_id=1179031640]
 
@@ -11,15 +10,12 @@ transform = Transform3D(1.0009824, 0, 0, 0, 1.0009824, 0, 0, 0, 1.0009824, 0.458
 metadata/_edit_group_ = true
 
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_dlyin")]
-transform = Transform3D(0.52438724, 0, 0.85148, 0, 1, 0, -0.85148, 0, 0.52438724, -30.325993, 2.1929526, -52.860516)
+transform = Transform3D(0.52438724, 0, 0.85148, 0, 1, 0, -0.85148, 0, 0.52438724, -110.02135, 2.9116025, -52.860516)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=1003186009]
 transform = Transform3D(0.5243871, 0, -0.8514798, 0, 1, 0, 0.8514798, 0, 0.5243871, -4.6769333, 2.1923814, 2.810608)
 fov = 95.69609
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=661843212 groups=["luzes_perigo"]]
-transform = Transform3D(0.99999994, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 0.99999994, -0.8644695, 1.4450073, 0.5869541)
-
-[node name="InimigoTeste" parent="." unique_id=2129184493 instance=ExtResource("3_cy3ig")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107.387436, 4.8102427, -54.190228)
+[node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=601256352]
+transform = Transform3D(0.9999999, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 0.9999999, -1.3526573, 1.8287773, 0.83303833)

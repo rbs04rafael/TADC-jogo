@@ -1,8 +1,9 @@
-[gd_scene format=4 uid="uid://ufby7umh4kjy"]
+[gd_scene format=4]
 
-[ext_resource type="Script" uid="uid://b7krbdvcpewqh" path="res://Personagens/Pomni.gd" id="1_5pbcl"]
-[ext_resource type="Texture2D" uid="uid://xyv4ylfwjj1d" path="res://Personagens/PomniResourses/Source/Pomni_PomniBody.png" id="2_5pbcl"]
-[ext_resource type="Texture2D" uid="uid://bebtcrhyv3qvx" path="res://Personagens/PomniResourses/Source/Pomni_Eyes.png" id="3_nepdb"]
+[ext_resource type="Script" path="res://Personagens/Pomni.gd" id="1_5pbcl"]
+[ext_resource type="Texture2D" path="res://Personagens/PomniResourses/Source/Pomni_PomniBody.png" id="2_5pbcl"]
+[ext_resource type="Texture2D" path="res://Personagens/PomniResourses/Source/Pomni_Eyes.png" id="3_nepdb"]
+[ext_resource type="PackedScene" path="res://Fase1/Lanterna.glb" id="4_nepdb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpf3c"]
 height = 1.8969727
@@ -2511,6 +2512,9 @@ _data = {
 &"Walk": SubResource("Animation_o02ug")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_nepdb"]
+size = Vector3(1.5, 1.5, 1.5)
+
 [node name="NoPomni" type="CharacterBody3D" unique_id=1781205588 groups=["jogador"]]
 axis_lock_linear_z = true
 script = ExtResource("1_5pbcl")
@@ -3211,6 +3215,26 @@ mesh = SubResource("ArrayMesh_toa8d")
 skin = SubResource("Skin_qp8a8")
 skeleton = NodePath("..")
 
+[node name="hand_R" type="BoneAttachment3D" parent="Pomni/Armature/Skeleton3D" unique_id=878579208]
+bone_name = "hand.R"
+
+[node name="Lanterna" type="Node3D" parent="Pomni/Armature/Skeleton3D/hand_R" unique_id=1232691382 instance=ExtResource("4_nepdb")]
+transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0.05, 0)
+visible = false
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Pomni/Armature/Skeleton3D/hand_R/Lanterna" unique_id=651056802]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+light_energy = 5.0
+spot_range = 15.0
+spot_angle = 35.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pomni" unique_id=1538485879]
 libraries/ = SubResource("AnimationLibrary_2k5f5")
 autoplay = &"Falling"
+
+[node name="HitboxSoco" type="Area3D" parent="." unique_id=987700850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.8)
+
+[node name="@CollisionShape3D@2" type="CollisionShape3D" parent="HitboxSoco" unique_id=766564722]
+shape = SubResource("BoxShape3D_nepdb")
+disabled = true
