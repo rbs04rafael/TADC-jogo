@@ -14,6 +14,10 @@ config/name="Trabalho_CG"
 run/main_scene="res://Cenas/Intro.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
+[autoload]
+
+Global="*res://Codigos/Global.gd"
+
 [input]
 
 move_left={

@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byh6tf4x8g3co"
-path.s3tc="res://.godot/imported/Cenario_marble_01_diff_1k.jpg-cc7e586148b823facb0e9c387b7f07ca.s3tc.ctex"
+uid="uid://cqinud3hqgywi"
+path.s3tc="res://.godot/imported/LampadaFarol_LightMat_baseColor.jpg-0cc9e8e23ef3e8e284ae62cde87f5301.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "3c26b9923f5b6c6fef011153abba16b8"
+"md5": "36c29c62a3c1ff2108e30d40234ee5d8"
 }
 
 [deps]
 
-source_file="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_diff_1k.jpg"
-dest_files=["res://.godot/imported/Cenario_marble_01_diff_1k.jpg-cc7e586148b823facb0e9c387b7f07ca.s3tc.ctex"]
+source_file="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_baseColor.jpg"
+dest_files=["res://.godot/imported/LampadaFarol_LightMat_baseColor.jpg-0cc9e8e23ef3e8e284ae62cde87f5301.s3tc.ctex"]
 
 [params]
 

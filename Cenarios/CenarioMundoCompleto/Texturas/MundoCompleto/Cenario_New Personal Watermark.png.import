@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ajilagry2yj"
-path.s3tc="res://.godot/imported/Cenario_gravelly_sand_diff_1k.jpg-78b90ad2eb80bd0bcbc5acf8f173b4c7.s3tc.ctex"
+uid="uid://dv67xgrurpnqe"
+path.s3tc="res://.godot/imported/Cenario_New Personal Watermark.png-1266b5fbfb9b0192d1b5d278756487ff.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "c8e416ad617198e50f8ccb043c9b9df4"
+"md5": "025c46fd703189aa299fc99585bcb150"
 }
 
 [deps]
 
-source_file="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_gravelly_sand_diff_1k.jpg"
-dest_files=["res://.godot/imported/Cenario_gravelly_sand_diff_1k.jpg-78b90ad2eb80bd0bcbc5acf8f173b4c7.s3tc.ctex"]
+source_file="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_New Personal Watermark.png"
+dest_files=["res://.godot/imported/Cenario_New Personal Watermark.png-1266b5fbfb9b0192d1b5d278756487ff.s3tc.ctex"]
 
 [params]
 

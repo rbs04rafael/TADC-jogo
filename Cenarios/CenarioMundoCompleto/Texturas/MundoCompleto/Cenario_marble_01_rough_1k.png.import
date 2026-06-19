@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqyxcneqjxtmi"
-path.s3tc="res://.godot/imported/Cenario_marble_01_nor_gl_1k.jpg-cc22774feec85aac908c73fdbead8aad.s3tc.ctex"
+uid="uid://0yfs5ww1j1xi"
+path.s3tc="res://.godot/imported/Cenario_marble_01_rough_1k.png-f3953cb1db209bb36db16c3e367b2be5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "47a1ba21d09902103b356333eea7c60f"
+"md5": "ebe7ae8f130db2f535281c86904b7831"
 }
 
 [deps]
 
-source_file="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/Cenario_marble_01_nor_gl_1k.jpg-cc22774feec85aac908c73fdbead8aad.s3tc.ctex"]
+source_file="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_marble_01_rough_1k.png"
+dest_files=["res://.godot/imported/Cenario_marble_01_rough_1k.png-f3953cb1db209bb36db16c3e367b2be5.s3tc.ctex"]
 
 [params]
 
@@ -25,12 +25,12 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://Cenario/Cenario_marble_01_nor_gl_1k.jpg"
+roughness/mode=0
+roughness/src_normal=""
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

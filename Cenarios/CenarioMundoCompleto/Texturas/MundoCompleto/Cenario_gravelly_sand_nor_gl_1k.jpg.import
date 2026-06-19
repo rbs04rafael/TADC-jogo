@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjqvg03i3akgx"
-path.s3tc="res://.godot/imported/Cenario_gravelly_sand_nor_gl_1k.jpg-195e79f5fd24bbc1e0475723d6eb8fab.s3tc.ctex"
+path.s3tc="res://.godot/imported/Cenario_gravelly_sand_nor_gl_1k.jpg-63a6b0ecf32ee865d3269ac88682b9ba.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_gravelly_sand_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/Cenario_gravelly_sand_nor_gl_1k.jpg-195e79f5fd24bbc1e0475723d6eb8fab.s3tc.ctex"]
+source_file="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_gravelly_sand_nor_gl_1k.jpg"
+dest_files=["res://.godot/imported/Cenario_gravelly_sand_nor_gl_1k.jpg-63a6b0ecf32ee865d3269ac88682b9ba.s3tc.ctex"]
 
 [params]
 

@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0yfs5ww1j1xi"
-path.s3tc="res://.godot/imported/Cenario_marble_01_rough_1k.png-eed2301e39080e246d8eb775beb09983.s3tc.ctex"
+uid="uid://lpfw0gusm20a"
+path.s3tc="res://.godot/imported/Cenario_gravelly_sand_rough_1k.png-06109ff8cd12c1f92245976295948d09.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ebe7ae8f130db2f535281c86904b7831"
+"md5": "35f94195d7a2c32ead1eb5042c6c025a"
 }
 
 [deps]
 
-source_file="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_rough_1k.png"
-dest_files=["res://.godot/imported/Cenario_marble_01_rough_1k.png-eed2301e39080e246d8eb775beb09983.s3tc.ctex"]
+source_file="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_gravelly_sand_rough_1k.png"
+dest_files=["res://.godot/imported/Cenario_gravelly_sand_rough_1k.png-06109ff8cd12c1f92245976295948d09.s3tc.ctex"]
 
 [params]
 

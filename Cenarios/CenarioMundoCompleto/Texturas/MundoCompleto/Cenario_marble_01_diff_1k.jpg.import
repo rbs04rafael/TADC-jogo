@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dv67xgrurpnqe"
-path.s3tc="res://.godot/imported/Cenario_New Personal Watermark.png-1fabc569fbe896871ccc7ec35f0d1108.s3tc.ctex"
+uid="uid://byh6tf4x8g3co"
+path.s3tc="res://.godot/imported/Cenario_marble_01_diff_1k.jpg-718aeebca94b207853de51a56b05b08f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "025c46fd703189aa299fc99585bcb150"
+"md5": "3c26b9923f5b6c6fef011153abba16b8"
 }
 
 [deps]
 
-source_file="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_New Personal Watermark.png"
-dest_files=["res://.godot/imported/Cenario_New Personal Watermark.png-1fabc569fbe896871ccc7ec35f0d1108.s3tc.ctex"]
+source_file="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_marble_01_diff_1k.jpg"
+dest_files=["res://.godot/imported/Cenario_marble_01_diff_1k.jpg-718aeebca94b207853de51a56b05b08f.s3tc.ctex"]
 
 [params]
 

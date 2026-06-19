@@ -48,13 +48,27 @@ func _process(delta):
 				player_inside.receber_dano(damage_amount)
 			damage_timer = 0.0
 
+func obter_altura_superficie() -> float:
+	var y_max = global_position.y
+	for child in get_children():
+		if child is CollisionShape3D and child.shape is BoxShape3D:
+			var top = child.global_position.y + (child.shape.size.y / 2.0)
+			if top > y_max:
+				y_max = top
+	return y_max
+
 func _on_body_entered(body):
 	if body.has_method("receber_dano"):
 		player_inside = body
-		if player_inside.has_method("receber_dano"):
-			player_inside.receber_dano(damage_amount)
+		player_inside.receber_dano(damage_amount)
 		damage_timer = 0.0
+		
+	if body.has_method("entrar_na_agua"):
+		body.entrar_na_agua(obter_altura_superficie())
 
 func _on_body_exited(body):
 	if body == player_inside:
 		player_inside = null
+		
+	if body.has_method("sair_da_agua"):
+		body.sair_da_agua()

@@ -43,6 +43,10 @@ var _camera_pivot: Node3D = null
 var _original_cam_pos: Vector3
 var _cam_ray: RayCast3D
 
+# --- VARIÁVEIS DA ÁGUA ---
+var na_agua: bool = false
+var altura_agua: float = 0.0
+
 # --- REFERÊNCIAS DE NÓS ---
 @onready var animation_player: AnimationPlayer = $Pomni/AnimationPlayer
 @onready var visual_model: Node3D = $Pomni
@@ -140,6 +144,25 @@ func _ready():
 	# Posição nos pés da personagem
 	particulas_passos.position = Vector3(0, -0.8, 0)
 	add_child(particulas_passos)
+	
+	# --- SISTEMA DE TELEPORTE ENTRE PORTAS ---
+	if has_node("/root/Global"):
+		var global = get_node("/root/Global")
+		if global.porta_destino_nome != "":
+			var nome_porta = global.porta_destino_nome
+			global.porta_destino_nome = "" # Reseta para não teleportar repetidamente
+			
+			# O get_tree().get_root() retorna a Window raiz, get_child(1) ou semelhante é a cena em si
+			# find_child deve procurar em toda a árvore da cena
+			var root = get_tree().get_root()
+			var porta = root.find_child(nome_porta, true, false)
+			if porta:
+				# Teleporta a Pomni para a posição da porta + um deslocamento para a frente dela
+				# Usa -Z da base global da porta normalizada para garantir que o 'Scale' da porta não empurre a Pomni mais longe do que o esperado
+				global_position = porta.global_position + (porta.global_transform.basis.z.normalized() * 1.5)
+				
+				# Faz a Pomni olhar para as costas da porta (para frente, afastando-se dela)
+				visual_model.global_rotation.y = porta.global_rotation.y
 
 func _process(delta: float) -> void:
 	if regenerando and vida < vida_maxima:
@@ -282,21 +305,42 @@ func _physics_process(delta: float) -> void:
 				cam.position = _original_cam_pos
 
 func apply_gravity(delta: float) -> void:
-	if not is_on_floor():
+	if na_agua:
+		# Lógica de Flutuação (Empuxo)
+		var profundidade = altura_agua - global_position.y
+		# Queremos que ela afunde até 1.2 metros (mais ou menos o peito/pescoço)
+		var profundidade_alvo = 1.2
+		var empuxo = (profundidade - profundidade_alvo) * 20.0
+		
+		velocity.y += empuxo * delta
+		# Amortecimento da água (arrasto vertical)
+		velocity.y = lerp(velocity.y, 0.0, 5.0 * delta)
+	elif not is_on_floor():
 		velocity.y -= gravity * delta
 
+func entrar_na_agua(y_superficie: float):
+	na_agua = true
+	altura_agua = y_superficie
+
+func sair_da_agua():
+	na_agua = false
+
 func handle_jump() -> void:
-	if is_on_floor():
+	if is_on_floor() or na_agua:
 		pulos_dados = 0
 	elif pulos_dados == 0:
 		pulos_dados = 1 # Gastar o primeiro pulo se cair de uma borda
 		
 	if Input.is_action_just_pressed("move_up") and pulos_dados < max_pulos:
-		velocity.y = jump_velocity
+		# Pulo na água é mais fraco
+		if na_agua:
+			velocity.y = jump_velocity * 0.7
+		else:
+			velocity.y = jump_velocity
 		pulos_dados += 1
 		
-		# Reinicia a animação se for o segundo pulo
-		if pulos_dados > 1:
+		# Reinicia a animação se for o segundo pulo (e não estiver nadando)
+		if pulos_dados > 1 and not na_agua:
 			animation_player.stop()
 			animation_player.play("Jumping", 0.1)
 
@@ -311,14 +355,22 @@ func handle_movement(delta: float) -> void:
 	
 	var current_speed = run_speed if esta_correndo else speed
 	
-	# Calcula a direção de movimento baseada no ângulo armazenado
-	var dir_x = cos(angulo_movimento) * input_axis
-	var dir_z = -sin(angulo_movimento) * input_axis
+	# Se estiver na água, fica lento e nadando com arrasto
+	if na_agua:
+		current_speed *= 0.5
 	
-	if input_axis != 0:
-		# Aplica velocidade diretamente para evitar que move_and_slide absorva micro-movimentos
-		velocity.x = dir_x * current_speed
-		velocity.z = dir_z * current_speed
+	# Calcula a direção de movimento baseada no ângulo armazenado
+	var input_dir: Vector2
+	input_dir.x = input_axis
+	
+	var direction = Vector3(input_dir.x, 0, 0)
+	direction = direction.rotated(Vector3.UP, angulo_movimento)
+	
+	if direction:
+		# Na água, ela acelera e desacelera com mais inércia (arrasto do fluido)
+		var accel = 2.0 if na_agua else 10.0
+		velocity.x = move_toward(velocity.x, direction.x * current_speed, accel * current_speed * delta)
+		velocity.z = move_toward(velocity.z, direction.z * current_speed, accel * current_speed * delta)
 		
 		# Rotação visual do modelo baseada na direção de input + ângulo da curva (absoluto/global)
 		var rotacao_alvo = angulo_movimento + PI/2
@@ -326,8 +378,10 @@ func handle_movement(delta: float) -> void:
 			rotacao_alvo = angulo_movimento - PI/2
 		visual_model.global_rotation.y = lerp_angle(visual_model.global_rotation.y, rotacao_alvo, 8 * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, friction * delta)
-		velocity.z = move_toward(velocity.z, 0, friction * delta)
+		# Desaceleração mais suave na água (flutuando/derrapando levemente no líquido)
+		var deccel = 2.0 if na_agua else 10.0
+		velocity.x = move_toward(velocity.x, 0, deccel * current_speed * delta)
+		velocity.z = move_toward(velocity.z, 0, deccel * current_speed * delta)
 
 func handle_path_movement(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")

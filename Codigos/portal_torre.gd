@@ -11,8 +11,10 @@ func _physics_process(delta: float) -> void:
 		var pos_pomni_2d = Vector2(pomni.global_position.x, pomni.global_position.z)
 		
 		if pos_portal_2d.distance_to(pos_pomni_2d) < 1.4:
-			print("Distância horizontal atingida! Teletransportando Pomni...")
-			get_tree().change_scene_to_file(cena_destino)
+			# Checagem extra de ALTURA (eixo Y) para não pegar a Pomni quando ela estiver lá no topo da torre!
+			if abs(global_position.y - pomni.global_position.y) < 3.0:
+				print("Distância atingida e mesma altura! Teletransportando Pomni...")
+				get_tree().change_scene_to_file(cena_destino)
 
 func _on_body_entered(body: Node3D) -> void:
 	# O terminal vai escrever o nome do que quer que toque na área
