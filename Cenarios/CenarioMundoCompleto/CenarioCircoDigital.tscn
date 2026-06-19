@@ -15,7 +15,8 @@
 [ext_resource type="Shader" uid="uid://deb4jo05ac0jl" path="res://Cenarios/CenarioMundoCompleto/Shaders/CenarioCircoDigital.gdshader" id="13_6txre"]
 [ext_resource type="Texture2D" uid="uid://dqyxcneqjxtmi" path="res://Cenarios/CenarioMundoCompleto/Texturas/Cenario_marble_01_nor_gl_1k.jpg" id="13_jb8ss"]
 [ext_resource type="Script" uid="uid://lhlp1bafc6oj" path="res://Codigos/portal_torre.gd" id="14_0mo70"]
-[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/Farol.tscn" id="ExtResource_farol"]
+[ext_resource type="Script" uid="uid://ddpc216yks1l4" path="res://Codigos/agua_toxica.gd" id="ExtResource_agua_toxica"]
+[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/farol.tscn" id="ExtResource_farol"]
 [ext_resource type="PackedScene" uid="uid://be7b5jwa47868" path="res://Personagens/Morcego/morcego.tscn" id="ExtResource_morcego"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bsbx7"]
@@ -6548,6 +6549,13 @@ _data = {
 }
 point_count = 3
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jb8ss"]
+albedo_color = Color(0.6, 0.6, 0.6, 1)
+roughness = 0.9
+emission_enabled = true
+emission = Color(0.81, 0.81, 0.81, 1)
+emission_energy_multiplier = 0.67
+
 [node name="Node3D" type="Node3D" unique_id=355003223]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1571548630]
@@ -7062,281 +7070,701 @@ mesh = SubResource("ArrayMesh_giqya")
 transform = Transform3D(-1.2728202, 0, 0.1556965, 0, 1.2823074, 0, -0.1556965, 0, -1.2728202, -104.78361, 2.6787372, -76.67142)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_093" unique_id=1784288345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_095" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=576253491]
 transform = Transform3D(1.1640849, -0.045724843, 0.79943424, 0.10874267, 1.4065516, -0.07789428, -0.79332274, 0.12570491, 1.1623756, -103.835434, 3.5566864, -37.789326)
 mesh = SubResource("ArrayMesh_xbrt1")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_095" unique_id=1036647881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_108" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1966161968]
 transform = Transform3D(1.4954361, -0.07629641, -0.23805824, 0.08341188, 1.5133891, 0.038943935, 0.23565938, -0.05150754, 1.4968743, -102.75946, 3.2642465, -39.16942)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_108" unique_id=1388969444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_121" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=183510888]
 transform = Transform3D(-0.78417873, -0.20500839, 1.1720855, 0.04719743, 1.3972689, 0.2759723, -1.188943, 0.19068259, -0.762105, -107.91694, 2.8386593, -36.174564)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_121" unique_id=1716873521]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_094" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1558957030]
 transform = Transform3D(-0.24199322, 0.023153616, 1.1346449, 0.0419614, 1.1595424, -0.014712291, -1.1341051, 0.037962094, -0.24265276, -109.47284, 2.3898997, -76.47837)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_094" unique_id=1363485167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_097" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=872614898]
 transform = Transform3D(0.8152294, 0, -1.0596266, 0, 1.3369396, 0, 1.0596266, 0, 0.8152294, -102.235435, 2.4544673, -82.793335)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_097" unique_id=1286415295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_099" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1330192585]
 transform = Transform3D(0.52651286, 0, -1.1692291, 0, 1.2823074, 0, 1.1692291, 0, 0.52651286, -109.10396, 2.6502032, -57.032066)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_099" unique_id=1245308146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_100" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1499810724]
 transform = Transform3D(1.0803972, -0.1041835, -0.4103697, 0.09808339, 1.1557066, -0.03517934, 0.41187027, -0.0019327784, 1.0848387, -108.91707, 2.4205642, -73.191925)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_100" unique_id=1601585982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_103" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=2092531883]
 transform = Transform3D(-0.86761284, 0.041160014, 0.7694607, 0.041961405, 1.1595424, -0.014712294, -0.7694174, 0.016824514, -0.86846393, -102.722916, 2.872787, -65.765564)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_103" unique_id=1170961160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_115" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=841888225]
 transform = Transform3D(1.2438626, 0, -0.31163743, 0, 1.2823074, 0, 0.31163743, 0, 1.2438626, -102.10048, 2.8334177, -66.99139)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_115" unique_id=1751633084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_130" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1193194389]
 transform = Transform3D(0.6148925, 0, 1.2855569, 0, 1.4250435, 0, -1.2855569, 0, 0.6148925, -97.77216, 2.8403032, -73.82105)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_130" unique_id=1378861314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_131" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=504146589]
 transform = Transform3D(-0.9901437, 0.102186404, 0.59639686, 0.09808341, 1.1557066, -0.03517932, -0.5970854, 0.02039311, -0.9947809, -98.16589, 2.5912664, -69.900566)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_131" unique_id=1386501947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_132" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1262686861]
 transform = Transform3D(0.0138053, -0.04365716, -0.76905334, 0.059294455, 0.76695484, -0.042473637, 0.76800585, -0.058428556, 0.017103337, -98.62086, 3.3617406, -72.99923)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_132" unique_id=1559278929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_133" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=17504411]
 transform = Transform3D(-1.243445, 0, 0.49117398, 0, 1.3369396, 0, -0.49117398, 0, -1.243445, -105.775604, 2.8212867, -67.41119)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_133" unique_id=1899885079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_134" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1603986183]
 transform = Transform3D(0.16779318, 0.020704713, 1.1480125, 0.098083444, 1.1557066, -0.035179336, -1.1440021, 0.102123775, 0.16536523, -103.237785, 2.8541856, -64.32327)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_134" unique_id=1033058985]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_135" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=337736290]
 transform = Transform3D(-0.5735036, -0.00450775, 1.403529, 0.08341186, 1.5133891, 0.038943943, -1.4010559, 0.09194481, -0.57219744, -106.42447, 2.3799071, -83.806915)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_135" unique_id=2108192656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_138" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=2141423674]
 transform = Transform3D(-0.49098527, 0.28768444, 1.1491231, 0.35328278, 1.2228723, -0.15520073, -1.1306801, 0.25716457, -0.54748666, -93.62344, 2.3386035, -72.97224)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_138" unique_id=1568422122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_139" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1757274429]
 transform = Transform3D(-1.104806, 0.32403484, -0.14464125, 0.3172364, 1.1138515, 0.0721928, 0.1589992, 0.02919142, -1.1490793, -94.61969, 1.3116348, -67.17423)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_139" unique_id=1919631071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_140" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=12132626]
 transform = Transform3D(1.2762177, 0.13686022, -0.5906075, -0.16699667, 1.4025358, -0.035849117, 0.58280367, 0.10218772, 1.2830343, -98.54752, 3.4684083, -68.3933)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_140" unique_id=1515602797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_142" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1932854478]
 transform = Transform3D(0.8361373, 0.022656478, -1.3663195, 0.11924602, 1.5944796, 0.09941402, 1.3612946, -0.15358855, 0.8305154, -100.997856, 1.2309928, -75.09536)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_142" unique_id=1312622958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_144" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=2112058462]
 transform = Transform3D(-0.15208767, 0.19861348, -1.1331099, 0.06646937, 1.142577, 0.19135132, 1.1484628, -0.039826903, -0.16112933, -99.14375, 2.44225, -64.07064)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_144" unique_id=2109270278]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_146" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=889733235]
 transform = Transform3D(1.124173, 0.18161796, 0.22308214, -0.16083166, 1.1429121, -0.120003924, -0.23850344, 0.08533865, 1.1324086, -104.0524, 2.3557153, -57.966473)
 mesh = SubResource("ArrayMesh_82llq")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_146" unique_id=1310502768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_148" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=941105010]
 transform = Transform3D(-0.61038643, 0.26932475, -1.2592227, 0.047197443, 1.397269, 0.27597228, 1.2868372, 0.07650126, -0.6074099, -105.60265, 2.5764365, -57.53602)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_148" unique_id=1736147275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_149" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1772322603]
 transform = Transform3D(0.98776567, 0.11818273, -0.597384, -0.12301319, 1.153589, 0.024818353, 0.59640807, 0.042202365, 0.994501, -105.243004, 2.4806628, -60.7812)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_149" unique_id=1737071009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_150" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=571924730]
 transform = Transform3D(0.0015832869, 0.18752049, 0.7472437, 0.101977274, 0.7406192, -0.1860741, -0.7636345, 0.09929256, -0.023299405, -111.90001, 2.983789, -59.75321)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_150" unique_id=1680255502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_153" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=143038852]
 transform = Transform3D(0.57175267, 0.29091883, -1.3737854, -0.10181666, 1.4879766, 0.27272573, 1.400555, -0.010590674, 0.5806509, -97.06908, 1.8051412, -68.322174)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_153" unique_id=1722790157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_155" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1837756082]
 transform = Transform3D(-1.1590531, 0.042403568, 0.03624473, 0.041961405, 1.1595424, -0.014712295, -0.036755733, -0.013384627, -1.1597352, -63.614746, 2.7960885, -86.98221)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_155" unique_id=1475262132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_156" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=527236132]
 transform = Transform3D(1.2613175, 0, 0.23106454, 0, 1.2823074, 0, -0.23106454, 0, 1.2613175, -62.430916, 2.6967804, -86.28324)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_156" unique_id=2086435192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_157" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1340452126]
 transform = Transform3D(0.44505936, -0.10842748, -1.3365797, 0.10874265, 1.4065516, -0.07789427, 1.336554, -0.07833239, 0.4514054, -74.04364, 3.5566864, -84.82325)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_157" unique_id=1613684788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_158" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=7616446]
 transform = Transform3D(-0.61895365, 0, 1.1230356, 0, 1.2823074, 0, -1.1230356, 0, -0.61895365, -83.76045, 2.321546, -80.2024)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_158" unique_id=1266851611]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_160" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=247864911]
 transform = Transform3D(0.23714386, -0.05466261, -1.1345884, 0.09808339, 1.1557066, -0.035179343, 1.1316617, -0.08871267, 0.24080622, -88.62983, 2.9774594, -81.07386)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_160" unique_id=1324990274]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_161" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1103581472]
 transform = Transform3D(0.5529536, -0.013049938, 0.5362943, 0.059294447, 0.76695484, -0.042473644, -0.533166, 0.071760304, 0.5514744, -90.588905, 3.1127267, -78.63035)
 mesh = SubResource("ArrayMesh_xbrt1")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_161" unique_id=1388910595]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_162" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1229436813]
 transform = Transform3D(0.4960076, -0.14413571, -1.2331297, 0.051930934, 1.3291458, -0.13447022, 1.2404383, 0.001990124, 0.49871475, -85.97197, 1.8848672, -77.378204)
 mesh = SubResource("ArrayMesh_qc6ai")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_162" unique_id=1881072476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_163" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1806864085]
 transform = Transform3D(-0.96954507, 0.02425716, -0.6371105, -0.008160111, 1.1589874, 0.056544892, 0.63751984, 0.051725253, -0.9681987, -80.69407, 2.449352, -81.405106)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_163" unique_id=1282072362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_164" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=552104113]
 transform = Transform3D(-1.2994215, 0.0915836, -0.77584654, 0.08341188, 1.5133891, 0.038943913, 0.7767676, -0.009306405, -1.3020625, -63.194042, 2.169027, -82.312805)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_164" unique_id=1711657634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_165" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=70248957]
 transform = Transform3D(0.6666711, -0.11598953, 0.9426621, -0.0654748, 1.1433564, 0.1869891, -0.94751173, -0.1606185, 0.65033764, -92.44278, 2.051591, -83.33647)
 mesh = SubResource("ArrayMesh_82llq")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_165" unique_id=1545809705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_166" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=413281353]
 transform = Transform3D(-0.48937672, 0.040321305, -1.1845661, 0.23851255, 1.2586988, -0.05569137, 1.161006, -0.24158633, -0.4878666, -95.79081, 2.9128578, -78.136566)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_166" unique_id=1438335588]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_167" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1103153302]
 transform = Transform3D(0.64588004, -0.049775053, -0.4847974, 0.13545549, 0.79150414, 0.09919782, 0.46814302, -0.160346, 0.640155, -89.04869, 2.6569667, -85.52729)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_167" unique_id=1396029717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_170" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=18691016]
 transform = Transform3D(0.16265394, -0.024608528, -1.2717117, 0.25181252, 1.2573148, 0.007877273, 1.2467746, -0.25073093, 0.16431624, -77.44636, 2.8217113, -86.25771)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_170" unique_id=1259356807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_171" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1509056394]
 transform = Transform3D(0.9285083, 0.021634968, 0.6956437, -0.036462266, 1.1597532, 0.012598821, -0.6950243, -0.031939868, 0.9286749, -83.695, 2.9492278, -84.328354)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_171" unique_id=1566392372]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_172" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=591105045]
 transform = Transform3D(-0.940364, -0.05630277, 0.67754084, -0.13364041, 1.1491555, -0.089987144, -0.66661227, -0.15095508, -0.93774015, -71.031746, 2.8197005, -88.59839)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_172" unique_id=1693034413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_173" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=2016309826]
 transform = Transform3D(0.25482202, -0.093974076, 1.3090615, -0.06929253, 1.3306847, 0.10901483, -1.3105998, -0.08862596, 0.24875923, -75.119446, 2.8724353, -87.724144)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_173" unique_id=1720274598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_174" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=288832049]
 transform = Transform3D(1.3637085, 0.03532319, -0.4120688, 0.047197446, 1.3972689, 0.2759723, 0.41087812, -0.27774188, 1.3359596, -57.846798, 2.3834307, -83.95352)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_174" unique_id=2094681767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_175" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=580808362]
 transform = Transform3D(-0.23602028, -0.049587686, 1.1350557, -0.12301318, 1.153589, 0.024818346, -1.1294593, -0.115279034, -0.2398928, -72.641365, 2.742886, -85.36756)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_175" unique_id=1390514771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_176" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1907845156]
 transform = Transform3D(-0.560233, -0.05500774, -0.5259778, 0.101977274, 0.7406192, -0.18607406, 0.5189211, -0.20493189, -0.5312846, -70.739784, 3.2460113, -87.92356)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_176" unique_id=1213697669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_177" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1243113932]
 transform = Transform3D(-0.5240997, 0.008038472, 1.2299033, 0.015667856, 1.3368464, -0.002060878, -1.2298298, 0.013605583, -0.5241573, -82.38526, 2.875527, -86.511)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_177" unique_id=1635853850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_178" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=449366628]
 transform = Transform3D(0.6845827, -0.024368146, 0.49965328, 0.076172754, 0.8420759, -0.06329735, -0.4944137, 0.09599499, 0.6820856, -80.17548, 3.0047646, -85.26014)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_178" unique_id=1328947708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_179" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1140820467]
 transform = Transform3D(0.6543025, -0.0336335, 1.3673253, -0.080455594, 1.5121565, 0.075696275, -1.3653705, -0.10522267, 0.6507788, -88.1734, 2.8990166, -83.80481)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_179" unique_id=1499364077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_048" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=579249291]
 transform = Transform3D(-0.44897732, 0.06880543, 1.3507164, 0.18317014, 1.4131788, -0.01110163, -1.3400065, 0.17011864, -0.45408323, -23.629444, 1.9377577, -28.512922)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_048" unique_id=1597080086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_096" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=859286580]
 transform = Transform3D(0.78550816, 0.022885403, 0.35669008, -0.03274934, 0.86221796, 0.016800778, -0.35592, -0.028827831, 0.7856619, -25.55422, 2.6306558, -33.87262)
 mesh = SubResource("ArrayMesh_82llq")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_096" unique_id=1816508609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_012" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1050262172]
 transform = Transform3D(-0.9647303, 0.04307496, 0.64339393, 0.041961413, 1.1595424, -0.014712281, -0.6434675, 0.011034467, -0.96557945, -17.588741, 1.8654199, -48.661983)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_012" unique_id=1483381588]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_014" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=2026028546]
 transform = Transform3D(1.3368411, 0, 0.016224269, 0, 1.3369396, 0, -0.016224269, 0, 1.3368411, -15.657148, 1.7479689, -52.81591)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_014" unique_id=1462591522]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_019" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1160191491]
 transform = Transform3D(1.1930349, 0, -0.47008568, 0, 1.2823074, 0, 0.47008568, 0, 1.1930349, -17.693737, 1.8920958, -47.286465)
 mesh = SubResource("ArrayMesh_s4vs7")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_019" unique_id=1629843708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_021" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=514709888]
 transform = Transform3D(1.0612749, -0.07597326, 0.46307626, 0.09808346, 1.1557066, -0.035179313, -0.45890218, 0.071316294, 1.063409, -17.953354, 1.6666023, -52.979355)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_021" unique_id=1158096271]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_022" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1026915688]
 transform = Transform3D(-1.2366669, 0.057902474, -0.68086845, 0.108742744, 1.4065516, -0.077894256, 0.67461807, -0.120581105, -1.2355688, -17.316221, 2.5405016, -55.63447)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_022" unique_id=2021390649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_023" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=416132989]
 transform = Transform3D(-0.87404776, 0.0219498, -0.76293814, 0.041961424, 1.1595424, -0.014712289, 0.76209944, -0.038670648, -0.8741995, -20.928877, 1.5014777, -67.658005)
 mesh = SubResource("ArrayMesh_82llq")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_023" unique_id=1473785577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_024" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1372709287]
 transform = Transform3D(1.3250577, 0, 0.17784715, 0, 1.3369396, 0, -0.17784715, 0, 1.3250577, -20.67002, 1.5532866, -63.08426)
 mesh = SubResource("ArrayMesh_qc6ai")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_024" unique_id=1447984252]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_025" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=99716517]
 transform = Transform3D(0.4681384, 0, 1.1938002, 0, 1.2823074, 0, -1.1938002, 0, 0.4681384, -21.480993, 1.5119019, -68.91707)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_025" unique_id=1799382081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_026" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=401316584]
 transform = Transform3D(-1.1131536, 0.10393302, 0.31080988, 0.09808349, 1.1557066, -0.035179332, -0.31270513, -0.0074756267, -1.1174414, -18.745321, 1.311134, -62.974552)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_026" unique_id=1036618018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_027" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1384323144]
 transform = Transform3D(-0.49953073, -0.034547728, -1.3211946, 0.108742744, 1.4065516, -0.07789427, 1.3171651, -0.12922443, -0.49462813, -17.876616, 2.3927672, -61.38317)
 mesh = SubResource("ArrayMesh_xbrt1")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_027" unique_id=1788178657]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_028" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=181000626]
 transform = Transform3D(0.7850177, -0.030398875, -0.1568983, 0.028969578, 0.80053216, -0.0101571595, 0.15716851, 0.0042793476, 0.78554034, -26.296242, 1.8945372, -77.22717)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_028" unique_id=1958636809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_029" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=593640717]
 transform = Transform3D(-1.3339758, 0, -0.08897142, 0, 1.3369396, 0, 0.08897142, 0, -1.3339758, -22.54481, 1.639921, -70.8035)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_029" unique_id=1306356601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_030" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1232522281]
 transform = Transform3D(-1.4153918, 0, -0.16557579, 0, 1.4250435, 0, 0.16557579, 0, -1.4153918, -28.004232, 1.9067073, -77.926765)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_030" unique_id=2135384841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_031" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=687053842]
 transform = Transform3D(-1.0347207, 0.07197847, -0.5202768, 0.098083444, 1.1557066, -0.03517932, 0.51599264, -0.07534619, -1.0366244, -23.158558, 1.6550859, -71.91489)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_031" unique_id=2051593196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_032" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=1407337581]
 transform = Transform3D(0.6422718, -0.026137087, 0.42466843, 0.059294492, 0.76695484, -0.042473644, -0.42132008, 0.06809332, 0.64139867, -27.507261, 2.3564396, -76.854996)
 mesh = SubResource("ArrayMesh_xbrt1")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_032" unique_id=1426642810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_033" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=482382784]
 transform = Transform3D(-0.6461466, 0, -1.1704284, 0, 1.3369396, 0, 1.1704283, 0, -0.6461466, -24.138172, 1.7479689, -66.34371)
 mesh = SubResource("ArrayMesh_qc6ai")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_033" unique_id=2137434365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_034" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=2043653051]
 transform = Transform3D(-1.1131536, 0.10393302, 0.31080988, 0.09808349, 1.1557066, -0.035179332, -0.31270513, -0.0074756267, -1.1174414, -21.964417, 1.6666023, -63.370556)
 mesh = SubResource("ArrayMesh_1y4ry")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_034" unique_id=1652913117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_035" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=444526942]
 transform = Transform3D(-1.464895, 0.070843145, 0.3845594, 0.083411835, 1.5133891, 0.03894396, -0.3820304, 0.05878274, -1.4660895, -19.01165, 1.6259453, -55.200974)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_035" unique_id=1277206567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Circle_090" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=520532942]
 transform = Transform3D(1.4342372, -0.11357518, -0.28149983, 0.11240587, 1.4615933, -0.016994664, 0.28196883, -0.004957583, 1.4386268, -34.341587, 2.158571, -75.54753)
 mesh = SubResource("ArrayMesh_82llq")
 
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_090" unique_id=1188227444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
+
 [node name="Circle_055" type="MeshInstance3D" parent="The Grounds/ArvoresLago" unique_id=532406797]
 transform = Transform3D(-0.7865486, 0.4053786, -1.1170312, 0.21340993, 1.3659686, 0.34544894, 1.168994, 0.023386532, -0.8146506, -42.765114, 2.6268208, -87.016556)
 mesh = SubResource("ArrayMesh_1y4ry")
+
+[node name="LuzArvore" type="OmniLight3D" parent="The Grounds/ArvoresLago/Circle_055" unique_id=1634732926]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0)
+light_color = Color(0.7983094, 0.9947768, 0.5613247, 1)
+light_energy = 3.376
+light_size = 0.02
 
 [node name="Boat Control" type="Node3D" parent="The Grounds" unique_id=1132308953]
 transform = Transform3D(-6.1910324, -1.5690672, 0.20708719, 0.24424802, -0.12111525, 6.384308, 1.5637147, -6.1933064, -0.17731574, -86.910324, 3.3321118, -61.530262)
@@ -8342,6 +8770,14 @@ light_indirect_energy = 1.821
 light_volumetric_fog_energy = 2.425
 light_specular = 3.668
 
+[node name="OmniLight3D6" type="OmniLight3D" parent="The Grounds" unique_id=510151538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.267725, 4.1000857, -89.85953)
+light_color = Color(0.9024171, 0.88530695, 0.52484864, 1)
+light_energy = 2.336
+light_indirect_energy = 1.821
+light_volumetric_fog_energy = 2.425
+light_specular = 3.668
+
 [node name="OmniLight3D2" type="OmniLight3D" parent="The Grounds" unique_id=1374083325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5838313, 3.3882587, -47.208736)
 light_color = Color(0.9024171, 0.88530695, 0.52484864, 1)
@@ -8373,10 +8809,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.202545, 0.92658377, -50.6
 material_override = ExtResource("9_qsfl4")
 mesh = SubResource("PlaneMesh_bsbx7")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="The Grounds/AguaLago" unique_id=1355663059]
+[node name="StaticBody3D" type="StaticBody3D" parent="The Grounds/AguaLago" unique_id=9999991]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="The Grounds/AguaLago/StaticBody3D" unique_id=1285171630]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7005386, -1.6286471, -1.9431496)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="The Grounds/AguaLago/StaticBody3D" unique_id=9999992]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7005386, -2.122865, -1.9431496)
+shape = SubResource("BoxShape3D_6txre")
+debug_color = Color(0.9809559, 0, 0.3792702, 0.41960785)
+
+[node name="Area3D" type="Area3D" parent="The Grounds/AguaLago" unique_id=1355663059]
+script = ExtResource("ExtResource_agua_toxica")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="The Grounds/AguaLago/Area3D" unique_id=1285171630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7005386, -1.5, -1.9431496)
 shape = SubResource("BoxShape3D_6txre")
 debug_color = Color(0.9809559, 0, 0.3792702, 0.41960785)
 
@@ -8476,6 +8920,14 @@ curve = SubResource("Curve3D_bbt2m")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="CaminhoPedraLago" unique_id=1663217860]
 transform = Transform3D(-0.741081, -0.2235437, -0.6330766, -1.4900749e-08, 0.9429364, -0.33295262, 0.6713747, -0.24675336, -0.6988066, -68.75321, -9.352523, 48.87764)
+
+[node name="varanda_farol" type="CSGCylinder3D" parent="." unique_id=1371712616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.820637, 17.871618, -86.92254)
+use_collision = true
+radius = 3.468
+height = 0.288
+sides = 34
+material = SubResource("StandardMaterial3D_jb8ss")
 
 [connection signal="body_entered" from="CaminhoEntrandoNoFarol/Area3D" to="CaminhoEntrandoNoFarol/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="Torre/Porta/PortalTorre" to="Torre/Porta/PortalTorre" method="_on_body_entered"]

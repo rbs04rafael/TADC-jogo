@@ -63,19 +63,8 @@ func _input(event):
 func iniciar_video():
 	if state == 0:
 		state = 1
-		label.visible = false
-		if background:
-			background.visible = false
-		
-		# Define um fundo preto por trás do vídeo
-		var color_rect = ColorRect.new()
-		color_rect.color = Color(0, 0, 0)
-		color_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-		canvas.add_child(color_rect)
-		canvas.move_child(color_rect, 0)
-		
-		video_player.visible = true
-		video_player.play()
+		# Pulando o vídeo temporariamente para evitar o travamento da placa de vídeo!
+		get_tree().change_scene_to_file("res://Cenas/CenaMundoCompleto.tscn")
 
 func _on_video_finished():
 	# Quando o vídeo acabar, inicia o jogo automaticamente
