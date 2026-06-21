@@ -4,12 +4,15 @@ var cutscene_ativa = false
 
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
+	# Garante que a área do gatilho chegue até o chão para que a Pomni consiga tocar ao andar
+	if global_position.y > 1.0:
+		global_position.y = 1.0
 
 func _on_body_entered(body: Node3D):
 	if cutscene_ativa:
 		return
 		
-	if "Pomni" in body.name or body.is_in_group("jogador"):
+	if "Pomni" in body.name or body.is_in_group("jogador") or body.has_method("entrar_no_caminho"):
 		# Se ela estiver escalando ainda ao tocar no chão, solte a escada!
 		if "is_climbing" in body and body.is_climbing:
 			if body.has_method("sair_da_escada"):
@@ -21,6 +24,15 @@ func _on_body_entered(body: Node3D):
 		# Procura o Seguidor globalmente, já que ele pode estar em CaminhoParque ou CaminhoParque2
 		var cena_raiz = get_tree().get_root()
 		var seguidor = cena_raiz.find_child("Seguidor", true, false)
+		
+		# Se o usuário recriou o CaminhoParque e esqueceu do Seguidor (PathFollow3D), criamos dinamicamente!
+		if not seguidor:
+			var caminho = cena_raiz.find_child("CaminhoParque", true, false)
+			if caminho:
+				seguidor = PathFollow3D.new()
+				seguidor.name = "Seguidor"
+				caminho.add_child(seguidor)
+				seguidor.progress_ratio = 0.0
 		
 		if seguidor:
 			# Chama a função na Pomni para usar esse carrinho (ela já tem `entrar_no_caminho`)

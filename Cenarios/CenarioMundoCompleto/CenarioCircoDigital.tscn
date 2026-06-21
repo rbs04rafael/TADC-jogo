@@ -6787,20 +6787,7 @@ height = 0.4
 size = Vector3(15, 15, 150)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rvefd"]
-size = Vector3(4.969116, 2.5500488, 4.491211)
-
-[sub_resource type="Curve3D" id="Curve3D_o7jmr"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -27.110556, 2.1120436, -50.524887, 0, 0, 0, 0, 0, 0, -28.34179, 2.3164368, -56.63333, 0, 0, 0, 0, 0, 0, -30.55353, 2.506393, -62.858303, 0, 0, 0, 0, 0, 0, -37.00007, 2.37007, -75.32989, 0, 0, 0, 0, 0, 0, -40.28809, 2.8537488, -78.91099, 0, 0, 0, 0, 0, 0, -43.321213, 3.3791227, -80.7351, 0, 0, 0, 0, 0, 0, -46.07009, 2.7550669, -84.831894, 0, 0, 0, 0, 0, 0, -47.092808, 2.993003, -88.40966),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 8
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lonk"]
-albedo_color = Color(0.901748, 0.7699283, 0, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bm1w7"]
-size = Vector3(4.4591904, 1, 6.3082123)
+size = Vector3(4.704651, 1.8726807, 3.601982)
 
 [sub_resource type="Curve3D" id="Curve3D_bbt2m"]
 _data = {
@@ -6815,6 +6802,16 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 11
+
+[sub_resource type="Curve3D" id="Curve3D_gfshs"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.039878845, 0.46467257, 3.3222961, 0, 0, 0, 0, 0, 0, -0.5074959, 0.4509008, -6.893032, 0, 0, 0, 0, 0, 0, -3.8778992, 0.41679144, -14.42503, 0, 0, 0, 0, 0, 0, -8.268875, 0.70729923, -20.520664, 0, 0, 0, 0, 0, 0, -12.673622, 0.68442225, -26.403889, 0, 0, 0, 0, 0, 0, -15.498337, 0.91952324, -30.762829, 0, 0, 0, 0, 0, 0, -16.995491, 0.96609354, -33.69859, 0, 0, 0, 0, 0, 0, -18.419601, 1.2265992, -36.564213),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6pcip"]
+size = Vector3(3.416626, 1.3133545, 4.9933395)
 
 [node name="Node3D" type="Node3D" unique_id=355003223]
 
@@ -9040,7 +9037,7 @@ debug_color = Color(0.9809559, 0, 0.3792702, 0.41960785)
 [node name="FarolTorre" type="Node3D" parent="The Grounds" unique_id=1760005777]
 
 [node name="Porta" type="Node3D" parent="The Grounds/FarolTorre" unique_id=1582186905]
-transform = Transform3D(1.8727449, 0, 0.7020167, 0, 2, 0, -0.7020167, 0, 1.8727449, -46.847797, 5.9340563, -87.93759)
+transform = Transform3D(1.8727449, 0, 0.7020167, 0, 2, 0, -0.7020167, 0, 1.8727449, -46.847797, 5.356903, -87.93759)
 metadata/_edit_group_ = true
 
 [node name="Portal1" type="MeshInstance3D" parent="The Grounds/FarolTorre/Porta" unique_id=1377761366]
@@ -9114,7 +9111,7 @@ transform = Transform3D(0.9908866, 0.0018573068, 0.13469267, -0.0011747833, 0.99
 shape = SubResource("BoxShape3D_0mo70")
 
 [node name="Cerca3" type="MeshInstance3D" parent="The Grounds/FarolTorre/Varanda" unique_id=400825318]
-transform = Transform3D(0.9886356, -0.042506877, -0.4842267, 0.041260906, 1.1008302, -0.012392569, 0.48433423, -0.00701468, 0.98947155, -50.798103, 18.714, -82.85841)
+transform = Transform3D(0.9534713, -0.041932546, -0.550288, 0.041260913, 1.1008302, -0.012392571, 0.55033857, -0.009884426, 0.95431256, -50.118465, 18.714, -82.59418)
 mesh = SubResource("ArrayMesh_8h2ag")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="The Grounds/FarolTorre/Varanda/Cerca3" unique_id=147647768]
@@ -9219,7 +9216,7 @@ transform = Transform3D(1, -1.094304e-08, -2.689194e-08, 1.1641532e-09, 0.999999
 curve = SubResource("Curve3D_rvefd")
 
 [node name="CarrinhoEscada" type="PathFollow3D" parent="The Grounds/FarolTorre/CaminhoEscada" unique_id=271322658]
-transform = Transform3D(-0.032450385, 0.007590273, -0.99940145, -4.656613e-10, 0.99997115, 0.0075939456, 0.99947333, 0.00024643753, -0.032448053, -0.016616821, -0.73280334, 0.059783936)
+transform = Transform3D(-0.032450385, 0.007590273, -0.99939936, -4.656613e-10, 0.99997115, 0.00759393, 0.99947333, 0.00024643753, -0.032447986, -0.016616821, -0.73280334, 0.059783936)
 loop = false
 
 [node name="MalhasLuzes" type="Node3D" parent="The Grounds/FarolTorre/CaminhoEscada" unique_id=182359269]
@@ -9270,7 +9267,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.30023, 3.7166915, -91.915
 script = ExtResource("25_skq35")
 
 [node name="@CollisionShape3D@2" type="CollisionShape3D" parent="The Grounds/GatilhoParque" unique_id=1312764011]
-transform = Transform3D(0.99999654, 0, 0.002635444, 0, 1, 0, -0.002635444, 0, 0.99999654, 1.3062553, -1.2170811, 1.2293243)
+transform = Transform3D(0.99999654, 0, 0.002635444, 0, 1, 0, -0.002635444, 0, 0.99999654, 0.47204208, -0.8772116, 0.8332901)
 shape = SubResource("BoxShape3D_rvefd")
 
 [node name="Abstracoes" type="Node3D" parent="The Grounds" unique_id=1024560472]
@@ -9295,39 +9292,6 @@ script = ExtResource("26_rvefd")
 
 [node name="Caminhos" type="Node3D" parent="The Grounds" unique_id=1915345878]
 
-[node name="CaminhoFarol" type="Path3D" parent="The Grounds/Caminhos" unique_id=1610852640]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19481087, 0)
-curve = SubResource("Curve3D_o7jmr")
-
-[node name="PathFollow3D" type="PathFollow3D" parent="The Grounds/Caminhos/CaminhoFarol" unique_id=237021138]
-transform = Transform3D(0.98027736, 0.006477586, 0.1974789, -2.3282881e-10, 0.99945414, -0.032782838, -0.1975872, 0.03213685, 0.97973996, -27.600698, 2.1120436, -50.426094)
-h_offset = -0.5
-
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="The Grounds/Caminhos/CaminhoFarol" unique_id=1499688579]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18360329, -0.06613922)
-material_override = SubResource("StandardMaterial3D_6lonk")
-polygon = PackedVector2Array(-2, 0, -1, 0.1, 1.8781788, -0.17183252, 2.4036653, -0.39643168)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 0.0
-path_rotation = 2
-path_rotation_accurate = false
-path_local = false
-path_continuous_u = false
-path_u_distance = 1.0
-path_joined = false
-smooth_faces = true
-
-[node name="Area3D" type="Area3D" parent="The Grounds/Caminhos/CaminhoFarol" unique_id=695720283]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.41434, 3.653656, -45.28826)
-script = ExtResource("9_6txre")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="The Grounds/Caminhos/CaminhoFarol/Area3D" unique_id=1041241709]
-transform = Transform3D(0.9831435, 0, 0.18283609, 0, 1, 0, -0.18283609, 0, 0.9831435, 0.35650063, -1.2563276, -6.7697296)
-shape = SubResource("BoxShape3D_bm1w7")
-
 [node name="CaminhoPedraLago" type="Path3D" parent="The Grounds/Caminhos" unique_id=1720563349]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.36924, 10.071396, -102.34979)
 curve = SubResource("Curve3D_bbt2m")
@@ -9338,6 +9302,24 @@ transform = Transform3D(-0.741081, -0.2235437, -0.6330766, -1.4900749e-08, 0.942
 [node name="CaminhoParque" type="Path3D" parent="The Grounds/Caminhos" unique_id=1476406023]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.69772, 0, -91.178246)
 curve = SubResource("Curve3D_4mh8s")
+
+[node name="Seguidor" type="PathFollow3D" parent="The Grounds/Caminhos/CaminhoParque" unique_id=1387323685]
+transform = Transform3D(-0.38885772, 0.020214153, -0.9210759, 1.8626442e-09, 0.9997574, 0.021940995, 0.9212974, 0.008531911, -0.38876423, 1.2681923, 2.9118829, 0.8582611)
+
+[node name="CaminhoFarol" type="Path3D" parent="The Grounds/Caminhos" unique_id=1961726525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.75454, 1.8837857, -52.13367)
+curve = SubResource("Curve3D_gfshs")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="The Grounds/Caminhos/CaminhoFarol" unique_id=11893713]
+transform = Transform3D(0.9989497, -6.158349e-05, 0.045727897, 0, 0.99999505, 0.0013467304, -0.045727942, -0.001345322, 0.99894875, -0.039878845, 0.46467257, 3.3222961)
+
+[node name="Area3D" type="Area3D" parent="The Grounds/Caminhos/CaminhoFarol" unique_id=826783345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16776276, 0)
+script = ExtResource("9_6txre")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="The Grounds/Caminhos/CaminhoFarol/Area3D" unique_id=1567318171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27960205, 0.15667725, 0.55743027)
+shape = SubResource("BoxShape3D_6pcip")
 
 [node name="GerenciadorFase1" type="Node" parent="." unique_id=906822225]
 script = ExtResource("28_4mh8s")
