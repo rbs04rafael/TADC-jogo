@@ -16,8 +16,9 @@ var particulas_ataque: CPUParticles3D
 var ponto_foco_luz: Vector3
 
 func _ready():
+	var scene_root = get_tree().current_scene
+	
 	if alvo_do_farol == null:
-		var scene_root = get_tree().current_scene
 		if scene_root:
 			var caminho = scene_root.find_child("CaminhoPedraLago", true, false)
 			if caminho:
@@ -27,7 +28,6 @@ func _ready():
 		alvo_do_farol.loop = false
 		
 	# Procura o nó 'morcego' que foi colocado na cena, em qualquer lugar
-	var scene_root = get_tree().current_scene
 	if scene_root:
 		morcego = scene_root.find_child("morcego", true, false)
 		if morcego == null:

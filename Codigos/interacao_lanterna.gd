@@ -8,8 +8,27 @@ func _ready():
 	var caminho = cena_raiz.find_child("CaminhoEscada", true, false)
 	if caminho:
 		caminho.visible = false
+		
+	# Checkpoint: Se já pegou a lanterna antes de morrer
+	var global_node = get_node_or_null("/root/Global")
+	if global_node and "pomni_tem_lanterna" in global_node:
+		if global_node.pomni_tem_lanterna:
+			lanterna_coletada = true
+			var lampada_visual = get_parent()
+			if lampada_visual:
+				lampada_visual.visible = false
+				
+			# Ativa a escuridão
+			var luz_sol = cena_raiz.find_child("DirectionalLight3D", true, false)
+			if luz_sol:
+				luz_sol.light_energy = 0.0
+			var env = cena_raiz.find_child("WorldEnvironment", true, false)
+			if env and env.environment:
+				env.environment.background_mode = Environment.BG_COLOR
+				env.environment.background_color = Color(0, 0, 0)
+				env.environment.ambient_light_energy = 0.0
 
-func _process(delta):
+func _process(_delta):
 	if lanterna_coletada:
 		return
 		
@@ -57,5 +76,3 @@ func _coletar_lanterna(pomni):
 	var lampada_visual = get_parent()
 	if lampada_visual:
 		lampada_visual.visible = false
-
-

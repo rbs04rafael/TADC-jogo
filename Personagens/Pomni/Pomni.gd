@@ -65,9 +65,10 @@ var _original_cam_pos: Vector3
 var _target_cam_pos: Vector3
 var _cam_ray: RayCast3D
 
-# --- VARIÁVEIS DA ÁGUA ---
+# --- VARIÁVEIS DA ÁGUA E DANO ---
 var na_agua: bool = false
 var altura_agua: float = 0.0
+var tempo_vermelho: float = 0.0
 
 # --- REFERÊNCIAS DE NÓS ---
 @onready var animation_player: AnimationPlayer = $Pomni/AnimationPlayer
@@ -85,6 +86,26 @@ func _ready():
 	axis_lock_linear_x = false
 	axis_lock_linear_z = false
 	
+	# === LÓGICA DE CHECKPOINT ===
+	var global_node = get_node_or_null("/root/Global")
+	if global_node and "pomni_tem_lanterna" in global_node:
+		if global_node.pomni_tem_lanterna:
+			tem_lanterna = true
+			lanterna_ligada = true
+			
+			# Ativar o brilho corporal para ela não ficar preta no escuro
+			ativar_brilho_corpo()
+			
+			# Renasce na Virada1 (EtapaParque) em vez do começo do jogo
+			var cena_raiz = get_tree().current_scene
+			if cena_raiz:
+				var virada1 = cena_raiz.find_child("Virada1", true, false)
+				if virada1:
+					global_position = virada1.global_position
+					# Atualiza posição inicial para evitar bugs de corrida
+					z_inicial = global_position.z
+					x_inicial = global_position.x
+	
 	# Busca a lanterna na mão da Pomni (adicionada pelo nosso script)
 	var skeleton = find_child("Skeleton3D", true, false)
 	if skeleton:
@@ -97,7 +118,7 @@ func _ready():
 			if not tem_lanterna:
 				ref_lanterna.visible = false
 			if ref_spotlight:
-				ref_spotlight.visible = false
+				ref_spotlight.visible = lanterna_ligada
 				# Ajuste da lanterna: raio longo mas cone mais fechado e luz BEM intensa
 				ref_spotlight.spot_range = 10
 				ref_spotlight.spot_angle = 20
@@ -137,6 +158,7 @@ func _ready():
 	
 	# Criar Interface de Vida visível via código usando Corações
 	var canvas = CanvasLayer.new()
+	canvas.name = "HealthCanvas"
 	add_child(canvas)
 	
 	var hbox = HBoxContainer.new()
@@ -291,6 +313,15 @@ func _process(delta: float) -> void:
 			else:
 				tpb.value = max(0, vida_restante)
 				vida_restante = 0
+
+	# Controle de piscar (Efeito de dano)
+	if tempo_vermelho > 0:
+		tempo_vermelho -= delta
+		if tempo_vermelho <= 0:
+			if na_agua:
+				_aplicar_cor_agua_toxica()
+			else:
+				_remover_cor_agua_toxica()
 
 	# Controle de emissão das partículas de passos
 	if particulas_passos != null:
@@ -535,7 +566,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				cam.position = _target_cam_pos
 
-func handle_climbing(delta: float) -> void:
+func handle_climbing(_delta: float) -> void:
 	# Reseta as velocidades horizontais para ela não escorregar
 	velocity.x = 0
 	velocity.z = 0
@@ -626,28 +657,29 @@ func apply_gravity(delta: float) -> void:
 func entrar_na_agua(y_superficie: float):
 	na_agua = true
 	altura_agua = y_superficie
-	_aplicar_cor_vermelha_agua()
+	_aplicar_cor_agua_toxica()
 
 func sair_da_agua():
 	na_agua = false
-	_remover_cor_vermelha_agua()
+	_remover_cor_agua_toxica()
 
-func _aplicar_cor_vermelha_agua() -> void:
+func _aplicar_cor_agua_toxica() -> void:
 	var meshes = []
 	if visual_model:
 		_buscar_meshes(visual_model, meshes)
 		
-	var red_mat = StandardMaterial3D.new()
-	red_mat.albedo_color = Color(1, 0, 0, 0.5)
-	red_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	red_mat.emission_enabled = true
-	red_mat.emission = Color(1, 0, 0)
-	red_mat.emission_energy_multiplier = 2.0
+	var toxic_mat = StandardMaterial3D.new()
+	toxic_mat.albedo_color = Color(0.2, 0.9, 0.2, 0.5)
+	toxic_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	toxic_mat.emission_enabled = true
+	toxic_mat.emission = Color(0.2, 0.9, 0.2)
+	toxic_mat.emission_energy_multiplier = 2.0
 	
 	for mesh in meshes:
-		mesh.material_overlay = red_mat
+		if is_instance_valid(mesh):
+			mesh.material_overlay = toxic_mat
 
-func _remover_cor_vermelha_agua() -> void:
+func _remover_cor_agua_toxica() -> void:
 	var meshes = []
 	if visual_model:
 		_buscar_meshes(visual_model, meshes)
@@ -724,7 +756,6 @@ func handle_path_movement(delta: float) -> void:
 	var current_speed = run_speed if esta_correndo else speed
 	
 	if direction != 0:
-		var ratio_antigo = trilho_atual.progress_ratio
 		trilho_atual.progress += direction * current_speed * delta
 		
 		# Se tentar ir além do início (0.0), bloqueie o movimento
@@ -826,32 +857,36 @@ func receber_dano(quantidade: float, origem: Vector3 = Vector3.ZERO, aplicar_kno
 			velocity.z = backward.z * 15.0
 			velocity.y = 3.0
 		
-	# Efeito visual de Dano (Piscar Vermelho)
+	# Efeito visual de Dano (Piscar Vermelho ou Branco se já estiver na água)
 	var meshes = []
 	if visual_model:
 		_buscar_meshes(visual_model, meshes)
 		
-	var red_mat = StandardMaterial3D.new()
-	red_mat.albedo_color = Color(1, 0, 0, 0.5)
-	red_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	red_mat.emission_enabled = true
-	red_mat.emission = Color(1, 0, 0)
-	red_mat.emission_energy_multiplier = 2.0
+	var damage_mat = StandardMaterial3D.new()
+	damage_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	damage_mat.emission_enabled = true
+	damage_mat.emission_energy_multiplier = 4.0
+	
+	# O flash de dano é sempre vermelho intenso para ficar bem visível
+	damage_mat.albedo_color = Color(1, 0, 0, 0.8)
+	damage_mat.emission = Color(1, 0, 0)
 	
 	for mesh in meshes:
-		mesh.material_overlay = red_mat
+		if is_instance_valid(mesh):
+			mesh.material_overlay = damage_mat
+			
+	tempo_vermelho = 0.3
 		
 	if vida <= 0:
 		print("Pomni morreu!")
-		get_tree().reload_current_scene()
-		
-	# Remove o vermelho após 0.2 segundos (piscar)
-	await get_tree().create_timer(0.2).timeout
-	for mesh in meshes:
-		# Verifica se o mesh ainda existe antes de limpar (previne erro se a cena recarregar)
-		if is_instance_valid(mesh):
-			if not na_agua:
-				mesh.material_overlay = null
+		var hc = get_node_or_null("HealthCanvas")
+		if hc:
+			hc.visible = false
+		var game_over_scene = load("res://Cenarios/GameOver.tscn")
+		if game_over_scene:
+			var game_over_instance = game_over_scene.instantiate()
+			get_tree().get_root().add_child(game_over_instance)
+			get_tree().paused = true
 
 func ativar_brilho_corpo() -> void:
 	if has_node("LuzPessoalPomni_0"):

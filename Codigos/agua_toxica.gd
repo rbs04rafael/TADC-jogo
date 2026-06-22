@@ -6,6 +6,23 @@ var damage_timer : float = 0.0
 var player_inside = null
 
 func _ready():
+	# Força a área a detectar a Pomni (que está na Layer 2) e o cenário (Layer 1)
+	collision_mask |= 2
+	
+	# Verifica se o usuário esqueceu de colocar um CollisionShape3D na Área
+	var tem_colisao = false
+	for child in get_children():
+		if child is CollisionShape3D:
+			tem_colisao = true
+			break
+	if not tem_colisao:
+		var shape = CollisionShape3D.new()
+		var box = BoxShape3D.new()
+		box.size = Vector3(70, 1.0, 60) # Dobro do extents do particle (35, 0.5, 30)
+		shape.shape = box
+		shape.position = Vector3(0, 0.5, 0)
+		add_child(shape)
+
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	# Create particle effect using CPUParticles3D
@@ -58,13 +75,13 @@ func obter_altura_superficie() -> float:
 	return y_max
 
 func _on_body_entered(body):
+	if body.has_method("entrar_na_agua"):
+		body.entrar_na_agua(obter_altura_superficie())
+		
 	if body.has_method("receber_dano"):
 		player_inside = body
 		player_inside.receber_dano(damage_amount, Vector3.ZERO, false)
 		damage_timer = 0.0
-		
-	if body.has_method("entrar_na_agua"):
-		body.entrar_na_agua(obter_altura_superficie())
 
 func _on_body_exited(body):
 	if body == player_inside:

@@ -544,12 +544,15 @@ surface_material_override/0 = SubResource("ShaderMaterial_dg3k6")
 shape = SubResource("ConcavePolygonShape3D_dg3k6")
 
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("5_x5iya")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.626012, 2.950016, 3.7041025)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9119334, 34.235565, -3.833011)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=511490549]
 transform = Transform3D(0.9998646, -3.5461576e-09, 0.016457677, 0.0007637875, 0.9989225, -0.046402693, -0.016439943, 0.04640898, 0.9987872, 0.40158272, 1.2190638, 4.506035)
 fov = 100.12928
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=467280185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20870018, 0.39226913, 0.93722343)
 
 [node name="Parkour" type="Node3D" parent="." unique_id=1635614568]
 

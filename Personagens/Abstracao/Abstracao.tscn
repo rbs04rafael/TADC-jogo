@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://7pd8ghyw5n8w" path="res://Fase1/abstracao_Image_2.png" id="3_wf1ey"]
 [ext_resource type="Texture2D" uid="uid://b6o788084f03n" path="res://Fase1/abstracao_Image_3.png" id="4_k5w5m"]
 [ext_resource type="Script" path="res://Personagens/Abstracao/Abstracao.gd" id="5_abstr"]
+[ext_resource type="Script" path="res://Personagens/Abstracao/Abstracao.gd" id="6_abstr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5fv1d"]
 resource_name = "Abstract_Body"
@@ -364,6 +365,7 @@ height = 2.5957031
 radius = 1.1699219
 
 [node name="NoAbstracao" type="CharacterBody3D" unique_id=1384687917]
+script = ExtResource("6_abstr")
 script = ExtResource("5_abstr")
 
 [node name="abstracao" type="Node3D" parent="." unique_id=857847889]

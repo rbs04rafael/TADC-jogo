@@ -3,7 +3,7 @@ extends Area3D
 @export var cena_destino: String = "res://Cenas/DentroFarol.tscn"
 
 # Fallback cego: garante a transição caso o motor de física falhe em disparar body_entered
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var pomni = get_tree().get_root().find_child("Pomni", true, false)
 	if pomni != null:
 		# Compara apenas a distância horizontal (X e Z), ignorando a diferença de altura (Y)
