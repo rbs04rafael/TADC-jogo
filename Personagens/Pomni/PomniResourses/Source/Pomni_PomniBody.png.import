@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xyv4ylfwjj1d"
-path.s3tc="res://.godot/imported/Pomni_PomniBody.png-8be9a0913aefbc4cb45f50bc61f03c38.s3tc.ctex"
+path.s3tc="res://.godot/imported/Pomni_PomniBody.png-eb398ad3eae75e023dd352b500817d35.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Personagens/PomniResourses/Source/Pomni_PomniBody.png"
-dest_files=["res://.godot/imported/Pomni_PomniBody.png-8be9a0913aefbc4cb45f50bc61f03c38.s3tc.ctex"]
+source_file="res://Personagens/Pomni/PomniResourses/Source/Pomni_PomniBody.png"
+dest_files=["res://.godot/imported/Pomni_PomniBody.png-eb398ad3eae75e023dd352b500817d35.s3tc.ctex"]
 
 [params]
 

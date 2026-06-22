@@ -1,8 +1,8 @@
 [gd_scene format=4 uid="uid://dgu81px0xrn50"]
 
-[ext_resource type="Script" uid="uid://b7krbdvcpewqh" path="res://Personagens/Pomni.gd" id="1_5pbcl"]
-[ext_resource type="Texture2D" uid="uid://xyv4ylfwjj1d" path="res://Personagens/PomniResourses/Source/Pomni_PomniBody.png" id="2_5pbcl"]
-[ext_resource type="Texture2D" uid="uid://bebtcrhyv3qvx" path="res://Personagens/PomniResourses/Source/Pomni_Eyes.png" id="3_nepdb"]
+[ext_resource type="Script" uid="uid://b7krbdvcpewqh" path="res://Personagens/Pomni/Pomni.gd" id="1_5pbcl"]
+[ext_resource type="Texture2D" uid="uid://xyv4ylfwjj1d" path="res://Personagens/Pomni/PomniResourses/Source/Pomni_PomniBody.png" id="2_5pbcl"]
+[ext_resource type="Texture2D" uid="uid://bebtcrhyv3qvx" path="res://Personagens/Pomni/PomniResourses/Source/Pomni_Eyes.png" id="3_nepdb"]
 [ext_resource type="PackedScene" uid="uid://fqhxry6f3h2" path="res://Fase1/Lanterna.glb" id="4_nepdb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpf3c"]
@@ -2516,7 +2516,6 @@ _data = {
 size = Vector3(1.5, 1.5, 1.5)
 
 [node name="NoPomni" type="CharacterBody3D" unique_id=1781205588 groups=["jogador"]]
-axis_lock_linear_z = true
 script = ExtResource("1_5pbcl")
 metadata/_edit_group_ = true
 
@@ -2525,10 +2524,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85422695, 0)
 shape = SubResource("CapsuleShape3D_rpf3c")
 
 [node name="Pomni" type="Node3D" parent="." unique_id=687766971]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.004688263, 0, 0.16005063)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.004688263, 0, 0.059785664)
 
 [node name="Armature" type="Node3D" parent="Pomni" unique_id=72591289]
-transform = Transform3D(0.9964964, -0.08243963, 0.014095081, 0.08140425, 0.9947054, 0.0627251, -0.019191487, -0.061357938, 0.99793124, 0.011905866, 0.047279548, 0.046392184)
+transform = Transform3D(0.9964964, -0.08243963, 0.01409508, 0.08140425, 0.9947054, 0.0627251, -0.019191487, -0.061357938, 0.9979312, 0.011905866, 0.047279548, 0.046392184)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Pomni/Armature" unique_id=1786351485]
 bones/0/name = "root"
@@ -3221,7 +3220,7 @@ bone_name = "hand.R"
 bone_idx = 57
 
 [node name="Lanterna" parent="Pomni/Armature/Skeleton3D/hand_R" unique_id=1232691382 instance=ExtResource("4_nepdb")]
-transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0.05, 0)
+transform = Transform3D(0.21659866, 0.08600432, -0.4423667, -0.39691633, 0.26883304, -0.14207837, 0.21340686, 0.41271308, 0.1847308, -0.016369, -0.08716887, 0.0671165)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Pomni/Armature/Skeleton3D/hand_R/Lanterna" unique_id=651056802]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)

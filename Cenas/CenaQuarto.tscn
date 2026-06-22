@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d3snuwg65s516"]
 
 [ext_resource type="PackedScene" uid="uid://c7i2dx8lopoai" path="res://Cenarios/CenarioQuarto/QuartoPomni.tscn" id="1_mm2aj"]
-[ext_resource type="PackedScene" uid="uid://ufby7umh4kjy" path="res://Personagens/Pomni.tscn" id="2_mm2aj"]
+[ext_resource type="PackedScene" uid="uid://dgu81px0xrn50" path="res://Personagens/Pomni/Pomni.tscn" id="2_mm2aj"]
 
 [sub_resource type="Environment" id="Environment_qvuxn"]
 background_mode = 1

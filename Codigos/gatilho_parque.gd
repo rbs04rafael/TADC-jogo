@@ -1,56 +1,55 @@
 extends Area3D
 
-var cutscene_ativa = false
+var atraso_reativacao = 0.0
 
 func _ready():
-	connect("body_entered", Callable(self, "_on_body_entered"))
-	# Garante que a área do gatilho chegue até o chão para que a Pomni consiga tocar ao andar
-	if global_position.y > 1.0:
-		global_position.y = 1.0
+	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
+		connect("body_entered", Callable(self, "_on_body_entered"))
+	collision_mask = 0xFFFFFFFF
+
+func _process(delta):
+	if atraso_reativacao > 0:
+		atraso_reativacao -= delta
 
 func _on_body_entered(body: Node3D):
-	if cutscene_ativa:
+	if atraso_reativacao > 0:
 		return
 		
 	if "Pomni" in body.name or body.is_in_group("jogador") or body.has_method("entrar_no_caminho"):
-		# Se ela estiver escalando ainda ao tocar no chão, solte a escada!
-		if "is_climbing" in body and body.is_climbing:
-			if body.has_method("sair_da_escada"):
-				body.sair_da_escada()
+		var dist_total = global_position.distance_to(body.global_position)
+		var diff_z = abs(global_position.z - body.global_position.z)
+		
+		# A Pomni precisa estar REALMENTE PERTO do gatilho para ser teleportada.
+		# Evita bugs de bounding boxes gigantes do Godot.
+		if dist_total < 4.0 and diff_z < 2.0:
 			
-		print("Iniciando cutscene para o parque!")
-		cutscene_ativa = true
-		
-		# Procura o Seguidor globalmente, já que ele pode estar em CaminhoParque ou CaminhoParque2
-		var cena_raiz = get_tree().get_root()
-		var seguidor = cena_raiz.find_child("Seguidor", true, false)
-		
-		# Se o usuário recriou o CaminhoParque e esqueceu do Seguidor (PathFollow3D), criamos dinamicamente!
-		if not seguidor:
+			if "is_climbing" in body and body.is_climbing:
+				if body.has_method("sair_da_escada"):
+					body.sair_da_escada()
+					
+			var cena_raiz = get_tree().current_scene
+			if not cena_raiz:
+				cena_raiz = get_tree().get_root()
+				
 			var caminho = cena_raiz.find_child("CaminhoParque", true, false)
-			if caminho:
-				seguidor = PathFollow3D.new()
-				seguidor.name = "Seguidor"
-				caminho.add_child(seguidor)
-				seguidor.progress_ratio = 0.0
-		
-		if seguidor:
-			# Chama a função na Pomni para usar esse carrinho (ela já tem `entrar_no_caminho`)
-			if body.has_method("entrar_no_caminho"):
-				body.entrar_no_caminho(seguidor)
-				# Força lanterna ligada (se tiver)
-				if body.has_method("equipar_lanterna"):
-					body.lanterna_ligada = true
-					if body.ref_spotlight:
-						body.ref_spotlight.visible = true
+			var seguidor = null
 			
-			# Adiciona uma propriedade para mover automaticamente (via script ou tween)
-			var tween = create_tween()
-			tween.tween_property(seguidor, "progress_ratio", 1.0, 8.0).set_trans(Tween.TRANS_LINEAR)
-			tween.tween_callback(func(): _fim_cutscene(body))
-
-func _fim_cutscene(pomni):
-	if pomni.has_method("sair_do_caminho"):
-		pomni.sair_do_caminho()
-	print("Chegou no Parque de Diversões!")
-	queue_free() # Destrói o gatilho
+			if caminho:
+				for child in caminho.get_children():
+					if child is PathFollow3D:
+						seguidor = child
+						break
+				
+				if not seguidor:
+					seguidor = PathFollow3D.new()
+					seguidor.name = "Seguidor"
+					caminho.add_child(seguidor)
+					
+				seguidor.progress_ratio = 0.0
+			
+			if seguidor:
+				if body.has_method("entrar_no_caminho"):
+					body.entrar_no_caminho(seguidor)
+					atraso_reativacao = 1.0 # 1 segundo de cooldown para evitar loop infinito de entrar e sair
+			else:
+				print("ERRO CRITICO: CaminhoParque não encontrado!")

@@ -18,7 +18,7 @@ func _realizar_teleporte():
 	# Salva a porta alvo no Singleton/Autoload
 	if has_node("/root/Global"):
 		get_node("/root/Global").porta_destino_nome = porta_destino_nome
-	get_tree().change_scene_to_file(cena_destino)
+	get_tree().call_deferred("change_scene_to_file", cena_destino)
 
 func _on_body_entered(body: Node3D):
 	if "Pomni" in body.name or body.is_in_group("jogador") or body.has_method("entrar_no_caminho"):

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bk4cm3ntkxbh6"
-path="res://.godot/imported/Pomni.glb-d64674f5744d48f20b6ca9ace98bc00e.scn"
+uid="uid://cni6oox0d72uv"
+path="res://.godot/imported/basic_fence.glb-b762af0706820206f5d840009be9a73d.scn"
 
 [deps]
 
-source_file="res://Personagens/PomniResourses/Source/Pomni.glb"
-dest_files=["res://.godot/imported/Pomni.glb-d64674f5744d48f20b6ca9ace98bc00e.scn"]
+source_file="res://basic_fence.glb"
+dest_files=["res://.godot/imported/basic_fence.glb-b762af0706820206f5d840009be9a73d.scn"]
 
 [params]
 

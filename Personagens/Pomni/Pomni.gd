@@ -19,12 +19,22 @@ var qtd_coracoes: int = 5
 
 var particulas_passos: CPUParticles3D
 
-var z_inicial
+var z_inicial: float
+var x_inicial: float
+var travar_eixo_z: bool = true
+var travar_eixo_x: bool = false
+var linha_inicio: Vector2
+var linha_fim: Vector2
+var travar_na_linha: bool = false
+var usar_linha_pendente: bool = false
+var linha_inicio_pendente: Vector2
+var linha_fim_pendente: Vector2
 var esta_correndo: bool = false
 
 # --- VARIÁVEIS DA LANTERNA ---
 var tem_lanterna: bool = false
 var lanterna_ligada: bool = false
+var lanterna_offset_pos: Vector3 = Vector3.ZERO
 var ref_lanterna: Node3D = null
 var ref_spotlight: SpotLight3D = null
 
@@ -66,16 +76,25 @@ var altura_agua: float = 0.0
 
 func _ready():
 	z_inicial = global_position.z
+	x_inicial = global_position.x
 	safe_margin = 0.01
 	floor_block_on_wall = false
+	
+	# Garante que a física padrão não interfira com nosso travamento manual
+	axis_lock_linear_x = false
+	axis_lock_linear_z = false
 	
 	# Busca a lanterna na mão da Pomni (adicionada pelo nosso script)
 	var skeleton = find_child("Skeleton3D", true, false)
 	if skeleton:
 		ref_lanterna = skeleton.find_child("Lanterna", true, false)
 		if ref_lanterna:
-			ref_spotlight = ref_lanterna.get_node_or_null("SpotLight3D")
-			ref_lanterna.visible = false
+			lanterna_offset_pos = ref_lanterna.position
+			ref_lanterna.top_level = true
+			ref_spotlight = ref_lanterna.find_child("SpotLight3D", true, false)
+			
+			if not tem_lanterna:
+				ref_lanterna.visible = false
 			if ref_spotlight:
 				ref_spotlight.visible = false
 	
@@ -184,8 +203,38 @@ func _ready():
 				
 				# Faz a Pomni olhar para as costas da porta (para frente, afastando-se dela)
 				visual_model.global_rotation.y = porta.global_rotation.y
+				
+				# ATUALIZA AS TRAVAS PARA A NOVA POSICAO DO TELEPORTE!
+				z_inicial = global_position.z
+				x_inicial = global_position.x
+
+	# Conecta os sinais das curvas do Parque de Diversões de forma automática
+	call_deferred("_conectar_areas_parque")
 
 func _process(delta: float) -> void:
+	# Debug: Rotação manual da câmera com 'J' e 'K'
+	if _camera_pivot:
+		if Input.is_physical_key_pressed(KEY_J):
+			_camera_pivot.rotation.y += 2.0 * delta
+		elif Input.is_physical_key_pressed(KEY_K):
+			_camera_pivot.rotation.y -= 2.0 * delta
+
+	# Debug: Zoom da câmera com 'I' (afastar) e 'O' (aproximar)
+	if _camera_pivot and _cam_ray:
+		var zoom_speed = 5.0 * delta
+		var dir = (_original_cam_pos - _cam_ray.position).normalized()
+		var mudou_zoom = false
+		if Input.is_physical_key_pressed(KEY_I):
+			_original_cam_pos += dir * zoom_speed
+			mudou_zoom = true
+		elif Input.is_physical_key_pressed(KEY_O):
+			if _original_cam_pos.distance_to(_cam_ray.position) > 1.0:
+				_original_cam_pos -= dir * zoom_speed
+				mudou_zoom = true
+		
+		if mudou_zoom:
+			_cam_ray.target_position = _original_cam_pos - _cam_ray.position
+
 	if regenerando and vida < vida_maxima:
 		vida += 3.0 * delta # Recuperação mais lenta (3 de vida por segundo)
 		if vida > vida_maxima:
@@ -265,6 +314,14 @@ func equipar_lanterna() -> void:
 		ref_spotlight.visible = true
 	print("Pomni equipou a lanterna!")
 	
+	# Salva globalmente para não perder ao trocar de cena
+	if has_node("/root/Global"):
+		var global_node = get_node("/root/Global")
+		if "pomni_tem_lanterna" in global_node:
+			global_node.pomni_tem_lanterna = true
+	# Faz o próprio corpo da Pomni brilhar com as cores originais no escuro
+	ativar_brilho_corpo()
+	
 	# Emitimos um sinal ou chamamos um Singleton pra escurecer o mundo
 	if has_node("/root/Global"):
 		if get_node("/root/Global").has_method("ativar_modo_escuro"):
@@ -281,9 +338,9 @@ func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float 
 	if angulo_camera_y == -999.0:
 		angulo_camera_y = novo_angulo_y
 	
-	# Desbloqueia os eixos durante a curva para evitar bugs de transição
-	axis_lock_linear_x = false
-	axis_lock_linear_z = false
+	# Desbloqueia os eixos manuais durante a curva para permitir a transição
+	travar_eixo_x = false
+	travar_eixo_z = false
 	
 	# Centraliza a Pomni no eixo perpendicular à NOVA direção para evitar que ela caia da beirada
 	if centro_alvo.x != INF:
@@ -327,24 +384,29 @@ func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float 
 func _finalizar_curva(angulo_final: float):
 	fazendo_curva = false
 	
-	# Normaliza o ângulo (ajusta para ficar entre 0 e 2*PI)
-	var angulo_norm = fposmod(angulo_final, TAU)
-	
-	# Define a tolerância para checar o ângulo
-	var epsilon = 0.1
-	
-	# Se estiver movendo no eixo Z (90 graus ou 270/-90 graus)
-	if abs(angulo_norm - PI/2) < epsilon or abs(angulo_norm - 3*PI/2) < epsilon:
-		axis_lock_linear_x = true
-		axis_lock_linear_z = false
-	# Se estiver movendo no eixo X (0 graus ou 180 graus)
-	elif abs(angulo_norm) < epsilon or abs(angulo_norm - PI) < epsilon or abs(angulo_norm - TAU) < epsilon:
-		axis_lock_linear_x = false
-		axis_lock_linear_z = true
+	if usar_linha_pendente:
+		linha_inicio = linha_inicio_pendente
+		linha_fim = linha_fim_pendente
+		travar_na_linha = true
+		usar_linha_pendente = false
+		travar_eixo_x = false
+		travar_eixo_z = false
 	else:
-		# Se por algum motivo o ângulo for diagonal, deixa ambos soltos
-		axis_lock_linear_x = false
-		axis_lock_linear_z = false
+		travar_na_linha = false
+		var angulo_norm = fposmod(angulo_final, TAU)
+		var epsilon = 0.1
+		
+		if abs(angulo_norm - PI/2) < epsilon or abs(angulo_norm - 3*PI/2) < epsilon:
+			travar_eixo_x = true
+			travar_eixo_z = false
+			x_inicial = global_position.x
+		elif abs(angulo_norm) < epsilon or abs(angulo_norm - PI) < epsilon or abs(angulo_norm - TAU) < epsilon:
+			travar_eixo_x = false
+			travar_eixo_z = true
+			z_inicial = global_position.z
+		else:
+			travar_eixo_x = false
+			travar_eixo_z = false
 
 func _physics_process(delta: float) -> void:
 	if is_on_path and trilho_atual != null:
@@ -356,6 +418,67 @@ func _physics_process(delta: float) -> void:
 		handle_jump()
 		handle_movement(delta)
 		move_and_slide()
+		
+		# Aplica o travamento na linha se ativado pelo Parque
+		if travar_na_linha and not fazendo_curva:
+			var pos2d = Vector2(global_position.x, global_position.z)
+			var a = linha_inicio
+			var b = linha_fim
+			var ab = b - a
+			if ab.length_squared() > 0.001:
+				var ap = pos2d - a
+				var t = ap.dot(ab) / ab.length_squared()
+				var proj = a + ab * t
+				global_position.x = proj.x
+				global_position.z = proj.y
+		# Senão, aplica o travamento de eixo original
+		else:
+			if travar_eixo_z and not fazendo_curva:
+				global_position.z = z_inicial
+			if travar_eixo_x and not fazendo_curva:
+				global_position.x = x_inicial
+	# Faz a lanterna sempre apontar para frente da Pomni, independente da animação da mão
+	if ref_lanterna and tem_lanterna:
+		var mao = ref_lanterna.get_parent()
+		if mao:
+			# Direção para frente baseada no modelo visual (Pomni)
+			# Como a lanterna estava apontando para trás, invertemos o sinal do Z
+			var frente = visual_model.global_transform.basis.z.normalized()
+			
+			# Anula a inclinação vertical para a luz ficar reta
+			frente.y = 0 
+			frente = frente.normalized()
+			
+			# Ajuste manual da posição da lanterna para ficar na mão
+			# A posição da 'mao' já está na direita, então o offset_direita pode ser quase zero.
+			var dir_direita = -visual_model.global_transform.basis.x.normalized()
+			var offset_direita = -0.3
+			var offset_baixo = -0.12
+			var offset_frente = 0.08
+			
+			# Ajuste manual da ROTAÇÃO da malha da lanterna (em graus)
+			# Modifique esses valores até o modelo 3D ficar perfeito na mão!
+			var rotacao_x_graus = 0
+			var rotacao_y_graus = 210
+			var rotacao_z_graus = 0
+			
+			ref_lanterna.global_position = mao.global_position + (dir_direita * offset_direita) + (Vector3.UP * offset_baixo) + (frente * offset_frente)
+			
+			# Aponta a lanterna
+			if frente.length() > 0.1:
+				# 1. Apontamos o padrão do Godot para frente
+				ref_lanterna.look_at(ref_lanterna.global_position + frente, Vector3.UP)
+				
+				# 2. Rotação fina manual
+				ref_lanterna.rotate_object_local(Vector3.RIGHT, deg_to_rad(rotacao_x_graus))
+				ref_lanterna.rotate_object_local(Vector3.UP, deg_to_rad(rotacao_y_graus))
+				ref_lanterna.rotate_object_local(Vector3.FORWARD, deg_to_rad(rotacao_z_graus))
+				
+				# Força a luz (SpotLight3D) a apontar para a frente da Pomni!
+				if ref_spotlight:
+					# Se a luz estava batendo na parede atrás, "+ frente" vai jogar o raio 
+					# exatamente 180 graus pro outro lado (pra frente da Pomni)!
+					ref_spotlight.look_at(ref_spotlight.global_position + frente, Vector3.UP)
 			
 	update_animations()
 
@@ -425,6 +548,9 @@ func entrar_na_escada(escada: Area3D) -> void:
 		global_position.x = shape.global_position.x
 		global_position.z = shape.global_position.z
 		
+	# Desativa travamento de linha ao escalar
+	travar_na_linha = false
+		
 	print("Pomni começou a escalar a escada!")
 
 func sair_da_escada() -> void:
@@ -434,6 +560,10 @@ func sair_da_escada() -> void:
 		
 	is_climbing = false
 	escada_atual = null
+	
+	# Atualiza a trava no ponto exato onde soltou a escada
+	travar_na_linha = false
+	
 	print("Pomni soltou a escada!")
 
 func apply_gravity(delta: float) -> void:
@@ -526,20 +656,30 @@ func handle_path_movement(delta: float) -> void:
 	var current_speed = run_speed if esta_correndo else speed
 	
 	if direction != 0:
+		var ratio_antigo = trilho_atual.progress_ratio
 		trilho_atual.progress += direction * current_speed * delta
-		if trilho_atual.progress_ratio >= 1.0:
+		
+		# Se tentar ir além do início (0.0), bloqueie o movimento
+		if trilho_atual.progress_ratio <= 0.01 and direction < 0:
+			trilho_atual.progress_ratio = 0.0
+			velocity.x = 0
+		# Se chegar no fim do caminho (0.99+), FORCE a saída do caminho
+		elif trilho_atual.progress_ratio >= 0.99 and direction > 0:
 			sair_do_caminho()
 			return
-		var rotacao_caminho = trilho_atual.global_rotation.y
-		var rotacao_alvo = rotacao_caminho - PI - 1
-		if direction == -1:
-			rotacao_alvo = rotacao_alvo - PI
-		visual_model.rotation.y = lerp_angle(visual_model.rotation.y, rotacao_alvo, 8 * delta)
+		else:
+			# Rotação visual enquanto anda no caminho
+			var rotacao_caminho = trilho_atual.global_rotation.y
+			var rotacao_alvo = rotacao_caminho - PI - 1
+			if direction == -1:
+				rotacao_alvo = rotacao_alvo - PI
+			visual_model.rotation.y = lerp_angle(visual_model.rotation.y, rotacao_alvo, 8 * delta)
 	
-	global_position = trilho_atual.global_position
-	# Removemos o +1.0 para ela não flutuar
-	velocity.x = direction * current_speed
-	velocity.y = 0.0
+	# Só atualiza a posição se ela ainda estiver no caminho
+	if is_on_path and trilho_atual != null:
+		global_position = trilho_atual.global_position
+		velocity.x = direction * current_speed
+		velocity.y = 0.0
 
 func update_animations() -> void:
 	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
@@ -570,24 +710,20 @@ func entrar_no_caminho(carrinho: PathFollow3D) -> void:
 	trilho_atual.loop = false # Garante que o caminho não é infinito
 	# Anula as velocidades acumuladas para ela não escorregar
 	velocity = Vector3.ZERO 
+	
+	# FORÇA A POMNI A MOVER IMEDIATAMENTE PARA O CARRINHO
+	if trilho_atual != null:
+		global_position = trilho_atual.global_position
 
 func sair_do_caminho() -> void:
 	is_on_path = false
 	trilho_atual = null
-	# Atualiza o Z inicial para que ela assuma a nova profundidade onde o trilho terminou
-	z_inicial = global_position.z
+	# Atualiza a posição inicial para que ela assuma a nova profundidade onde o trilho terminou
 	
 	if escada_pendente != null:
 		var escada_temp = escada_pendente
 		escada_pendente = null
 		entrar_na_escada(escada_temp)
-	else:
-		# Se por algum motivo o evento da física falhou (comum em teletransportes ao longo de Path3D),
-		# forçamos a busca pela AreaEscada na cena!
-		var root = get_tree().get_root()
-		var area_escada = root.find_child("AreaEscada", true, false)
-		if area_escada:
-			entrar_na_escada(area_escada)
 
 func receber_dano(quantidade: float) -> void:
 	vida -= quantidade
@@ -595,3 +731,139 @@ func receber_dano(quantidade: float) -> void:
 	if vida <= 0:
 		print("Pomni morreu!")
 		get_tree().reload_current_scene()
+
+func ativar_brilho_corpo() -> void:
+	if has_node("LuzPessoalPomni_0"):
+		return
+		
+	var posicoes_luzes = [
+		Vector3(-1.0, 2.5, 2.0),  # Luz Principal (Alta, na frente e na esquerda) - Cria sombras do lado direito e embaixo do pescoço
+		Vector3(1.0, 1.0, -2.0)   # Luz de Recorte (Baixa, nas costas e na direita) - Bem fraca, só pra dar silhueta
+	]
+	
+	for i in range(posicoes_luzes.size()):
+		var luz_pessoal = OmniLight3D.new()
+		luz_pessoal.name = "LuzPessoalPomni_" + str(i)
+		luz_pessoal.light_color = Color(1, 1, 1)
+		
+		# A luz da frente tem energia 0.35, a das costas tem energia 0.15
+		luz_pessoal.light_energy = 0.35 if i == 0 else 0.15 
+		
+		luz_pessoal.omni_range = 5.0
+		
+		# Camada 20 (524288 em bits). A luz SÓ vai bater em quem estiver na camada 20.
+		luz_pessoal.light_cull_mask = 524288 
+		
+		add_child(luz_pessoal)
+		luz_pessoal.position = posicoes_luzes[i]
+	
+	var meshes = []
+	if visual_model:
+		_buscar_meshes(visual_model, meshes)
+		
+	for mesh_node in meshes:
+		# Colocamos a Pomni na camada 1 (normal) + camada 20 (luz pessoal) = 524289
+		mesh_node.layers = 524289
+
+func _buscar_meshes(node: Node, lista: Array) -> void:
+	if node is MeshInstance3D:
+		lista.append(node)
+	for child in node.get_children():
+		_buscar_meshes(child, lista)
+
+# ==========================================
+# LÓGICA DO ETAPA PARQUE (CURVAS E CAMINHOS)
+# ==========================================
+var _viradas_feitas: Array = []
+
+func _conectar_areas_parque() -> void:
+	var cena_raiz = get_tree().get_root()
+	var etapa_parque = cena_raiz.find_child("EtapaParque", true, false)
+	
+	if etapa_parque:
+		# Conecta as 7 viradas
+		for i in range(1, 8):
+			var area_virada = etapa_parque.find_child("Virada" + str(i), true, false)
+			if area_virada and area_virada is Area3D:
+				area_virada.body_entered.connect(_on_virada_parque_entered.bind(i, area_virada))
+				
+		# Conecta a área final do CaminhoCirco
+		var caminho_circo = etapa_parque.find_child("CaminhoCirco", true, false)
+		if caminho_circo:
+			var area_final = caminho_circo.find_child("Area3d", true, false)
+			if area_final and area_final is Area3D:
+				area_final.body_entered.connect(_on_area_caminho_circo_entered)
+
+
+func _on_virada_parque_entered(body: Node3D, index: int, area: Area3D) -> void:
+	if body != self:
+		return
+	if index in _viradas_feitas:
+		return
+		
+	_viradas_feitas.append(index)
+	
+	# Em vez de somar exatamente 90 graus (o que falha se o cenário for diagonal),
+	# vamos calcular o ângulo exato apontando direto para a PRÓXIMA área!
+	var cena_raiz = get_tree().get_root()
+	var proxima_area: Node3D = null
+	
+	if index < 7:
+		proxima_area = cena_raiz.find_child("Virada" + str(index + 1), true, false)
+	else:
+		proxima_area = cena_raiz.find_child("Area3d", true, false) # Fim do percurso
+		
+	var novo_angulo = angulo_movimento
+	
+	if proxima_area:
+		var dir = proxima_area.global_position - area.global_position
+		dir.y = 0 # Ignora a altura
+		if dir.length() > 0.1:
+			# atan2(-Z, X) nos dá o ângulo exato da Godot no eixo Y
+			novo_angulo = atan2(-dir.z, dir.x)
+	
+	print("Pomni entrou na Virada ", index, ". Apontando exatamente para a próxima área!")
+	
+	# Busca o centro exato da colisão (CollisionShape3D) para alinhar a Pomni,
+	# evitando que ela seja jogada para o lado se a Area3D estiver descentralizada.
+	var alvo_pos = Vector3(INF, INF, INF)
+	for child in area.get_children():
+		if child is CollisionShape3D:
+			alvo_pos = child.global_position
+			break
+			
+	var angulo_cam = -999.0
+	if index <= 3:
+		angulo_cam = novo_angulo + PI
+		
+	# Define a linha pendente que será ativada ao fim da curva
+	if proxima_area:
+		var proxima_pos = proxima_area.global_position
+		for child in proxima_area.get_children():
+			if child is CollisionShape3D:
+				proxima_pos = child.global_position
+				break
+				
+		linha_inicio_pendente = Vector2(alvo_pos.x, alvo_pos.z)
+		linha_fim_pendente = Vector2(proxima_pos.x, proxima_pos.z)
+		usar_linha_pendente = true
+	else:
+		usar_linha_pendente = false
+		
+	iniciar_curva(novo_angulo, 0.4, angulo_cam, alvo_pos)
+
+func _on_area_caminho_circo_entered(body: Node3D) -> void:
+	if body != self:
+		return
+	if is_on_path:
+		return
+		
+	var cena_raiz = get_tree().get_root()
+	var etapa_parque = cena_raiz.find_child("EtapaParque", true, false)
+	if etapa_parque:
+		var caminho_circo = etapa_parque.find_child("CaminhoCirco", true, false)
+		if caminho_circo:
+			var path_follow = caminho_circo.find_child("PathFollow3D", true, false)
+			if path_follow:
+				print("Pomni entrou no CaminhoCirco!")
+				entrar_no_caminho(path_follow)

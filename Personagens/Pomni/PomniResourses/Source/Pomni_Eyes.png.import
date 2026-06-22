@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bebtcrhyv3qvx"
-path.s3tc="res://.godot/imported/Pomni_Eyes.png-17e9edbe23766ff013d5ef061d7c26a8.s3tc.ctex"
+path.s3tc="res://.godot/imported/Pomni_Eyes.png-8218ab08aba475533bf2c84d57e237cc.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Personagens/PomniResourses/Source/Pomni_Eyes.png"
-dest_files=["res://.godot/imported/Pomni_Eyes.png-17e9edbe23766ff013d5ef061d7c26a8.s3tc.ctex"]
+source_file="res://Personagens/Pomni/PomniResourses/Source/Pomni_Eyes.png"
+dest_files=["res://.godot/imported/Pomni_Eyes.png-8218ab08aba475533bf2c84d57e237cc.s3tc.ctex"]
 
 [params]
 
