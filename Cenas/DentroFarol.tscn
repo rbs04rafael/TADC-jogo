@@ -170,72 +170,6 @@ lightmap_size_hint = Vector2i(6, 4)
 flip_faces = true
 size = Vector2(0.8, 0.5)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_sjkwv"]
-size = Vector2(40, 45)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5iya"]
-render_priority = 0
-shader = ExtResource("6_dg3k6")
-shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
-shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
-shader_parameter/tamanho_dos_quadrados = 12.0
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2msw6"]
-points = PackedVector3Array(-62.5, 0, -62.5, -62.5, 0, 62.5, 62.5, 0, -62.5, 62.5, 0, 62.5)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_rpbe6"]
-size = Vector2(30, 25)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg3k6"]
-render_priority = 0
-shader = ExtResource("6_dg3k6")
-shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
-shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
-shader_parameter/tamanho_dos_quadrados = 12.0
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dg3k6"]
-data = PackedVector3Array(15, 0, 12.5, -15, 0, 12.5, 15, 0, -12.5, -15, 0, 12.5, -15, 0, -12.5, 15, 0, -12.5)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_x5iya"]
-size = Vector2(12, 10)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_inwgv"]
-render_priority = 0
-shader = ExtResource("6_dg3k6")
-shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
-shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
-shader_parameter/tamanho_dos_quadrados = 12.0
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_inwgv"]
-data = PackedVector3Array(6, 0, 5, -6, 0, 5, 6, 0, -5, -6, 0, 5, -6, 0, -5, 6, 0, -5)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_roniq"]
-size = Vector2(6, 19)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5pr2"]
-render_priority = 0
-shader = ExtResource("6_dg3k6")
-shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
-shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
-shader_parameter/tamanho_dos_quadrados = 12.0
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_t5pr2"]
-data = PackedVector3Array(2.5, 0, 9.5, -2.5, 0, 9.5, 2.5, 0, -9.5, -2.5, 0, 9.5, -2.5, 0, -9.5, 2.5, 0, -9.5)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_u7qha"]
-lightmap_size_hint = Vector2i(42, 37)
-size = Vector2(8, 6)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u7qha"]
-render_priority = 0
-shader = ExtResource("6_dg3k6")
-shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
-shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
-shader_parameter/tamanho_dos_quadrados = 12.0
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5e4x4"]
-data = PackedVector3Array(4, 0, 3.5, -4, 0, 3.5, 4, 0, -3.5, -4, 0, 3.5, -4, 0, -3.5, 4, 0, -3.5)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5iya"]
 albedo_color = Color(1, 0.84313726, 0, 1)
 emission = Color(1, 0.84313726, 0, 1)
@@ -277,6 +211,32 @@ size = Vector2(0.8, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_roniq"]
 size = Vector3(1.5543213, 2.5724487, 0.30241698)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sjkwv"]
+size = Vector2(40, 45)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5iya"]
+render_priority = 0
+shader = ExtResource("6_dg3k6")
+shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
+shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
+shader_parameter/tamanho_dos_quadrados = 12.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2msw6"]
+points = PackedVector3Array(-62.5, 0, -62.5, -62.5, 0, 62.5, 62.5, 0, -62.5, 62.5, 0, 62.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rpbe6"]
+size = Vector2(30, 25)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg3k6"]
+render_priority = 0
+shader = ExtResource("6_dg3k6")
+shader_parameter/cor_escura = Color(0.1, 0.1, 0.15, 1)
+shader_parameter/cor_clara = Color(0.9, 0.9, 0.9, 1)
+shader_parameter/tamanho_dos_quadrados = 12.0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dg3k6"]
+data = PackedVector3Array(15, 0, 12.5, -15, 0, 12.5, 15, 0, -12.5, -15, 0, 12.5, -15, 0, -12.5, 15, 0, -12.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c7r8n"]
 resource_name = "Rubber"
@@ -526,59 +486,6 @@ transform = Transform3D(0.9996327, -0.02574253, -0.008482583, -0.0102699455, -0.
 material_override = SubResource("StandardMaterial3D_bw8cr")
 mesh = SubResource("PlaneMesh_4wln7")
 
-[node name="ChaoBase" type="MeshInstance3D" parent="Farol" unique_id=1149328613]
-transform = Transform3D(-0.09202298, 0, -0.99575686, 0, 1, 0, 0.99575686, 0, -0.09202298, -46.253407, 1.3860006, -96.46175)
-mesh = SubResource("PlaneMesh_sjkwv")
-surface_material_override/0 = SubResource("ShaderMaterial_x5iya")
-
-[node name="AreaMorte" type="Area3D" parent="Farol/ChaoBase" unique_id=371377763]
-script = ExtResource("Script_ChaoMorteFarol")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoBase/AreaMorte" unique_id=1447605518]
-shape = SubResource("ConvexPolygonShape3D_2msw6")
-
-[node name="ChaoCima" type="Node3D" parent="Farol" unique_id=1850838244]
-
-[node name="ChaoCima1" type="MeshInstance3D" parent="Farol/ChaoCima" unique_id=411269494]
-transform = Transform3D(0.0006457642, 0, -0.9999998, 0, 1, 0, 0.9999998, 0, 0.0006457642, -54.14824, 32.480755, -94.66377)
-mesh = SubResource("PlaneMesh_rpbe6")
-surface_material_override/0 = SubResource("ShaderMaterial_dg3k6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Farol/ChaoCima/ChaoCima1" unique_id=1473009791]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoCima/ChaoCima1/StaticBody3D" unique_id=1424353302]
-shape = SubResource("ConcavePolygonShape3D_dg3k6")
-
-[node name="ChaoCima2" type="MeshInstance3D" parent="Farol/ChaoCima" unique_id=2051795325]
-transform = Transform3D(-0.9991796, 0, 0.040497996, 0, 1, 0, -0.040497996, 0, -0.9991796, -37.181488, 32.48, -82.98008)
-mesh = SubResource("PlaneMesh_x5iya")
-surface_material_override/0 = SubResource("ShaderMaterial_inwgv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Farol/ChaoCima/ChaoCima2" unique_id=1485543804]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoCima/ChaoCima2/StaticBody3D" unique_id=1675914171]
-shape = SubResource("ConcavePolygonShape3D_inwgv")
-
-[node name="ChaoCima3" type="MeshInstance3D" parent="Farol/ChaoCima" unique_id=987966076]
-transform = Transform3D(-0.9999903, 0, -0.0044331327, 0, 1, 0, 0.0044331327, 0, -0.9999903, -34.799335, 32.48, -96.12944)
-mesh = SubResource("PlaneMesh_roniq")
-surface_material_override/0 = SubResource("ShaderMaterial_t5pr2")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Farol/ChaoCima/ChaoCima3" unique_id=1348611167]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoCima/ChaoCima3/StaticBody3D" unique_id=334788817]
-shape = SubResource("ConcavePolygonShape3D_t5pr2")
-
-[node name="ChaoCima4" type="MeshInstance3D" parent="Farol/ChaoCima" unique_id=961041753]
-transform = Transform3D(-0.9991796, 0, 0.040497996, 0, 1, 0, -0.040497996, 0, -0.9991796, -37.733604, 32.48, -104.66418)
-mesh = SubResource("PlaneMesh_u7qha")
-surface_material_override/0 = SubResource("ShaderMaterial_u7qha")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Farol/ChaoCima/ChaoCima4" unique_id=318722357]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/ChaoCima/ChaoCima4/StaticBody3D" unique_id=1841010091]
-shape = SubResource("ConcavePolygonShape3D_5e4x4")
-
 [node name="PortaCima" type="Node3D" parent="Farol" unique_id=1308732925]
 transform = Transform3D(-0.77121764, 0.010434121, -1.8452952, 0.038396284, 1.9996263, -0.0047404096, 1.8449252, -0.03725426, -0.7712737, -59.2912, 35.02262, -99.57186)
 script = ExtResource("8_roniq")
@@ -613,16 +520,36 @@ collision_mask = 3
 transform = Transform3D(1, 2.1047892e-07, 1.7881392e-07, -2.104789e-07, 1, -9.31312e-08, -1.7881393e-07, 9.313116e-08, 1, -0.15472198, 0.11062813, 0.023397446)
 shape = SubResource("BoxShape3D_roniq")
 
+[node name="Node3D" type="Node3D" parent="Farol" unique_id=292520532]
+
+[node name="ChaoBase" type="MeshInstance3D" parent="Farol/Node3D" unique_id=1149328613]
+transform = Transform3D(-0.09202298, 0, -0.99575686, 0, 1, 0, 0.99575686, 0, -0.09202298, -46.253407, 1.3860006, -96.46175)
+mesh = SubResource("PlaneMesh_sjkwv")
+surface_material_override/0 = SubResource("ShaderMaterial_x5iya")
+
+[node name="AreaMorte" type="Area3D" parent="Farol/Node3D/ChaoBase" unique_id=371377763]
+script = ExtResource("Script_ChaoMorteFarol")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/Node3D/ChaoBase/AreaMorte" unique_id=1447605518]
+shape = SubResource("ConvexPolygonShape3D_2msw6")
+
+[node name="ChaoCima1" type="MeshInstance3D" parent="Farol/Node3D" unique_id=411269494]
+transform = Transform3D(0.0006457642, 0, -0.9999998, 0, 1, 0, 0.9999998, 0, 0.0006457642, -54.14824, 32.480755, -94.66377)
+mesh = SubResource("PlaneMesh_rpbe6")
+surface_material_override/0 = SubResource("ShaderMaterial_dg3k6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Farol/Node3D/ChaoCima1" unique_id=1473009791]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Farol/Node3D/ChaoCima1/StaticBody3D" unique_id=1424353302]
+shape = SubResource("ConcavePolygonShape3D_dg3k6")
+
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("5_x5iya")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.816828, 2.448718, 3.0607505)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.626012, 2.950016, 3.7041025)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=511490549]
 transform = Transform3D(0.9998646, -3.5461576e-09, 0.016457677, 0.0007637875, 0.9989225, -0.046402693, -0.016439943, 0.04640898, 0.9987872, 0.40158272, 1.2190638, 4.506035)
 fov = 100.12928
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Pomni" unique_id=1381641655]
-transform = Transform3D(0.99999994, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 0.99999994, -0.8644695, 1.4450073, 0.5869541)
 
 [node name="Parkour" type="Node3D" parent="." unique_id=1635614568]
 

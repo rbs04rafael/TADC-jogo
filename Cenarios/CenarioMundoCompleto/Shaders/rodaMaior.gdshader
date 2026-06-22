@@ -1,6 +1,6 @@
 shader_type spatial;
 
-uniform float energy = 8.0;
+uniform float energy = 1.5;
 uniform float speed = 0.5;
 uniform float trail_length = 1;
 uniform float base_glow_intensity = 0.15;

@@ -1,6 +1,6 @@
 shader_type spatial;
 
-uniform float energy = 3.0; // Força do brilho
+uniform float energy = 1.5; // Força do brilho
 uniform float velocidade = 6.0; // Rapidez do piscar
 
 void fragment() {

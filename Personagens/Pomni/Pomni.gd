@@ -62,6 +62,7 @@ var fazendo_curva: bool = false
 # Pivô da câmera — criado em _ready() para orbitar sem rotacionar o CharacterBody3D
 var _camera_pivot: Node3D = null
 var _original_cam_pos: Vector3
+var _target_cam_pos: Vector3
 var _cam_ray: RayCast3D
 
 # --- VARIÁVEIS DA ÁGUA ---
@@ -97,7 +98,15 @@ func _ready():
 				ref_lanterna.visible = false
 			if ref_spotlight:
 				ref_spotlight.visible = false
-	
+				# Ajuste da lanterna: raio longo mas cone mais fechado e luz BEM intensa
+				ref_spotlight.spot_range = 10
+				ref_spotlight.spot_angle = 20
+				ref_spotlight.light_energy = 15
+				ref_spotlight.spot_attenuation = 0.5
+				
+				# Puxa a luz um pouquinho para trás para sair de dentro do modelo
+				ref_spotlight.position.z -= 0
+				
 	# Configurar pivô da câmera e o sistema anti-colisão (RayCast3D)
 	var cam = get_node_or_null("Camera3D")
 	if cam:
@@ -108,6 +117,7 @@ func _ready():
 		# Salva a posição original e local da câmera
 		var cam_local_transform = cam.transform
 		_original_cam_pos = cam_local_transform.origin
+		_target_cam_pos = _original_cam_pos
 		
 		# Reparenta a câmera
 		cam.get_parent().remove_child(cam)
@@ -210,6 +220,20 @@ func _ready():
 
 	# Conecta os sinais das curvas do Parque de Diversões de forma automática
 	call_deferred("_conectar_areas_parque")
+	
+	# Habilita a colisão do soco (Godot 4 exige que fique ativado para detectar)
+	var hitbox = find_child("HitboxSoco", true, false)
+	if hitbox:
+		for child in hitbox.get_children():
+			if child is CollisionShape3D:
+				child.disabled = false
+				
+		# Reparenta para o modelo visual para que a hitbox de soco acompanhe a rotação visual!
+		if hitbox.get_parent() != visual_model:
+			var old_transform = hitbox.transform
+			hitbox.get_parent().remove_child(hitbox)
+			visual_model.add_child(hitbox)
+			hitbox.transform = old_transform
 
 func _process(delta: float) -> void:
 	# Debug: Rotação manual da câmera com 'J' e 'K'
@@ -218,6 +242,21 @@ func _process(delta: float) -> void:
 			_camera_pivot.rotation.y += 2.0 * delta
 		elif Input.is_physical_key_pressed(KEY_K):
 			_camera_pivot.rotation.y -= 2.0 * delta
+
+	# Debug: Movimento lateral da câmera com 'M' (direita) e 'N' (esquerda)
+	if _camera_pivot:
+		var cam_debug = _camera_pivot.get_node_or_null("Camera3D")
+		if cam_debug:
+			var move_speed = 5.0 * delta
+			# Pega o eixo X real da câmera (direita e esquerda na tela) ignorando o Y
+			var right_dir = cam_debug.global_transform.basis.x
+			right_dir.y = 0
+			right_dir = right_dir.normalized()
+			
+			if Input.is_physical_key_pressed(KEY_M):
+				_camera_pivot.global_position += right_dir * move_speed
+			elif Input.is_physical_key_pressed(KEY_N):
+				_camera_pivot.global_position -= right_dir * move_speed
 
 	# Debug: Zoom da câmera com 'I' (afastar) e 'O' (aproximar)
 	if _camera_pivot and _cam_ray:
@@ -291,19 +330,10 @@ func socar() -> void:
 	print("Pomni desferiu um soco!")
 	var hitbox = find_child("HitboxSoco", true, false)
 	if hitbox:
-		# Ativa colisão rapidamente
-		var col = hitbox.find_child("CollisionShape3D", true, false)
-		if col:
-			col.disabled = false
-			# Verifica o que tem na área e aplica dano
-			var corpos = hitbox.get_overlapping_bodies()
-			for body in corpos:
-				if body.has_method("receber_dano") and body != self:
-					body.receber_dano(25)
-			
-			# Desativa logo depois (simulando a duração do soco)
-			await get_tree().create_timer(0.2).timeout
-			col.disabled = true
+		var corpos = hitbox.get_overlapping_bodies()
+		for body in corpos:
+			if body.has_method("receber_dano") and body != self:
+				body.receber_dano(25, global_position)
 
 func equipar_lanterna() -> void:
 	tem_lanterna = true
@@ -330,7 +360,7 @@ func equipar_lanterna() -> void:
 # ==========================================
 # SISTEMA DE CURVA — Rotaciona apenas a câmera, nunca o CharacterBody3D
 # ==========================================
-func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float = -999.0, centro_alvo: Vector3 = Vector3(INF, INF, INF)):
+func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float = -999.0, centro_alvo: Vector3 = Vector3(INF, INF, INF), cam_offset: Vector3 = Vector3.ZERO):
 	if fazendo_curva:
 		return
 	fazendo_curva = true
@@ -346,15 +376,19 @@ func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float 
 	if centro_alvo.x != INF:
 		var angulo_norm = fposmod(novo_angulo_y, TAU)
 		var epsilon = 0.1
-		var tween_pos = create_tween()
-		tween_pos.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS) # Roda junto com a física
+		var eh_z = abs(angulo_norm - PI/2) < epsilon or abs(angulo_norm - 3*PI/2) < epsilon
+		var eh_x = abs(angulo_norm) < epsilon or abs(angulo_norm - PI) < epsilon or abs(angulo_norm - TAU) < epsilon
 		
-		# Se a nova direção for no eixo Z (90 graus ou 270/-90 graus), o eixo lateral é o X
-		if abs(angulo_norm - PI/2) < epsilon or abs(angulo_norm - 3*PI/2) < epsilon:
-			tween_pos.tween_property(self, "global_position:x", centro_alvo.x, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		# Se a nova direção for no eixo X (0 graus ou 180 graus), o eixo lateral é o Z
-		elif abs(angulo_norm) < epsilon or abs(angulo_norm - PI) < epsilon or abs(angulo_norm - TAU) < epsilon:
-			tween_pos.tween_property(self, "global_position:z", centro_alvo.z, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		if eh_z or eh_x:
+			var tween_pos = create_tween()
+			tween_pos.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS) # Roda junto com a física
+			
+			# Se a nova direção for no eixo Z (90 graus ou 270/-90 graus), o eixo lateral é o X
+			if eh_z:
+				tween_pos.tween_property(self, "global_position:x", centro_alvo.x, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			# Se a nova direção for no eixo X (0 graus ou 180 graus), o eixo lateral é o Z
+			elif eh_x:
+				tween_pos.tween_property(self, "global_position:z", centro_alvo.z, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
 	# Calcula o caminho mais curto para o angulo_movimento
 	var diff_mov = fposmod(novo_angulo_y - angulo_movimento + PI, TAU) - PI
@@ -369,7 +403,12 @@ func iniciar_curva(novo_angulo_y: float, duracao: float, angulo_camera_y: float 
 		var diff_cam = fposmod(angulo_camera_y - _camera_pivot.rotation.y + PI, TAU) - PI
 		var cam_alvo_continuo = _camera_pivot.rotation.y + diff_cam
 		var tween_cam = create_tween()
+		tween_cam.set_parallel(true)
 		tween_cam.tween_property(_camera_pivot, "rotation:y", cam_alvo_continuo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		
+		# Anima o offset da câmera (para aproximar/afastar ou deslocar lateralmente)
+		var pos_alvo = _original_cam_pos + cam_offset
+		tween_cam.tween_property(self, "_target_cam_pos", pos_alvo, duracao).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
 	# Rotaciona o modelo visual pelo caminho mais curto (usa o angulo_mov_continuo para acompanhar o movimento)
 	var tween_visual = create_tween()
@@ -479,6 +518,9 @@ func _physics_process(delta: float) -> void:
 					# Se a luz estava batendo na parede atrás, "+ frente" vai jogar o raio 
 					# exatamente 180 graus pro outro lado (pra frente da Pomni)!
 					ref_spotlight.look_at(ref_spotlight.global_position + frente, Vector3.UP)
+					
+					# Inclina a lanterna um pouco para baixo para a luz bater no chão mais perto dela!
+					ref_spotlight.rotate_object_local(Vector3.RIGHT, deg_to_rad(-8.0))
 			
 	update_animations()
 
@@ -486,11 +528,12 @@ func _physics_process(delta: float) -> void:
 	if _camera_pivot and _cam_ray:
 		var cam = _camera_pivot.get_node_or_null("Camera3D")
 		if cam:
+			_cam_ray.target_position = _target_cam_pos - _cam_ray.position
 			_cam_ray.force_raycast_update()
 			if _cam_ray.is_colliding():
 				cam.global_position = _cam_ray.get_collision_point() + _cam_ray.get_collision_normal() * 0.25
 			else:
-				cam.position = _original_cam_pos
+				cam.position = _target_cam_pos
 
 func handle_climbing(delta: float) -> void:
 	# Reseta as velocidades horizontais para ela não escorregar
@@ -583,9 +626,34 @@ func apply_gravity(delta: float) -> void:
 func entrar_na_agua(y_superficie: float):
 	na_agua = true
 	altura_agua = y_superficie
+	_aplicar_cor_vermelha_agua()
 
 func sair_da_agua():
 	na_agua = false
+	_remover_cor_vermelha_agua()
+
+func _aplicar_cor_vermelha_agua() -> void:
+	var meshes = []
+	if visual_model:
+		_buscar_meshes(visual_model, meshes)
+		
+	var red_mat = StandardMaterial3D.new()
+	red_mat.albedo_color = Color(1, 0, 0, 0.5)
+	red_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	red_mat.emission_enabled = true
+	red_mat.emission = Color(1, 0, 0)
+	red_mat.emission_energy_multiplier = 2.0
+	
+	for mesh in meshes:
+		mesh.material_overlay = red_mat
+
+func _remover_cor_vermelha_agua() -> void:
+	var meshes = []
+	if visual_model:
+		_buscar_meshes(visual_model, meshes)
+	for mesh in meshes:
+		if is_instance_valid(mesh):
+			mesh.material_overlay = null
 
 func handle_jump() -> void:
 	if is_on_floor() or na_agua:
@@ -680,6 +748,11 @@ func handle_path_movement(delta: float) -> void:
 		global_position = trilho_atual.global_position
 		velocity.x = direction * current_speed
 		velocity.y = 0.0
+		
+		# NOVO: Mantém a câmera sempre atrás da Pomni enquanto ela estiver no caminho (visão em 3ª pessoa)
+		# APENAS no CaminhoParque!
+		if _camera_pivot and trilho_atual.get_parent() and "Parque" in trilho_atual.get_parent().name:
+			_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, visual_model.rotation.y + PI + 1, 4.0 * delta)
 
 func update_animations() -> void:
 	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
@@ -718,19 +791,67 @@ func entrar_no_caminho(carrinho: PathFollow3D) -> void:
 func sair_do_caminho() -> void:
 	is_on_path = false
 	trilho_atual = null
+	
 	# Atualiza a posição inicial para que ela assuma a nova profundidade onde o trilho terminou
+	z_inicial = global_position.z
+	x_inicial = global_position.x
 	
 	if escada_pendente != null:
 		var escada_temp = escada_pendente
 		escada_pendente = null
 		entrar_na_escada(escada_temp)
 
-func receber_dano(quantidade: float) -> void:
-	vida -= quantidade
-	print("Pomni recebeu dano do morcego! Vida atual: ", int(vida))
+func receber_dano(quantidade: float, origem: Vector3 = Vector3.ZERO, aplicar_knockback: bool = true) -> void:
+	vida -= abs(quantidade) # Garante que a vida seja subtraída
+	print("Pomni recebeu dano! Vida atual: ", int(vida))
+	
+	if aplicar_knockback:
+		# Efeito de Knockback corrigido (Horizontal)
+		if origem != Vector3.ZERO:
+			var dir = (global_position - origem)
+			dir.y = 0 # Ignora a altura para não jogar pro alto
+			
+			if dir.length_squared() < 0.001:
+				dir = -visual_model.global_transform.basis.z.normalized()
+			else:
+				dir = dir.normalized()
+				
+			velocity.x = dir.x * 15.0
+			velocity.z = dir.z * 15.0
+			velocity.y = 3.0 # Apenas um pequeno pulo, não a força principal
+		else:
+			# Knockback genérico (Morcego)
+			var backward = -visual_model.global_transform.basis.z.normalized()
+			velocity.x = backward.x * 15.0
+			velocity.z = backward.z * 15.0
+			velocity.y = 3.0
+		
+	# Efeito visual de Dano (Piscar Vermelho)
+	var meshes = []
+	if visual_model:
+		_buscar_meshes(visual_model, meshes)
+		
+	var red_mat = StandardMaterial3D.new()
+	red_mat.albedo_color = Color(1, 0, 0, 0.5)
+	red_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	red_mat.emission_enabled = true
+	red_mat.emission = Color(1, 0, 0)
+	red_mat.emission_energy_multiplier = 2.0
+	
+	for mesh in meshes:
+		mesh.material_overlay = red_mat
+		
 	if vida <= 0:
 		print("Pomni morreu!")
 		get_tree().reload_current_scene()
+		
+	# Remove o vermelho após 0.2 segundos (piscar)
+	await get_tree().create_timer(0.2).timeout
+	for mesh in meshes:
+		# Verifica se o mesh ainda existe antes de limpar (previne erro se a cena recarregar)
+		if is_instance_valid(mesh):
+			if not na_agua:
+				mesh.material_overlay = null
 
 func ativar_brilho_corpo() -> void:
 	if has_node("LuzPessoalPomni_0"):
@@ -832,9 +953,27 @@ func _on_virada_parque_entered(body: Node3D, index: int, area: Area3D) -> void:
 			alvo_pos = child.global_position
 			break
 			
-	var angulo_cam = -999.0
-	if index <= 3:
-		angulo_cam = novo_angulo + PI
+	# Lógica Customizada de Câmera e Offset baseada no pedido
+	var angulo_cam = novo_angulo - PI/2 # Padrão: 3ª pessoa nas costas
+	var cam_offset = Vector3.ZERO
+	
+	if index in [1, 2, 6]:
+		# Visão terceira pessoa (nas costas)
+		angulo_cam = novo_angulo - PI/2
+		cam_offset = Vector3.ZERO
+	elif index == 3:
+		# Deslocada para esquerda e um pouco de zoom out
+		angulo_cam = novo_angulo + PI + 0.3
+		cam_offset = Vector3(-2, 0, -4) # X negativo = esquerda, Z positivo = zoom out
+		
+	elif index == 4:
+		# Rotacionada 90 graus (side-scroller)
+		angulo_cam = novo_angulo # Fica de lado
+		cam_offset = Vector3(2, 0, 4) # Mais para cima (Y positivo) e mais zoom out (Z maior)
+	elif index == 5:
+		# Deslocada para a direita e zoom out
+		angulo_cam = novo_angulo + 0.1 # Volta para as costas, mas deslocada
+		cam_offset = Vector3(1, 0, 1) # X positivo = direita
 		
 	# Define a linha pendente que será ativada ao fim da curva
 	if proxima_area:
@@ -850,7 +989,7 @@ func _on_virada_parque_entered(body: Node3D, index: int, area: Area3D) -> void:
 	else:
 		usar_linha_pendente = false
 		
-	iniciar_curva(novo_angulo, 0.4, angulo_cam, alvo_pos)
+	iniciar_curva(novo_angulo, 0.4, angulo_cam, alvo_pos, cam_offset)
 
 func _on_area_caminho_circo_entered(body: Node3D) -> void:
 	if body != self:
