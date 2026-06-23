@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0c5nt03bm1d"
+uid="uid://d3mvyf57mg6sf"
 path.s3tc="res://.godot/imported/LampadaFarol_LightMat_normal.png-a117ef7500517a5836baa6a8278c2994.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "8f8ca021c12a222fb84b202c578a66d9"
 }
 
 [deps]
@@ -30,7 +27,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://LampadaFarol_LightMat_normal.png"
+roughness/src_normal="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_normal.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

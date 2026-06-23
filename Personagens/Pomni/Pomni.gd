@@ -358,9 +358,8 @@ func _input(event: InputEvent) -> void:
 			print("Lanterna ligada: ", lanterna_ligada)
 			
 	# Atacar (Soco)
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or (event is InputEventKey and event.physical_keycode == KEY_Z and event.pressed and not event.echo):
 		socar()
-
 func socar() -> void:
 	# 1. Aplica o Dano imediatamente a CADA CLIQUE, mesmo se a animação já estiver tocando
 	print("Pomni desferiu um soco rápido!")

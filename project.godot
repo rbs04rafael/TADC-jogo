@@ -18,6 +18,13 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 Global="*res://Codigos/Global.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+
 [input]
 
 move_left={
@@ -52,10 +59,3 @@ move_right={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-
-[display]
-
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/window_width_override=1920
-window/size/window_height_override=1080

@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqinud3hqgywi"
+uid="uid://ch36ks7s7q56u"
 path.s3tc="res://.godot/imported/LampadaFarol_LightMat_baseColor.jpg-0cc9e8e23ef3e8e284ae62cde87f5301.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "36c29c62a3c1ff2108e30d40234ee5d8"
 }
 
 [deps]
