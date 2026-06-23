@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkxsb5nb4fdh6"
-path.s3tc="res://.godot/imported/PomniTeste_Eyes.png-b414d4e4d380a4565b77bcd31f0da31b.s3tc.ctex"
+uid="uid://b0jjem6xnly0x"
+path.s3tc="res://.godot/imported/PomniTeste_Eyes.png-a0ae1cb6a6c7328fb3c6035a0a811c4a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Fase1/PomniTeste_Eyes.png"
-dest_files=["res://.godot/imported/PomniTeste_Eyes.png-b414d4e4d380a4565b77bcd31f0da31b.s3tc.ctex"]
+source_file="res://Personagens/Pomni/PomniResourses/Source/PomniTeste_Eyes.png"
+dest_files=["res://.godot/imported/PomniTeste_Eyes.png-a0ae1cb6a6c7328fb3c6035a0a811c4a.s3tc.ctex"]
 
 [params]
 

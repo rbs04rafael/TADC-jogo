@@ -30,6 +30,7 @@ var usar_linha_pendente: bool = false
 var linha_inicio_pendente: Vector2
 var linha_fim_pendente: Vector2
 var esta_correndo: bool = false
+var esta_socando: bool = false
 
 # --- VARIÁVEIS DA LANTERNA ---
 var tem_lanterna: bool = false
@@ -110,6 +111,7 @@ func _ready():
 	var skeleton = find_child("Skeleton3D", true, false)
 	if skeleton:
 		ref_lanterna = skeleton.find_child("Lanterna", true, false)
+		
 		if ref_lanterna:
 			lanterna_offset_pos = ref_lanterna.position
 			ref_lanterna.top_level = true
@@ -256,6 +258,9 @@ func _ready():
 			hitbox.get_parent().remove_child(hitbox)
 			visual_model.add_child(hitbox)
 			hitbox.transform = old_transform
+			
+	# Conecta gatilho da IdaFase2 (fim do Circo)
+	call_deferred("_conectar_ida_fase_2")
 
 func _process(delta: float) -> void:
 	# Debug: Rotação manual da câmera com 'J' e 'K'
@@ -357,14 +362,34 @@ func _input(event: InputEvent) -> void:
 		socar()
 
 func socar() -> void:
-	# Aqui tocaria uma animação de soco. Por enquanto ativamos o hitbox.
-	print("Pomni desferiu um soco!")
+	# 1. Aplica o Dano imediatamente a CADA CLIQUE, mesmo se a animação já estiver tocando
+	print("Pomni desferiu um soco rápido!")
 	var hitbox = find_child("HitboxSoco", true, false)
 	if hitbox:
 		var corpos = hitbox.get_overlapping_bodies()
 		for body in corpos:
 			if body.has_method("receber_dano") and body != self:
 				body.receber_dano(25, global_position)
+				
+	# 2. Controle Visual da Animação
+	if esta_socando:
+		return # Se já está tocando, não reinicia a animação
+		
+	esta_socando = true
+	var tempo_soco = 0.5
+	var velocidade_soco = 2.5 # Acelerando a animação em 2.5x
+	
+	if animation_player:
+		# Toca a animação com blend de 0.1s e custom_speed de 2.5x
+		animation_player.play("Punch", 0.1, velocidade_soco)
+		if animation_player.has_animation("Punch"):
+			# O tempo de espera será a duração original dividida pela nova velocidade
+			tempo_soco = animation_player.get_animation("Punch").length / velocidade_soco
+				
+	# Espera exatamente a duração real da animação acelerada
+	await get_tree().create_timer(tempo_soco).timeout
+	esta_socando = false
+
 
 func equipar_lanterna() -> void:
 	tem_lanterna = true
@@ -597,11 +622,13 @@ func handle_climbing(_delta: float) -> void:
 		return
 	
 	if climb_dir != 0:
-		if animation_player.current_animation != "Walk":
-			animation_player.play("Walk", 0.2)
+		if animation_player.current_animation != "ClimbingDown":
+			animation_player.play("ClimbingDown", 0.2)
+		elif not animation_player.is_playing():
+			animation_player.play()
 	else:
-		if animation_player.current_animation != "Idle":
-			animation_player.play("Idle", 0.3)
+		if animation_player.current_animation == "ClimbingDown":
+			animation_player.pause()
 
 func entrar_na_escada(escada: Area3D) -> void:
 	if is_on_path:
@@ -622,6 +649,11 @@ func entrar_na_escada(escada: Area3D) -> void:
 		global_position.x = shape.global_position.x
 		global_position.z = shape.global_position.z
 		
+	# Rotaciona o modelo visual em 180 graus
+	if visual_model:
+		visual_model.rotation.y += PI - 1
+		visual_model.rotation.x -= 0.5 
+		visual_model.position.z -= 0.5
 	# Desativa travamento de linha ao escalar
 	travar_na_linha = false
 		
@@ -635,6 +667,11 @@ func sair_da_escada() -> void:
 	is_climbing = false
 	escada_atual = null
 	
+	# Retorna as propriedades modificadas para o padrão
+	if visual_model:
+		visual_model.rotation.x += 0.5
+		visual_model.position.z += 0.5
+		
 	# Atualiza a trava no ponto exato onde soltou a escada
 	travar_na_linha = false
 	
@@ -786,6 +823,9 @@ func handle_path_movement(delta: float) -> void:
 			_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, visual_model.rotation.y + PI + 1, 4.0 * delta)
 
 func update_animations() -> void:
+	if esta_socando or is_climbing:
+		return
+		
 	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	if not is_on_floor() and not is_on_path:
 		if velocity.y > 0.0:
@@ -796,8 +836,8 @@ func update_animations() -> void:
 				animation_player.play("Falling", 0.7)
 	elif horizontal_speed > 0.1:
 		if esta_correndo:
-			if animation_player.current_animation != "Walk":
-				animation_player.play("Walk", 0.2)
+			if animation_player.current_animation != "Run":
+				animation_player.play("Run", 0.2)
 		else:
 			if animation_player.current_animation != "Walk":
 				animation_player.play("Walk", 0.2)
@@ -1041,3 +1081,25 @@ func _on_area_caminho_circo_entered(body: Node3D) -> void:
 			if path_follow:
 				print("Pomni entrou no CaminhoCirco!")
 				entrar_no_caminho(path_follow)
+
+func _conectar_ida_fase_2() -> void:
+	var cena_raiz = get_tree().get_root()
+	var circo_node = cena_raiz.find_child("Circo", true, false)
+	if circo_node:
+		var ida_fase2 = circo_node.find_child("IdaFase2", true, false)
+		if ida_fase2 and ida_fase2 is Area3D:
+			ida_fase2.body_entered.connect(_on_ida_fase_2_entered)
+
+func _on_ida_fase_2_entered(body: Node3D) -> void:
+	if body != self:
+		return
+		
+	print("Pomni entrou na IdaFase2! Abrindo a tela final...")
+	
+	var script_tela = load("res://Codigos/tela_fim_fase.gd")
+	if script_tela:
+		var tela = script_tela.new()
+		get_tree().get_root().add_child(tela)
+		
+	# Pausa o jogo
+	get_tree().paused = true

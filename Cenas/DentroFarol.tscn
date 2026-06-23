@@ -544,7 +544,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_dg3k6")
 shape = SubResource("ConcavePolygonShape3D_dg3k6")
 
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("5_x5iya")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9119334, 34.235565, -3.833011)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.529885, 1.8027072, 3.0405867)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=511490549]
