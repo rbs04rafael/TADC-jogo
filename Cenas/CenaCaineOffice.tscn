@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c0i60ddvmtmtf"]
+
+[ext_resource type="PackedScene" uid="uid://bhqfr7f3juuck" path="res://Cenarios/CaineOffices/CenarioCaineOffice.tscn" id="1_sthh8"]
+[ext_resource type="PackedScene" uid="uid://dgu81px0xrn50" path="res://Personagens/Pomni/Pomni.tscn" id="2_8i777"]
+
+[node name="CenaCaineOffice" type="Node3D" unique_id=731327524]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CaineOffice" parent="." unique_id=525295074 instance=ExtResource("1_sthh8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_8i777")]
+transform = Transform3D(0.008307576, 0, -0.99996555, 0, 1, 0, 0.99996555, 0, 0.008307576, 2.2338948, 0.91643405, 3.684214)
+axis_lock_angular_z = true
+
+[node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=819291148]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.468359, 1.5808663, 0.7285522)
+fov = 107.47775

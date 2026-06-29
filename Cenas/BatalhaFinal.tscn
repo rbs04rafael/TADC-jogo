@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cnxbyykihbfb7"]
+
+[ext_resource type="PackedScene" uid="uid://dgu81px0xrn50" path="res://Personagens/Pomni/Pomni.tscn" id="1_pomni"]
+[ext_resource type="PackedScene" path="res://Personagens/Caim/CaineBoss.tscn" id="2_caine"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(30, 1, 40)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.15, 0.05, 0.15, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("StandardMaterial3D_floor")
+size = Vector3(30, 1, 40)
+
+[node name="BatalhaFinal" type="Node3D" unique_id=1016902706]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1854551984]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 15, 0)
+light_energy = 1.5
+shadow_enabled = true
+
+[node name="Chao" type="StaticBody3D" parent="." unique_id=459855757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Chao" unique_id=208931835]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Chao" unique_id=851827784]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="CaineBoss" parent="." unique_id=1378554019 instance=ExtResource("2_caine")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+
+[node name="Pomni" parent="." unique_id=470470822 instance=ExtResource("1_pomni")]
+transform = Transform3D(-0.99900275, 0, 0.044648018, 0, 1, 0, -0.044648018, 0, -0.99900275, 0, 0.15124714, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=98101090]
+transform = Transform3D(-0.99964404, 0, -0.026682954, 0, 1, 0, 0.026682954, 0, -0.99964404, 0.018632345, 2.5799518, -2.324891)
+fov = 108.03896

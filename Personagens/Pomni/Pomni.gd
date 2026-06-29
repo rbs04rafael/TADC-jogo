@@ -47,6 +47,7 @@ var intervalo_double_tap: int = 300 # Tempo máximo em milissegundos entre os to
 # --- VARIÁVEIS DO CAMINHO ---
 var is_on_path: bool = false
 var trilho_atual: PathFollow3D = null # Guarda o carrinho que a Pomni está usando no momento
+var esperando_decisao: bool = false # Variável para travar a Pomni nas bifurcações dos tubos
 
 # Gravidade
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -361,14 +362,27 @@ func _input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or (event is InputEventKey and event.physical_keycode == KEY_Z and event.pressed and not event.echo):
 		socar()
 func socar() -> void:
-	# 1. Aplica o Dano imediatamente a CADA CLIQUE, mesmo se a animação já estiver tocando
-	print("Pomni desferiu um soco rápido!")
-	var hitbox = find_child("HitboxSoco", true, false)
-	if hitbox:
-		var corpos = hitbox.get_overlapping_bodies()
-		for body in corpos:
-			if body.has_method("receber_dano") and body != self:
-				body.receber_dano(25, global_position)
+	var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
+	
+	if "Batalha" in scene_name:
+		print("Pomni atirou um projetil magico!")
+		var cena_tiro = load("res://Cenas/TiroPomni.tscn")
+		if cena_tiro:
+			var tiro = cena_tiro.instantiate()
+			get_tree().current_scene.add_child(tiro)
+			# Posiciona na frente da Pomni
+			tiro.global_position = global_position + Vector3(0, 1.2, -0.5)
+			# Direção sempre para o fundo
+			tiro.direction = Vector3(0, 0, -1)
+	else:
+		# 1. Aplica o Dano imediatamente a CADA CLIQUE, mesmo se a animação já estiver tocando
+		print("Pomni desferiu um soco rápido!")
+		var hitbox = find_child("HitboxSoco", true, false)
+		if hitbox:
+			var corpos = hitbox.get_overlapping_bodies()
+			for body in corpos:
+				if body.has_method("receber_dano") and body != self:
+					body.receber_dano(25, global_position)
 				
 	# 2. Controle Visual da Animação
 	if esta_socando:
@@ -590,6 +604,28 @@ func _physics_process(delta: float) -> void:
 			else:
 				cam.position = _target_cam_pos
 
+	# ===== TRAVAMENTO CUPHEAD (BATALHA FINAL) =====
+	var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
+	if "Batalha" in scene_name:
+		# Trava a Pomni no eixo Z = 0 e impede que ela fuja da tela
+		global_position.z = 0
+		if global_position.x < -8.0:
+			global_position.x = -8.0
+		if global_position.x > 8.0:
+			global_position.x = 8.0
+		
+		# Força a câmera e a rotação da personagem para o fundo
+		if _camera_pivot:
+			_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, 0, 10.0 * delta)
+		if visual_model:
+			# Força a Pomni a olhar para o fundo da tela (ou para os lados dependendo do movimento, mas base Z)
+			if velocity.x > 0.1:
+				visual_model.rotation.y = lerp_angle(visual_model.rotation.y, -PI/2, 10 * delta)
+			elif velocity.x < -0.1:
+				visual_model.rotation.y = lerp_angle(visual_model.rotation.y, PI/2, 10 * delta)
+			else:
+				visual_model.rotation.y = lerp_angle(visual_model.rotation.y, 0, 10 * delta)
+
 func handle_climbing(_delta: float) -> void:
 	# Reseta as velocidades horizontais para ela não escorregar
 	velocity.x = 0
@@ -618,7 +654,6 @@ func handle_climbing(_delta: float) -> void:
 	# Se bater no chão ao descer, solta a escada (colisão natural restaurada!)
 	if is_on_floor() and climb_dir < 0:
 		sair_da_escada()
-		return
 	
 	if climb_dir != 0:
 		if animation_player.current_animation != "ClimbingDown":
@@ -782,6 +817,11 @@ func handle_movement(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, deccel * current_speed * delta)
 
 func handle_path_movement(delta: float) -> void:
+	if esperando_decisao:
+		velocity.x = 0
+		velocity.y = 0
+		return
+		
 	var direction := Input.get_axis("move_left", "move_right")
 	
 	if Input.is_physical_key_pressed(KEY_SHIFT):
@@ -798,14 +838,34 @@ func handle_path_movement(delta: float) -> void:
 		if trilho_atual.progress_ratio <= 0.01 and direction < 0:
 			trilho_atual.progress_ratio = 0.0
 			velocity.x = 0
+			
 		# Se chegar no fim do caminho (0.99+), FORCE a saída do caminho
 		elif trilho_atual.progress_ratio >= 0.99 and direction > 0:
-			sair_do_caminho()
-			return
+			var parent_name = str(trilho_atual.get_parent().name) if trilho_atual.get_parent() else ""
+			if "Errado" in parent_name:
+				trilho_atual.progress_ratio = 0.99
+				velocity.x = 0
+			else:
+				sair_do_caminho()
+				return
 		else:
 			# Rotação visual enquanto anda no caminho
+			var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
+			var is_perseguicao = "Perseguicao" in scene_name
+			var is_EscritorioCaim = "Caine" in scene_name
+					
 			var rotacao_caminho = trilho_atual.global_rotation.y
+			
+			# Por padrão, todas as outras cenas do jogo usam o offset de -1
 			var rotacao_alvo = rotacao_caminho - PI - 1
+			
+			# Na Perseguição, ela deve ficar retinha
+			if is_perseguicao:
+				rotacao_alvo = rotacao_caminho + PI/2
+				
+			if is_EscritorioCaim:
+				rotacao_alvo = rotacao_caminho + PI/2
+				
 			if direction == -1:
 				rotacao_alvo = rotacao_alvo - PI
 			visual_model.rotation.y = lerp_angle(visual_model.rotation.y, rotacao_alvo, 8 * delta)
@@ -817,9 +877,21 @@ func handle_path_movement(delta: float) -> void:
 		velocity.y = 0.0
 		
 		# NOVO: Mantém a câmera sempre atrás da Pomni enquanto ela estiver no caminho (visão em 3ª pessoa)
-		# APENAS no CaminhoParque!
-		if _camera_pivot and trilho_atual.get_parent() and "Parque" in trilho_atual.get_parent().name:
-			_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, visual_model.rotation.y + PI + 1, 4.0 * delta)
+		if _camera_pivot:
+			var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
+			var is_perseguicao = "Perseguicao" in scene_name
+			
+			var is_parque = false
+			if trilho_atual.get_parent() and "Parque" in trilho_atual.get_parent().name:
+				is_parque = true
+				
+			# Roda a câmera APENAS no Parque ou na Perseguição!
+			if is_parque:
+				_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, visual_model.rotation.y + PI + 1, 4.0 * delta)
+			elif is_perseguicao:
+				_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, visual_model.rotation.y, 10.0 * delta)
+			else:
+				_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, visual_model.rotation.y - PI/2, 4.0 * delta)
 
 func update_animations() -> void:
 	if esta_socando or is_climbing:
@@ -870,6 +942,16 @@ func sair_do_caminho() -> void:
 		var escada_temp = escada_pendente
 		escada_pendente = null
 		entrar_na_escada(escada_temp)
+		
+	# Mudar o ângulo da câmera ao sair de um tubo baseado na Cena atual
+	var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
+	if "Caine" in scene_name:
+		# Quando sai do tubo (CaminhoCorredor) no escritório do Caine, 
+		# rotaciona a câmera para a visão Side-Scroller
+		var angulo_mov = 0.0 # Define a linha de movimento (horizontal)
+		var duracao_suave = 0.3 # 1 segundo para a câmera fazer a transição
+		var angulo_cam = deg_to_rad(-90) # 180 graus (ou 0, 90, -90, ajuste conforme ficar melhor visualmente!)
+		iniciar_curva(angulo_mov, duracao_suave, angulo_cam)
 
 func receber_dano(quantidade: float, origem: Vector3 = Vector3.ZERO, aplicar_knockback: bool = true) -> void:
 	vida -= abs(quantidade) # Garante que a vida seja subtraída

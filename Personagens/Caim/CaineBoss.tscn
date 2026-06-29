@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://caineboss0000"]
+
+[ext_resource type="Script" path="res://Personagens/Caim/CaineBoss.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://wpakeb048xwv" path="res://Personagens/Caim/CaimFinalForm.tscn" id="2_caim"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_caine"]
+size = Vector3(5.0, 8.0, 2.0)
+
+[node name="CaineBoss" type="CharacterBody3D"]
+script = ExtResource("1_script")
+
+[node name="CaimFinalForm" parent="." instance=ExtResource("2_caim")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0, 0)
+shape = SubResource("BoxShape3D_caine")
