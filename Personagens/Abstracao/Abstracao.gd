@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export var speed: float = 6.0
-@export var damage: float = 25.0
+@export var damage: float = 20.0
 
 var is_furious: bool = false
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,14 +19,19 @@ var limite_a: Vector2
 var limite_b: Vector2
 var tem_limite: bool = false
 
+var modo_cuphead: bool = false
+var direcao_cuphead: int = 1
+
 func _ready() -> void:
-	# Encontra a Pomni na cena, já que agora as abstrações são colocadas manualmente
-	pomni = get_tree().get_root().find_child("Pomni", true, false)
+	# Só procura a Pomni se não tiverem passado a referência direta pra ela (O Boss Caine agora passa a ref)
+	if pomni == null:
+		pomni = get_tree().get_root().find_child("Pomni", true, false)
 	
 	_create_health_bar()
 	
-	# Mapeia as viradas para restringir o movimento da abstração ao segmento mais próximo
-	call_deferred("_mapear_limites")
+	# Mapeia as viradas para restringir o movimento apenas se não estiver no modo Cuphead!
+	if not modo_cuphead:
+		call_deferred("_mapear_limites")
 
 func _mapear_limites() -> void:
 	var cena_raiz = get_tree().get_root()
@@ -78,6 +83,28 @@ func _physics_process(delta: float) -> void:
 
 	if not pomni:
 		move_and_slide()
+		return
+		
+	if modo_cuphead:
+		velocity.x = direcao_cuphead * speed
+		velocity.z = 0
+		
+		# Faz a abstração olhar para a direção em que está correndo
+		# Como o modelo 3D é invertido (+Z pra frente), subtraímos o vetor direção
+		var dir = Vector3(direcao_cuphead, 0, 0)
+		var look_at_pos = global_position - dir
+		look_at_pos.y = global_position.y
+		if look_at_pos.distance_squared_to(global_position) > 0.001:
+			var target_transform = global_transform.looking_at(look_at_pos, Vector3.UP)
+			global_transform.basis = global_transform.basis.slerp(target_transform.basis, 15.0 * delta)
+		
+		move_and_slide()
+		_check_damage(delta)
+		
+		if direcao_cuphead > 0 and global_position.x > pomni.posicao_x_max + 2.0:
+			queue_free()
+		elif direcao_cuphead < 0 and global_position.x < pomni.posicao_x_min - 2.0:
+			queue_free()
 		return
 		
 	_check_flashlight()

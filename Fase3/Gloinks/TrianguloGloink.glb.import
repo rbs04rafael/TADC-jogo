@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cxbu184cxfdfs"
-path="res://.godot/imported/TuboLongo.glb-a9e883112f6922b97a921fb01249002f.scn"
+uid="uid://dbk0ojompjes7"
+path="res://.godot/imported/TrianguloGloink.glb-005870392090bbc3d430cadb8784ecde.scn"
 
 [deps]
 
-source_file="res://Fase3/TuboLongo.glb"
-dest_files=["res://.godot/imported/TuboLongo.glb-a9e883112f6922b97a921fb01249002f.scn"]
+source_file="res://Fase3/Gloinks/TrianguloGloink.glb"
+dest_files=["res://.godot/imported/TrianguloGloink.glb-005870392090bbc3d430cadb8784ecde.scn"]
 
 [params]
 

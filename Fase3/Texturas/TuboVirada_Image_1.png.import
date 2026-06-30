@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu0jdrcvx3g8g"
+uid="uid://cyxg26ayian35"
 path.s3tc="res://.godot/imported/TuboVirada_Image_1.png-8bbb2b8f3996e94a4cb157e53fe86716.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -30,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=8
-roughness/src_normal="res://Fase3/TuboVirada_Image_2.png"
+roughness/src_normal="res://Fase3/Tubos/TuboVirada_Image_2.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

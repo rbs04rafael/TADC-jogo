@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cdqngxpi66wxf"]
+
+[ext_resource type="Script" uid="uid://c5k3k4kkxnd2h" path="res://Personagens/Caim/GloinkCaindo.gd" id="1_lg06h"]
+[ext_resource type="PackedScene" uid="uid://dbk0ojompjes7" path="res://Fase3/Gloinks/TrianguloGloink.glb" id="2_c5htv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lg06h"]
+size = Vector3(1, 0.6623535, 0.3145752)
+
+[node name="TrianguloGloink" type="Area3D" unique_id=1340240982]
+script = ExtResource("1_lg06h")
+
+[node name="TrianguloGloink" parent="." unique_id=479630869 instance=ExtResource("2_c5htv")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -0.061781883, -0.42848098, -0.93339753)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=612750301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.097069085, 0.34866375, 0.013572574)
+shape = SubResource("BoxShape3D_lg06h")

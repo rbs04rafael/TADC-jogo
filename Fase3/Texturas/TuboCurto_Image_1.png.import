@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp4jpfyudmuby"
+uid="uid://bn7mgqhg24vgi"
 path.s3tc="res://.godot/imported/TuboCurto_Image_1.png-9fcc1648a24b2125238af13822ba7abf.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -30,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=8
-roughness/src_normal="res://Fase3/TuboCurto_Image_2.png"
+roughness/src_normal="res://Fase3/Tubos/TuboCurto_Image_2.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

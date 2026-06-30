@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://6h1sibths8xb"]
+
+[ext_resource type="Script" uid="uid://c5k3k4kkxnd2h" path="res://Personagens/Caim/GloinkCaindo.gd" id="1_eywhj"]
+[ext_resource type="PackedScene" uid="uid://2k6nhf8do3nw" path="res://Fase3/Gloinks/QuadradoGloink.glb" id="2_b6ef2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oqd5s"]
+size = Vector3(0.78811646, 0.76335144, 0.7019501)
+
+[node name="QuadradoGloink" type="Area3D" unique_id=1443215552]
+script = ExtResource("1_eywhj")
+
+[node name="QuadradoGloink" parent="." unique_id=1231276774 instance=ExtResource("2_b6ef2")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2069857785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05189514, 0.28342438, -0.008476257)
+shape = SubResource("BoxShape3D_oqd5s")

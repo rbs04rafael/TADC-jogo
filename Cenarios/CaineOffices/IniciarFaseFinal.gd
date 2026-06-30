@@ -10,5 +10,23 @@ func _ready() -> void:
 
 func on_body_entered(body: Node3D):
 	if body == pomni:
-		# Usa call_deferred para esperar a física terminar de processar a colisão antes de destruir a cena
-		get_tree().call_deferred("change_scene_to_file", "res://Cenas/BatalhaFinal.tscn")
+		if pomni.has_method("iniciar_batalha_final"):
+			pomni.iniciar_batalha_final()
+			
+		var anim_player = get_tree().current_scene.find_child("AnimationPlayer", true, false)
+		if anim_player:
+			anim_player.play("CaimSubindo")
+			
+			# Como a Godot só toca uma animação por vez no mesmo Player, 
+			# criamos um sub-player temporário na memória para tocar a segunda simultaneamente!
+			var sub_player = AnimationPlayer.new()
+			sub_player.add_animation_library("", anim_player.get_animation_library(""))
+			# Adiciona na mesma raiz da cena, para que os caminhos dos nós da animação funcionem
+			anim_player.get_parent().add_child(sub_player)
+			# Copia o caminho da raiz da animação original
+			sub_player.root_node = anim_player.root_node
+			
+			sub_player.play("CenarioBatalhaFinal")
+			
+		# Destrói o gatilho para não rodar duas vezes
+		call_deferred("queue_free")

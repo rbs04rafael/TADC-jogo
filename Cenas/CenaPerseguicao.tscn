@@ -519,7 +519,7 @@ shape = SubResource("BoxShape3D_jk3el")
 curve = SubResource("Curve3D_stegw")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="PerseguicaoTubos/EntradaCaminho/CaminhoInicial" unique_id=1164091797]
-transform = Transform3D(-0.99997294, -4.2648237e-05, 0.0069448454, -1.8189841e-12, 0.9999794, 0.0061408626, -0.0069449693, 0.0061407154, -0.99995506, -0.059344023, 0.5145996, 18.359846)
+transform = Transform3D(-0.9999729, -4.2648237e-05, 0.0069448454, -1.818984e-12, 0.9999794, 0.0061408626, -0.0069449693, 0.0061407154, -0.99995506, -0.059344023, 0.5145996, 18.359846)
 
 [node name="Decisao1" type="Area3D" parent="PerseguicaoTubos" unique_id=1291178999]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33776107, 0.9173565, 39.88657)
@@ -559,7 +559,7 @@ transform = Transform3D(-0.98942006, -0.084329456, -0.11805369, 0.084329434, -0.
 curve = SubResource("Curve3D_ss2e0")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="PerseguicaoTubos/Decisao2/CaminhoCerto" unique_id=2106332369]
-transform = Transform3D(-0.99716187, -0.0010893459, 0.07513818, 0, 0.9998519, 0.0144962, -0.07514737, 0.014454987, -0.99704, -0.011383057, 0.002216339, 0.0011253357)
+transform = Transform3D(-0.99716187, -0.0010893459, 0.075138174, 0, 0.9998519, 0.014496199, -0.07514737, 0.014454987, -0.9970399, -0.011383057, 0.002216339, 0.0011253357)
 
 [node name="Decisao3" type="Area3D" parent="PerseguicaoTubos" unique_id=923412682]
 transform = Transform3D(-0.99824, -9.3442117e-07, -0.05930621, -0.00079502165, -0.99990994, 0.013397515, -0.059300877, 0.0134212375, 0.99814993, 43.226715, 0.9173565, 40.0148)

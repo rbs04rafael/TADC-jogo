@@ -10,7 +10,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="Pomni" parent="." unique_id=1781205588 instance=ExtResource("2_8i777")]
-transform = Transform3D(0.008307576, 0, -0.99996555, 0, 1, 0, 0.99996555, 0, 0.008307576, 2.2338948, 0.91643405, 3.684214)
+transform = Transform3D(0.008307576, 0, -0.99996555, 0, 1, 0, 0.99996555, 0, 0.008307576, -69.08015, 6.372658, 3.684208)
 axis_lock_angular_z = true
 
 [node name="Camera3D" type="Camera3D" parent="Pomni" unique_id=819291148]

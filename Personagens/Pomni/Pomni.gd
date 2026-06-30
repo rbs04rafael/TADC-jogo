@@ -32,6 +32,13 @@ var linha_fim_pendente: Vector2
 var esta_correndo: bool = false
 var esta_socando: bool = false
 
+# --- VARIÁVEIS DA BATALHA FINAL ---
+var em_batalha_final: bool = false
+var camera_batalha_rot: Vector3 = Vector3.ZERO
+var posicao_z_congelada: float = 0.0
+var posicao_x_min: float = 0.0
+var posicao_x_max: float = 0.0
+
 # --- VARIÁVEIS DA LANTERNA ---
 var tem_lanterna: bool = false
 var lanterna_ligada: bool = false
@@ -302,7 +309,8 @@ func _process(delta: float) -> void:
 		if mudou_zoom:
 			_cam_ray.target_position = _original_cam_pos - _cam_ray.position
 
-	if regenerando and vida < vida_maxima:
+	# A vida não regenera durante a Batalha Final contra o Boss!
+	if regenerando and not em_batalha_final and vida < vida_maxima:
 		vida += 3.0 * delta # Recuperação mais lenta (3 de vida por segundo)
 		if vida > vida_maxima:
 			vida = vida_maxima
@@ -362,18 +370,24 @@ func _input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or (event is InputEventKey and event.physical_keycode == KEY_Z and event.pressed and not event.echo):
 		socar()
 func socar() -> void:
-	var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
-	
-	if "Batalha" in scene_name:
+	if em_batalha_final:
 		print("Pomni atirou um projetil magico!")
 		var cena_tiro = load("res://Cenas/TiroPomni.tscn")
 		if cena_tiro:
 			var tiro = cena_tiro.instantiate()
 			get_tree().current_scene.add_child(tiro)
 			# Posiciona na frente da Pomni
-			tiro.global_position = global_position + Vector3(0, 1.2, -0.5)
-			# Direção sempre para o fundo
-			tiro.direction = Vector3(0, 0, -1)
+			tiro.global_position = global_position + Vector3(0, 1.2, 0)
+			# Na batalha final, o tiro vai na direção onde o mouse aponta!
+			var cam = get_viewport().get_camera_3d()
+			if cam:
+				var mouse_pos = get_viewport().get_mouse_position()
+				# Projeta a posição do mouse a 20 metros de distância (logo à frente da Pomni)
+				# Isso faz o tiro cruzar o ponteiro visualmente bem mais cedo!
+				var alvo_3d = cam.project_position(mouse_pos, 20.0)
+				tiro.direction = (alvo_3d - tiro.global_position).normalized()
+			else:
+				tiro.direction = Vector3(0, 0, -1)
 	else:
 		# 1. Aplica o Dano imediatamente a CADA CLIQUE, mesmo se a animação já estiver tocando
 		print("Pomni desferiu um soco rápido!")
@@ -604,27 +618,32 @@ func _physics_process(delta: float) -> void:
 			else:
 				cam.position = _target_cam_pos
 
-	# ===== TRAVAMENTO CUPHEAD (BATALHA FINAL) =====
-	var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
-	if "Batalha" in scene_name:
-		# Trava a Pomni no eixo Z = 0 e impede que ela fuja da tela
-		global_position.z = 0
-		if global_position.x < -8.0:
-			global_position.x = -8.0
-		if global_position.x > 8.0:
-			global_position.x = 8.0
+	# ===== TRAVAMENTO CUPHEAD (BATALHA FINAL INTEGRADA) =====
+	if em_batalha_final:
+		# A câmera fica totalmente estática e top_level (nós ativamos isso no iniciar_batalha_final)
+		# Limites simples baseados na posição X (Esquerda/Direita na tela):
+		# A Pomni agora caminha pelo eixo X.
+		if global_position.x < posicao_x_min:
+			global_position.x = posicao_x_min
+		if global_position.x > posicao_x_max:
+			global_position.x = posicao_x_max
+			
+		# E garante que o Z (profundidade em relação à câmera) não fuja NUNCA
+		global_position.z = posicao_z_congelada
+		velocity.z = 0
 		
-		# Força a câmera e a rotação da personagem para o fundo
-		if _camera_pivot:
-			_camera_pivot.rotation.y = lerp_angle(_camera_pivot.rotation.y, 0, 10.0 * delta)
+		# Força a Pomni a olhar para o Boss (fundo, eixo -Z) no idle, e pros lados quando corre
 		if visual_model:
-			# Força a Pomni a olhar para o fundo da tela (ou para os lados dependendo do movimento, mas base Z)
-			if velocity.x > 0.1:
-				visual_model.rotation.y = lerp_angle(visual_model.rotation.y, -PI/2, 10 * delta)
-			elif velocity.x < -0.1:
-				visual_model.rotation.y = lerp_angle(visual_model.rotation.y, PI/2, 10 * delta)
-			else:
-				visual_model.rotation.y = lerp_angle(visual_model.rotation.y, 0, 10 * delta)
+			var target_rot = PI/2 # Idle = Boss
+			var input_axis = Input.get_axis("move_left", "move_right")
+			if input_axis > 0.1:
+				target_rot = 0 # Direita
+			elif input_axis < -0.1:
+				target_rot = PI # Esquerda
+			visual_model.rotation.y = lerp_angle(visual_model.rotation.y, target_rot, 12 * delta)
+		
+		return
+
 
 func handle_climbing(_delta: float) -> void:
 	# Reseta as velocidades horizontais para ela não escorregar
@@ -806,10 +825,11 @@ func handle_movement(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, direction.z * current_speed, accel * current_speed * delta)
 		
 		# Rotação visual do modelo baseada na direção de input + ângulo da curva (absoluto/global)
-		var rotacao_alvo = angulo_movimento + PI/2
-		if input_axis == -1:
-			rotacao_alvo = angulo_movimento - PI/2
-		visual_model.global_rotation.y = lerp_angle(visual_model.global_rotation.y, rotacao_alvo, 8 * delta)
+		if not em_batalha_final:
+			var rotacao_alvo = angulo_movimento + PI/2
+			if input_axis == -1:
+				rotacao_alvo = angulo_movimento - PI/2
+			visual_model.global_rotation.y = lerp_angle(visual_model.global_rotation.y, rotacao_alvo, 8 * delta)
 	else:
 		# Desaceleração mais suave na água (flutuando/derrapando levemente no líquido)
 		var deccel = 2.0 if na_agua else 10.0
@@ -1184,3 +1204,60 @@ func _on_ida_fase_2_entered(body: Node3D) -> void:
 		
 	# Pausa o jogo
 	get_tree().paused = true
+
+func iniciar_batalha_final() -> void:
+	em_batalha_final = true
+	print("Pomni entrou no modo Batalha Final (Cuphead)!")
+	
+	# Destrava o mouse obrigatoriamente para poder mirar
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	if _camera_pivot:
+		# Solta a câmera do corpo da Pomni para ela não andar junto
+		_camera_pivot.set_as_top_level(true)
+		
+		# Define a posição da câmera travada (Afastada no eixo Z para a câmera ficar atrás)
+		# Reduzido de 6.0 para 4.5 para dar mais zoom
+		_camera_pivot.global_position = global_position + Vector3(0, 2, 2)
+		
+		# O pivot vira 90 graus para anular a rotação local bizarra da Camera3D filha, fazendo ela apontar reto pro -Z! 
+		_camera_pivot.rotation = Vector3(0, PI/2, 0)
+		
+	# Trava as bordas do corredor no eixo X (Esquerda e Direita da tela)
+	# Área lateral aumentada (de 7.0 para 14.0 metros para cada lado)
+	posicao_x_min = global_position.x - 14.0
+	posicao_x_max = global_position.x + 14.0
+	posicao_z_congelada = global_position.z
+	
+	# Move a Pomni no eixo X (Esquerda/Direita)
+	angulo_movimento = 0.0
+	
+	# Desliga as travas antigas de cena 2.5D para o nosso código fluir solto!
+	travar_eixo_x = false
+	travar_eixo_z = false
+	travar_na_linha = false
+	
+	# Força a malha a olhar para frente (-Z, onde o boss vai estar)
+	if visual_model:
+		visual_model.rotation.y = 0
+		
+	# Trava as bordas do corredor no eixo X (Esquerda e Direita) pelas BORDAS DA CÂMERA!
+	# Aguardamos 1 frame para garantir que a câmera assumiu a posição global
+	await get_tree().process_frame
+	if _camera_pivot:
+		var cam = _camera_pivot.get_node_or_null("Camera3D")
+		if cam:
+			var viewport_size = get_viewport().get_visible_rect().size
+			var distancia = abs(cam.global_position.z - posicao_z_congelada)
+			
+			# Pega a posição 3D do canto esquerdo e direito da tela, na exata profundidade da Pomni
+			var limite_esq = cam.project_position(Vector2(0, viewport_size.y / 2.0), distancia)
+			var limite_dir = cam.project_position(Vector2(viewport_size.x, viewport_size.y / 2.0), distancia)
+			
+			# Adiciona 0.5 de margem para o modelo 3D não vazar metade pra fora da tela
+			var margem = 0.5
+			posicao_x_min = min(limite_esq.x, limite_dir.x) + margem
+			posicao_x_max = max(limite_esq.x, limite_dir.x) - margem
+		else:
+			posicao_x_min = global_position.x - 14.0
+			posicao_x_max = global_position.x + 14.0

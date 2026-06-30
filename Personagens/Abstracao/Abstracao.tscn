@@ -4,9 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://sibg3abro7y4" path="res://Fase1/abstracao_Image_1.png" id="2_08g2j"]
 [ext_resource type="Texture2D" uid="uid://7pd8ghyw5n8w" path="res://Fase1/abstracao_Image_2.png" id="3_wf1ey"]
 [ext_resource type="Texture2D" uid="uid://b6o788084f03n" path="res://Fase1/abstracao_Image_3.png" id="4_k5w5m"]
-[ext_resource type="Script" uid="uid://cjqnxdjqyqw6r" path="res://Personagens/Abstracao/Abstracao.gd" id="5_abstr"]
 [ext_resource type="Script" uid="uid://cjqnxdjqyqw6r" path="res://Personagens/Abstracao/Abstracao.gd" id="6_abstr"]
-
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5fv1d"]
 resource_name = "Abstract_Body"
@@ -362,12 +360,11 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8xk0u"]
-height = 2.5957031
+height = 2.40625
 radius = 1.1699219
 
 [node name="NoAbstracao" type="CharacterBody3D" unique_id=1384687917]
 script = ExtResource("6_abstr")
-script = ExtResource("5_abstr")
 
 [node name="abstracao" type="Node3D" parent="." unique_id=857847889]
 transform = Transform3D(1, 0, 0, 0, 0.03530073, -0.9993767, 0, 0.9993767, 0.03530073, 0.13249576, 0, -0.025367498)
@@ -786,5 +783,5 @@ skin = SubResource("Skin_ebryj")
 skeleton = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1966888847]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5684652, -0.5052166)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4737387, -0.5052166)
 shape = SubResource("CylinderShape3D_8xk0u")

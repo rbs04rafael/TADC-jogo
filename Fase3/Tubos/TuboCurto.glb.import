@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://4tdghwolkjqu"
-path="res://.godot/imported/TampaTubo.glb-79aebab474a3ca8f5da54a0cbe8eefd4.scn"
+uid="uid://7rr8cr36v34r"
+path="res://.godot/imported/TuboCurto.glb-ed74dc741c9e926a3e912db5eafbebbe.scn"
 
 [deps]
 
-source_file="res://Fase3/TampaTubo.glb"
-dest_files=["res://.godot/imported/TampaTubo.glb-79aebab474a3ca8f5da54a0cbe8eefd4.scn"]
+source_file="res://Fase3/Tubos/TuboCurto.glb"
+dest_files=["res://.godot/imported/TuboCurto.glb-ed74dc741c9e926a3e912db5eafbebbe.scn"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://u3qifem0uve"
-path="res://.godot/imported/TuboT.glb-919ebecbe6dd61b9fb065662778e4e2b.scn"
+uid="uid://b6mrujv5lh2ia"
+path="res://.godot/imported/EstrelaGloink.glb-5c3f22e1f33c71e40267ebc9d2ec856d.scn"
 
 [deps]
 
-source_file="res://Fase3/TuboT.glb"
-dest_files=["res://.godot/imported/TuboT.glb-919ebecbe6dd61b9fb065662778e4e2b.scn"]
+source_file="res://Fase3/Gloinks/EstrelaGloink.glb"
+dest_files=["res://.godot/imported/EstrelaGloink.glb-5c3f22e1f33c71e40267ebc9d2ec856d.scn"]
 
 [params]
 

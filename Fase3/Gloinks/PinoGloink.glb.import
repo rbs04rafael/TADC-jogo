@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://darpbusagu5wg"
-path="res://.godot/imported/TuboVirada.glb-4027f01295a5f66f68dcb197ac7ce484.scn"
+uid="uid://chaypw4um8kye"
+path="res://.godot/imported/PinoGloink.glb-232bcd5ad39e717df7ace03cf4aaf71c.scn"
 
 [deps]
 
-source_file="res://Fase3/TuboVirada.glb"
-dest_files=["res://.godot/imported/TuboVirada.glb-4027f01295a5f66f68dcb197ac7ce484.scn"]
+source_file="res://Fase3/Gloinks/PinoGloink.glb"
+dest_files=["res://.godot/imported/PinoGloink.glb-232bcd5ad39e717df7ace03cf4aaf71c.scn"]
 
 [params]
 

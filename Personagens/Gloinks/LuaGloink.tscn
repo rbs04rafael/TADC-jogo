@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cxtugd4l8rlc1"]
+
+[ext_resource type="PackedScene" uid="uid://cr2ueum5fwxcu" path="res://Fase3/Gloinks/LuaGloink.glb" id="1_73c77"]
+[ext_resource type="Script" uid="uid://c5k3k4kkxnd2h" path="res://Personagens/Caim/GloinkCaindo.gd" id="1_pre1e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pre1e"]
+size = Vector3(0.62597656, 0.7227173, 0.3491211)
+
+[node name="LuaGloink" type="Area3D" unique_id=1063223974]
+script = ExtResource("1_pre1e")
+
+[node name="LuaGloink" parent="." unique_id=514816186 instance=ExtResource("1_73c77")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -0.012725741, -0.47102654, -0.8004854)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1429546701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025878906, 0.4414978, 0.07788086)
+shape = SubResource("BoxShape3D_pre1e")

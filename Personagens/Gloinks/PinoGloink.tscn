@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b41cq7oly7bvp"]
+
+[ext_resource type="PackedScene" uid="uid://chaypw4um8kye" path="res://Fase3/Gloinks/PinoGloink.glb" id="1_auf4a"]
+[ext_resource type="Script" uid="uid://c5k3k4kkxnd2h" path="res://Personagens/Caim/GloinkCaindo.gd" id="1_wtdy3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wtdy3"]
+size = Vector3(0.42114842, 0.8128433, 0.5011482)
+
+[node name="PinoGloink" type="Area3D" unique_id=1294817079]
+script = ExtResource("1_wtdy3")
+
+[node name="PinoGloink" parent="." unique_id=1598268543 instance=ExtResource("1_auf4a")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.044587463, -0.45951456, -0.79977965)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1435363507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.055133313, 0.39915848, -0.04398918)
+shape = SubResource("BoxShape3D_wtdy3")

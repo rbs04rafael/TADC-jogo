@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://7rr8cr36v34r"
-path="res://.godot/imported/TuboCurto.glb-2b139d5af7d8885db4acf0e3836b830c.scn"
+uid="uid://darpbusagu5wg"
+path="res://.godot/imported/TuboVirada.glb-a13f1ae74ca82c816d03b441846e658b.scn"
 
 [deps]
 
-source_file="res://Fase3/TuboCurto.glb"
-dest_files=["res://.godot/imported/TuboCurto.glb-2b139d5af7d8885db4acf0e3836b830c.scn"]
+source_file="res://Fase3/Tubos/TuboVirada.glb"
+dest_files=["res://.godot/imported/TuboVirada.glb-a13f1ae74ca82c816d03b441846e658b.scn"]
 
 [params]
 
