@@ -8,6 +8,10 @@ func _ready():
 	body_entered.connect(_on_body_entered)
 	area_entered.connect(_on_area_entered)
 	
+	# Faz o objeto girar o bico para a direção em que está voando (Essencial para balas)
+	if direction != Vector3.ZERO:
+		look_at(global_position + direction, Vector3.UP)
+	
 	# Destrói o tiro após alguns segundos para não pesar o jogo
 	var timer = get_tree().create_timer(life_time)
 	timer.timeout.connect(queue_free)

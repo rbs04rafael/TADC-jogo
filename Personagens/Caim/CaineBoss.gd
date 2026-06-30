@@ -76,6 +76,20 @@ func receber_dano(quantidade: float):
 
 func morrer():
 	print("Caine Final Form derrotado!")
+	
+	# Busca e deleta as portas para abrir passagem
+	var porta_direita = get_tree().get_root().find_child("PortaDireita", true, false)
+	if porta_direita:
+		porta_direita.queue_free()
+	
+	var porta_esquerda = get_tree().get_root().find_child("PortaEsquerda", true, false)
+	if porta_esquerda:
+		porta_esquerda.queue_free()
+		
+	# Finaliza a batalha final para a Pomni (retorna a câmera e destrava eixos)
+	if pomni_ref and pomni_ref.has_method("finalizar_batalha_final"):
+		pomni_ref.finalizar_batalha_final()
+		
 	# Aqui você pode carregar a cena de zeramento ou animação de morte!
 	queue_free()
 

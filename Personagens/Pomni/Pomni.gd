@@ -39,17 +39,22 @@ var posicao_z_congelada: float = 0.0
 var posicao_x_min: float = 0.0
 var posicao_x_max: float = 0.0
 
-# --- VARIÁVEIS DA LANTERNA ---
+# --- VARIÁVEIS DA LANTERNA E ARMA ---
 var tem_lanterna: bool = false
 var lanterna_ligada: bool = false
 var lanterna_offset_pos: Vector3 = Vector3.ZERO
 var ref_lanterna: Node3D = null
 var ref_spotlight: SpotLight3D = null
 
+var tem_arma: bool = false
+
 # Variáveis para controle do tempo no double-tap
 var ultimo_click_esquerda: int = 0
 var ultimo_click_direita: int = 0
 var intervalo_double_tap: int = 300 # Tempo máximo em milissegundos entre os toques
+
+# Cooldown para soco/tiro contínuo
+var tempo_ultimo_ataque: float = 0.0
 
 # --- VARIÁVEIS DO CAMINHO ---
 var is_on_path: bool = false
@@ -95,7 +100,7 @@ func _ready():
 	axis_lock_linear_x = false
 	axis_lock_linear_z = false
 	
-	# === LÓGICA DE CHECKPOINT ===
+	# === LÓGICA DE CHECKPOINT E ITENS ===
 	var global_node = get_node_or_null("/root/Global")
 	if global_node and "pomni_tem_lanterna" in global_node:
 		if global_node.pomni_tem_lanterna:
@@ -114,6 +119,11 @@ func _ready():
 					# Atualiza posição inicial para evitar bugs de corrida
 					z_inicial = global_position.z
 					x_inicial = global_position.x
+					
+	# Oculta a arma da mão da Pomni por padrão (até ela pegar no baú)
+	var pistola_visual = find_child("Pistol", true, false)
+	if pistola_visual and not tem_arma:
+		pistola_visual.visible = false
 	
 	# Busca a lanterna na mão da Pomni (adicionada pelo nosso script)
 	var skeleton = find_child("Skeleton3D", true, false)
@@ -343,6 +353,15 @@ func _process(delta: float) -> void:
 		var no_chao = is_on_floor() or is_on_path
 		particulas_passos.emitting = (andando and no_chao)
 
+	# Lógica para tiro/soco contínuo
+	if tempo_ultimo_ataque > 0:
+		tempo_ultimo_ataque -= delta
+		
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.is_physical_key_pressed(KEY_Z):
+		if tempo_ultimo_ataque <= 0:
+			socar()
+			tempo_ultimo_ataque = 0.25 # 4 vezes por segundo
+
 func _input(event: InputEvent) -> void:
 	# Detecta o toque duplo para a direita
 	if event.is_action_pressed("move_right"):
@@ -366,11 +385,9 @@ func _input(event: InputEvent) -> void:
 				ref_spotlight.visible = lanterna_ligada
 			print("Lanterna ligada: ", lanterna_ligada)
 			
-	# Atacar (Soco)
-	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or (event is InputEventKey and event.physical_keycode == KEY_Z and event.pressed and not event.echo):
-		socar()
+
 func socar() -> void:
-	if em_batalha_final:
+	if em_batalha_final and tem_arma:
 		print("Pomni atirou um projetil magico!")
 		var cena_tiro = load("res://Cenas/TiroPomni.tscn")
 		if cena_tiro:
@@ -403,18 +420,19 @@ func socar() -> void:
 		return # Se já está tocando, não reinicia a animação
 		
 	esta_socando = true
-	var tempo_soco = 0.5
-	var velocidade_soco = 2.5 # Acelerando a animação em 2.5x
+	var animacao_nome = "Atirar" if (em_batalha_final and tem_arma) else "Punch"
+	var tempo_anim = 0.5
+	var velocidade_anim = 2.5 # Acelerando a animação em 2.5x
 	
 	if animation_player:
 		# Toca a animação com blend de 0.1s e custom_speed de 2.5x
-		animation_player.play("Punch", 0.1, velocidade_soco)
-		if animation_player.has_animation("Punch"):
+		animation_player.play(animacao_nome, 0.1, velocidade_anim)
+		if animation_player.has_animation(animacao_nome):
 			# O tempo de espera será a duração original dividida pela nova velocidade
-			tempo_soco = animation_player.get_animation("Punch").length / velocidade_soco
+			tempo_anim = animation_player.get_animation(animacao_nome).length / velocidade_anim
 				
 	# Espera exatamente a duração real da animação acelerada
-	await get_tree().create_timer(tempo_soco).timeout
+	await get_tree().create_timer(tempo_anim).timeout
 	esta_socando = false
 
 
@@ -1216,9 +1234,8 @@ func iniciar_batalha_final() -> void:
 		# Solta a câmera do corpo da Pomni para ela não andar junto
 		_camera_pivot.set_as_top_level(true)
 		
-		# Define a posição da câmera travada (Afastada no eixo Z para a câmera ficar atrás)
-		# Reduzido de 6.0 para 4.5 para dar mais zoom
-		_camera_pivot.global_position = global_position + Vector3(0, 2, 2)
+		# Define a posição da câmera travada (Afastada no eixo Z e Y para não bugar nos móveis)
+		_camera_pivot.global_position = global_position + Vector3(0, 2.5, 2)
 		
 		# O pivot vira 90 graus para anular a rotação local bizarra da Camera3D filha, fazendo ela apontar reto pro -Z! 
 		_camera_pivot.rotation = Vector3(0, PI/2, 0)
@@ -1261,3 +1278,20 @@ func iniciar_batalha_final() -> void:
 		else:
 			posicao_x_min = global_position.x - 14.0
 			posicao_x_max = global_position.x + 14.0
+
+func finalizar_batalha_final() -> void:
+	em_batalha_final = false
+	print("Pomni saiu do modo Batalha Final!")
+	
+	# Retorna o mouse para o estado padrão (se ele era capturado)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	if _camera_pivot:
+		# Devolve a câmera para ser filha do CharacterBody3D, seguindo a Pomni
+		_camera_pivot.set_as_top_level(false)
+		_camera_pivot.position = Vector3.ZERO
+		
+	# Rotaciona 90 graus para a direita para voltar à visão em terceira pessoa do corredor
+	# O ângulo de movimento continua 0.0 (para ela correr ao longo do corredor),
+	# mas passamos -PI/2 como terceiro argumento para girar a câmera e ela olhar para a profundidade do corredor.
+	iniciar_curva(0.0, 1.0, -PI/2)

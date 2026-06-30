@@ -13,7 +13,15 @@ func on_body_entered(body: Node3D):
 		if pomni.has_method("iniciar_batalha_final"):
 			pomni.iniciar_batalha_final()
 			
-		var anim_player = get_tree().current_scene.find_child("AnimationPlayer", true, false)
+		# Procura especificamente o AnimationPlayer que tem a animação do Caim!
+		# Como você adicionou um baú na cena, o script estava pegando o AnimationPlayer do Baú por engano!
+		var anim_player = null
+		var todos_players = get_tree().current_scene.find_children("*", "AnimationPlayer", true, false)
+		for p in todos_players:
+			if p.has_animation("CaimSubindo"):
+				anim_player = p
+				break
+				
 		if anim_player:
 			anim_player.play("CaimSubindo")
 			
