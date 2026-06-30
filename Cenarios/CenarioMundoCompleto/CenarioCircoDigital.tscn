@@ -1,11 +1,5 @@
 [gd_scene format=4 uid="uid://n1fxa5n8ma3y"]
 
-[ext_resource type="Texture2D" uid="uid://ch36ks7s7q56u" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_baseColor.jpg" id="Ext_Lamp_LightBase"]
-[ext_resource type="Texture2D" uid="uid://yekd0gkg6r33" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_metallicRoughness.png" id="Ext_Lamp_LightMet"]
-[ext_resource type="Texture2D" uid="uid://d3mvyf57mg6sf" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_normal.png" id="Ext_Lamp_LightNorm"]
-[ext_resource type="Texture2D" uid="uid://pqqt5fldaoux" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_GlassMat_metallicRoughness.png" id="Ext_Lamp_GlassMet"]
-[ext_resource type="Texture2D" uid="uid://51oy1iui7cum" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_GlassMat_normal.png" id="Ext_Lamp_GlassNorm"]
-[ext_resource type="Texture2D" uid="uid://bkb3jgppd8o83" path="res://Cenarios/CenarioMundoCompleto/Texturas/Lua/Moon.png" id="Ext_Moon"]
 [ext_resource type="Texture2D" uid="uid://b6ajilagry2yj" path="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_gravelly_sand_diff_1k.jpg" id="1_rwvwc"]
 [ext_resource type="Texture2D" uid="uid://lbjbhw2m5q0q" path="res://Assets/Texturas/Moon.png" id="1_s4vs7"]
 [ext_resource type="Texture2D" uid="uid://lpfw0gusm20a" path="res://Cenarios/CenarioMundoCompleto/Texturas/MundoCompleto/Cenario_gravelly_sand_rough_1k.png" id="2_lsiv6"]
@@ -33,8 +27,14 @@
 [ext_resource type="Script" uid="uid://c1aph2ntgpjnw" path="res://Codigos/gerenciador_fase1.gd" id="28_4mh8s"]
 [ext_resource type="Script" uid="uid://bk24vc436oen0" path="res://Codigos/trap_espinho.gd" id="99_trapespinho"]
 [ext_resource type="Script" uid="uid://ddpc216yks1l4" path="res://Codigos/agua_toxica.gd" id="ExtResource_agua_toxica"]
-[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/farol.tscn" id="ExtResource_farol"]
+[ext_resource type="PackedScene" uid="uid://cyrmxq73nrw5b" path="res://Cenas/Farol.tscn" id="ExtResource_farol"]
 [ext_resource type="PackedScene" uid="uid://be7b5jwa47868" path="res://Personagens/Morcego/morcego.tscn" id="ExtResource_morcego"]
+[ext_resource type="Texture2D" uid="uid://pqqt5fldaoux" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_GlassMat_metallicRoughness.png" id="Ext_Lamp_GlassMet"]
+[ext_resource type="Texture2D" uid="uid://51oy1iui7cum" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_GlassMat_normal.png" id="Ext_Lamp_GlassNorm"]
+[ext_resource type="Texture2D" uid="uid://ch36ks7s7q56u" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_baseColor.jpg" id="Ext_Lamp_LightBase"]
+[ext_resource type="Texture2D" uid="uid://yekd0gkg6r33" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_metallicRoughness.png" id="Ext_Lamp_LightMet"]
+[ext_resource type="Texture2D" uid="uid://d3mvyf57mg6sf" path="res://Cenarios/CenarioMundoCompleto/Texturas/LampadaFarol/LampadaFarol_LightMat_normal.png" id="Ext_Lamp_LightNorm"]
+[ext_resource type="Texture2D" uid="uid://bkb3jgppd8o83" path="res://Cenarios/CenarioMundoCompleto/Texturas/Lua/Moon.png" id="Ext_Moon"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bsbx7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -3166,9 +3166,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_jt3pg")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s4vs7"]
-load_path = "res://.godot/imported/Moon.png-5975e9a56679a12035b17ea22be3d912.s3tc.ctex"
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bsbx7"]
 transparency = 1
 albedo_texture = ExtResource("Ext_Moon")
@@ -6168,10 +6165,6 @@ shadow_mesh = SubResource("ArrayMesh_yejtk")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bm1w7"]
 points = PackedVector3Array(-0.00014650822, 0.42616114, -0.74832565, -0.00014650822, 0.47085407, -0.74832565, 0.52901405, 0.42616114, -0.5291606, 0.1453287, -0.44409764, -0.5575817, -0.00014650822, 0.4200286, -0.74715364, -0.5291606, 0.42616114, -0.5291606, -0.00014650822, 0.47698662, -0.74715364, 0.52901405, 0.47085407, -0.5291606, -0.5291606, 0.47085407, -0.5291606, 0.528135, 0.4200286, -0.52828157, 0.29138988, -0.44409764, -0.49707693, 0.74832565, 0.42616114, -0.00014650822, 0.19440639, -0.46240225, -0.19455296, -0.00014650822, -0.46240225, -0.27512836, -0.49707693, -0.44409764, -0.29153645, -0.52828157, 0.4200286, -0.52828157, -0.74832565, 0.42616114, -0.00014650822, -0.00014650822, 0.48209706, -0.7433446, 0.525498, 0.48209706, -0.52564454, 0.528135, 0.47698662, -0.52828157, -0.52828157, 0.47698662, -0.52828157, -0.52564454, 0.48209706, -0.52564454, 0.74832565, 0.47085407, -0.00014650822, -0.74832565, 0.47085407, -0.00014650822, -0.74715364, 0.47698662, -0.00014650822, 0.74686056, 0.4200286, -0.00014650822, 0.5574352, -0.44409764, 0.1453287, 0.2749818, -0.46240225, -0.00014650822, 0.52901405, 0.42616114, 0.52901405, 0.49693042, -0.44409764, 0.29138988, -0.19455296, -0.46240225, -0.19455296, -0.27512836, -0.46240225, -0.00014650822, -0.5575817, -0.44409764, -0.14547521, -0.74715364, 0.4200286, -0.00014650822, -0.5291606, 0.42616114, 0.52901405, -0.00014650822, 0.48553494, -0.7377776, 0.5215425, 0.48553494, -0.52168906, 0.737631, 0.48553494, -0.00014650822, 0.7431981, 0.48209706, -0.00014650822, 0.74686056, 0.47698662, -0.00014650822, -0.7433446, 0.48209706, -0.00014650822, -0.7377776, 0.48553494, -0.00014650822, -0.52168906, 0.48553494, -0.52168906, 0.528135, 0.47698662, 0.528135, 0.52901405, 0.47085407, 0.52901405, -0.5291606, 0.47085407, 0.52901405, -0.52828157, 0.47698662, 0.528135, -0.52564454, 0.48209706, 0.525498, 0.19440639, -0.46240225, 0.19440639, -0.00014650822, 0.42616114, 0.74832565, 0.528135, 0.4200286, 0.528135, -0.00014650822, -0.46240225, 0.2749818, -0.14547521, -0.44409764, 0.5574352, -0.29153645, -0.44409764, 0.49693042, -0.19455296, -0.46240225, 0.19440639, -0.52828157, 0.4200286, 0.528135, -0.00014650822, 0.4868358, -0.7311851, 0.51685447, 0.4868358, -0.51700103, 0.7310385, 0.4868358, -0.00014650822, 0.5215425, 0.48553494, 0.5215425, 0.525498, 0.48209706, 0.525498, -0.52168906, 0.48553494, 0.5215425, -0.7311851, 0.4868358, -0.00014650822, -0.51700103, 0.4868358, -0.51700103, -0.00014650822, 0.48209706, 0.7431981, -0.00014650822, 0.47698662, 0.74686056, -0.00014650822, 0.47085407, 0.74832565, -0.00014650822, 0.48553494, 0.737631, -0.00014650822, 0.4200286, 0.74686056, 0.51685447, 0.4868358, 0.51685447, -0.00014650822, 0.4868358, 0.7310385, -0.51700103, 0.4868358, 0.51685447)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o7jmr"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6lonk"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6jrmh"]
 resource_name = "GlassMat"
 albedo_color = Color(0.84388626, 0.91778445, 0.99852514, 1)
@@ -6217,12 +6210,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_w14na")
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bm1w7"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gm2nu"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_byktf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3hudy"]
 resource_name = "LightMat"
@@ -9375,6 +9362,17 @@ script = ExtResource("16_bm1w7")
 transform = Transform3D(0.9999996, 0, 7.4505806e-08, -4.917383e-07, 1, 1.7229468e-07, -8.121133e-07, 3.259629e-09, 0.99999267, 2.201645, -1.0533543, 0.071575165)
 shape = SubResource("BoxShape3D_byktf")
 
+[node name="Cerca4" type="MeshInstance3D" parent="The Grounds/FarolTorre/Estrutura/Varanda" unique_id=1189439968]
+transform = Transform3D(1.1005138, -0.040915612, 0.029621437, 0.041260917, 1.1008303, -0.012392573, -0.029138505, 0.013488976, 1.1012053, -45.9268, 18.714, -84.050095)
+mesh = SubResource("ArrayMesh_8h2ag")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="The Grounds/FarolTorre/Estrutura/Varanda/Cerca4" unique_id=923525891]
+transform = Transform3D(0.7088474, 0.018850647, 0.70510936, 0.0029722997, 0.99955404, -0.029710487, -0.70535564, 0.023156017, 0.7084747, 2.2965698, -0.12400627, -3.3682022)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="The Grounds/FarolTorre/Estrutura/Varanda/Cerca4/StaticBody3D2" unique_id=537338348]
+transform = Transform3D(0.36669117, 0.013265388, -0.9302474, 0.034203373, 0.9990311, 0.027728954, 0.92970604, -0.04198548, 0.3658832, -1.0165882, 3.4500427, 0.4243698)
+shape = SubResource("BoxShape3D_0mo70")
+
 [node name="PortaCima" type="Node3D" parent="The Grounds/FarolTorre/Estrutura" unique_id=1070323406]
 transform = Transform3D(1.4470292, 0, 0.39510244, 0, 1.4999998, 0, -0.39510244, 0, 1.4470292, -47.566532, 19.963423, -88.77745)
 metadata/_edit_group_ = true
@@ -9455,7 +9453,7 @@ transform = Transform3D(1, -1.094304e-08, -2.689194e-08, 1.1641532e-09, 0.999999
 curve = SubResource("Curve3D_rvefd")
 
 [node name="CarrinhoEscada" type="PathFollow3D" parent="The Grounds/FarolTorre/CaminhoEscada" unique_id=271322658]
-transform = Transform3D(-0.032450385, 0.007590273, -0.9993831, -4.656613e-10, 0.99997115, 0.007593806, 0.99947333, 0.00024643753, -0.032447457, -0.016616821, -0.73280334, 0.059783936)
+transform = Transform3D(-0.032450385, 0.007590273, -0.99938303, -4.656613e-10, 0.99997115, 0.0075938054, 0.99947333, 0.00024643753, -0.032447454, -0.016616821, -0.73280334, 0.059783936)
 loop = false
 
 [node name="MalhasLuzes" type="Node3D" parent="The Grounds/FarolTorre/CaminhoEscada" unique_id=182359269]
