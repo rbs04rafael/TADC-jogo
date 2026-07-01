@@ -34,5 +34,6 @@ func _ready():
 	add_child(btn)
 
 func _on_btn_pressed():
-	print("Botão PRÓXIMA FASE clicado. Fechando o jogo por enquanto...")
-	get_tree().quit()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Fase2.1/Cenas/Fase2.1.tscn")
+	queue_free()
