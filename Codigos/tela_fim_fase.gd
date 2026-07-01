@@ -1,6 +1,11 @@
 extends CanvasLayer
 
+var proxima_fase: String = "res://Fase2.1/Cenas/Fase2.1.tscn"
+
 func _ready():
+	# Libera o mouse para o jogador poder clicar no botão
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
 	# Faz a UI rodar mesmo quando a árvore estiver pausada
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -34,6 +39,8 @@ func _ready():
 	add_child(btn)
 
 func _on_btn_pressed():
+	# Retorna o mouse para o modo capturado (oculto) para a próxima fase
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Fase2.1/Cenas/Fase2.1.tscn")
+	get_tree().change_scene_to_file(proxima_fase)
 	queue_free()

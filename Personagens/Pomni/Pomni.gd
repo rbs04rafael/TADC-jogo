@@ -103,7 +103,8 @@ func _ready():
 	# === LÓGICA DE CHECKPOINT E ITENS ===
 	var global_node = get_node_or_null("/root/Global")
 	if global_node and "pomni_tem_lanterna" in global_node:
-		if global_node.pomni_tem_lanterna:
+		var eh_escritorio = (get_tree().current_scene and get_tree().current_scene.name == "CenaCaineOffice")
+		if global_node.pomni_tem_lanterna and not eh_escritorio:
 			tem_lanterna = true
 			lanterna_ligada = true
 			
