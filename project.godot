@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Trabalho_CG"
-run/main_scene="res://Cenas/Intro.tscn"
+run/main_scene="uid://ddqobh7mqmni4"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [autoload]
@@ -22,6 +22,7 @@ Global="*res://Codigos/Global.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 

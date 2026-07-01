@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc8macmssecbl"
+uid="uid://37qi60h8tu6a"
 path.s3tc="res://.godot/imported/Kaykes Room V2_Checkerboard Texture.png-69f6649b292055d65a775ee662f9c5bc.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "de744124f589c920eb02ee112057e559"
+"md5": "FORCE_REIMPORT"
 }
 
 [deps]

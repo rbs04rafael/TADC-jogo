@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0jjem6xnly0x"
+uid="uid://qsnlnkdhsrpp"
 path.s3tc="res://.godot/imported/KaykeTeste_Eyes.png-fbfb4bda41f284e8297077e8e838313b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "76c7ffef8fabd997236e8fdebd652181"
+"md5": "FORCE_REIMPORT"
 }
 
 [deps]

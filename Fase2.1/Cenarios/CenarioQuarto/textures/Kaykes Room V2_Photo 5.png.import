@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6vo5l8vkncyh"
+uid="uid://y687adbysa0b"
 path.s3tc="res://.godot/imported/Kaykes Room V2_Photo 5.png-68f3874bfd49179d02ca503f9a79f787.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "d52fad07efcd28f9a5af11a59c0df9c9"
+"md5": "FORCE_REIMPORT"
 }
 
 [deps]

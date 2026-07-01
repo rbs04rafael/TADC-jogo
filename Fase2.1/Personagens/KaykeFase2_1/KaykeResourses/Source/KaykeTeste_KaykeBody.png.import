@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgps3vcbs5bre"
+uid="uid://vemrsns86o2q"
 path.s3tc="res://.godot/imported/KaykeTeste_KaykeBody.png-708e4f3f47da39ebc001f0f8c3e1e63d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2727908783a12658c9dfefda27f559a3"
+"md5": "FORCE_REIMPORT"
 }
 
 [deps]

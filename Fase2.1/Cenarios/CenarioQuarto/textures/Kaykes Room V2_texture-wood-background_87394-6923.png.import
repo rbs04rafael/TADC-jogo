@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dduys2w3u1whs"
+uid="uid://y7ua6xy7apgn"
 path.s3tc="res://.godot/imported/Kaykes Room V2_texture-wood-background_87394-6923.png-ea8bd8cf90ff186704f39a44cad1ca05.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "591c10580da2a9037f17b688454342b5"
+"md5": "FORCE_REIMPORT"
 }
 
 [deps]

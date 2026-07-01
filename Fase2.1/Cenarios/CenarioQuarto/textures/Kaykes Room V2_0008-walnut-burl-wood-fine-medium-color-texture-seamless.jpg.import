@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i2ntfyi7ob28"
+uid="uid://vrbx6lqauwly"
 path.s3tc="res://.godot/imported/Kaykes Room V2_0008-walnut-burl-wood-fine-medium-color-texture-seamless.jpg-630b894315ada37f93d9b1fff9670b31.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "3743d7b404cb2900e0f12ca29584f26a"
+"md5": "FORCE_REIMPORT"
 }
 
 [deps]
