@@ -172,9 +172,8 @@ func _ready():
 	hbox.position = Vector2(20, 20)
 	hbox.add_theme_constant_override("separation", 10)
 	canvas.add_child(hbox)
-	
-	var tex_vazio = load("res://Fase2.1/Assets/UI/coraÃ§Ã£o sem vida.png")
-	var tex_cheio = load("res://Fase2.1/Assets/UI/coraÃ§Ã£o com vida.png")
+	var tex_vazio = load("res://Fase2.1/Assets/UI/coração sem vida.png")
+	var tex_cheio = load("res://Fase2.1/Assets/UI/coração com vida.png")
 	
 	for i in range(qtd_coracoes):
 		var tpb = TextureProgressBar.new()

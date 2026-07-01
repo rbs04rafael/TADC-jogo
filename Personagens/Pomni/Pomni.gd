@@ -1216,6 +1216,9 @@ func _on_ida_fase_2_entered(body: Node3D) -> void:
 		
 	print("Pomni entrou na IdaFase2! Abrindo a tela final...")
 	
+	# Destrava o mouse para o jogador clicar no botão
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
 	var script_tela = load("res://Codigos/tela_fim_fase.gd")
 	if script_tela:
 		var tela = script_tela.new()

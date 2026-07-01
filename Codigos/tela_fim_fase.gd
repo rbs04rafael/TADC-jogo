@@ -3,9 +3,6 @@ extends CanvasLayer
 var proxima_fase: String = "res://Fase2.1/Cenas/Fase2.1.tscn"
 
 func _ready():
-	# Libera o mouse para o jogador poder clicar no botão
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
 	# Faz a UI rodar mesmo quando a árvore estiver pausada
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	

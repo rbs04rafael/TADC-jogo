@@ -7,6 +7,9 @@ func _ready() -> void:
 	
 func _on_body_entered(body: Node3D):
 	if "Rafael" in body.name or "Pomni" in body.name:
+		# Destrava o mouse para o jogador clicar no botão
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
 		# Carrega a tela de fim de fase (a mesma do mundo completo)
 		var script_tela = load("res://Codigos/tela_fim_fase.gd")
 		if script_tela:
