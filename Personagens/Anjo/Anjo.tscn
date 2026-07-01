@@ -1,26 +1,3 @@
-[gd_scene format=3 uid="uid://deky8tpbwwj8b"]
-
-[ext_resource type="PackedScene" uid="uid://djk3v202ow2tm" path="res://Personagens/Anjo/source/Anjo.glb" id="1_76ywq"]
-[ext_resource type="Script" uid="uid://kres2cs8aylc" path="res://Personagens/Anjo/Anjo.gd" id="2_script"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_76ywq"]
-radius = 0.8803711
-height = 2.505127
-
-[node name="Node3D" type="CharacterBody3D" unique_id=654706418]
-transform = Transform3D(0.024501927, 0, 0.9996998, 0, 1, 0, -0.9996998, 0, 0.024501927, 0, 0, 0)
-script = ExtResource("2_script")
-
-[node name="Anjo" parent="." unique_id=1980909423 instance=ExtResource("1_76ywq")]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -1.6543247, 1.6447164, -1.9035051)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=685267115]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.086393, 1.7787964, -0.21432817)
-shape = SubResource("CapsuleShape3D_76ywq")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1834694660]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.027681252, 2.8026958, 1.129419)
-light_color = Color(1, 0, 0, 1)
-shadow_enabled = true
-omni_range = 22.686
-omni_attenuation = 3.727
+version https://git-lfs.github.com/spec/v1
+oid sha256:193bc6d1a0143fd7ff6b338f8131bd22d5db67025d6deb133345ff1b9dd1d66a
+size 1217

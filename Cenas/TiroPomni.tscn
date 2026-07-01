@@ -1,25 +1,3 @@
-[gd_scene format=3 uid="uid://csbb0u3ltamck"]
-
-[ext_resource type="Script" uid="uid://bossi5hjctv17" path="res://Cenas/TiroPomni.gd" id="1_script"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_tiro"]
-radius = 0.1453259
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jxwfe"]
-albedo_color = Color(1, 0.84313726, 0, 1)
-metallic = 1.0
-
-[sub_resource type="SphereMesh" id="SphereMesh_0hh14"]
-material = SubResource("StandardMaterial3D_jxwfe")
-radius = 0.1
-height = 0.2
-
-[node name="TiroPomni" type="Area3D" unique_id=1093208694]
-script = ExtResource("1_script")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1575220559]
-shape = SubResource("SphereShape3D_tiro")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1358742483]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-mesh = SubResource("SphereMesh_0hh14")
+version https://git-lfs.github.com/spec/v1
+oid sha256:fb1bb6a53d9c5ef9672a79f916a4ce1b34c3aca4f71c53ec65e0fde1d9f1b810
+size 921

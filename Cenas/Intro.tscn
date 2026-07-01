@@ -1,6 +1,3 @@
-[gd_scene format=3 uid="uid://ddqobh7mqmni4"]
-
-[ext_resource type="Script" uid="uid://birefn5ejngbb" path="res://Codigos/intro.gd" id="1_intro"]
-
-[node name="Intro" type="Node3D" unique_id=1264003314]
-script = ExtResource("1_intro")
+version https://git-lfs.github.com/spec/v1
+oid sha256:ef643516fa422242fab07fd70260c52f20c03fc06872287853603cb7cfd122fb
+size 233

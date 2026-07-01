@@ -1,12 +1,3 @@
-[gd_scene format=3 uid="uid://sn6phxakfu61"]
-
-[ext_resource type="Script" uid="uid://bv1iqwhxe56m5" path="res://Fase2/Codigos/PontoLabirinto.gd" id="1_ptlb"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ptlb"]
-radius = 1.8
-
-[node name="PontoLabirinto" type="Area3D" unique_id=837703989]
-script = ExtResource("1_ptlb")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1746620251]
-shape = SubResource("SphereShape3D_ptlb")
+version https://git-lfs.github.com/spec/v1
+oid sha256:33f50628c5d1c437c2f44d6bcf1562c5e3941a8819bc2f1910eb02f085f4084d
+size 457
