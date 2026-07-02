@@ -6,7 +6,6 @@ extends Node3D
 var area_teleporte: Area3D
 
 func _ready():
-	# Agora a Area3D (AreaTeleporte) é um nó filho permanente da porta no editor
 	area_teleporte = find_child("AreaTeleporte", true, false)
 	if area_teleporte:
 		area_teleporte.body_entered.connect(_on_body_entered)
@@ -15,7 +14,7 @@ func _ready():
 
 func _realizar_teleporte():
 	print("Teletransportando para a porta: ", porta_destino_nome)
-	# Salva a porta alvo no Singleton/Autoload
+	# Salva a porta alvo no Singleton
 	if has_node("/root/Global"):
 		get_node("/root/Global").porta_destino_nome = porta_destino_nome
 	get_tree().call_deferred("change_scene_to_file", cena_destino)

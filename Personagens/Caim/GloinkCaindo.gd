@@ -25,5 +25,4 @@ func _on_body_entered(body: Node3D) -> void:
 	# Se a hitbox encostar na Pomni
 	if body.name == "Pomni" and body.has_method("receber_dano"):
 		body.receber_dano(dano, global_position)
-		# Opcional: tocar um som de "splat" aqui
 		queue_free() # Destrói o Gloink após acertar a Pomni!

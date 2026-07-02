@@ -9,7 +9,7 @@ func _ready():
 	# Esconder a armadilha no início
 	_set_meshes_visible(false)
 	
-	# Encontrar a área de colisão (Area3D) que o usuário adicionou
+	# Encontrar a área de colisão (Area3D)
 	for child in get_children():
 		if child is Area3D:
 			area = child

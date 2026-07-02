@@ -245,26 +245,19 @@ func _ready():
 			var nome_porta = global.porta_destino_nome
 			global.porta_destino_nome = "" # Reseta para não teleportar repetidamente
 			
-			# O get_tree().get_root() retorna a Window raiz, get_child(1) ou semelhante é a cena em si
-			# find_child deve procurar em toda a árvore da cena
 			var root = get_tree().get_root()
 			var porta = root.find_child(nome_porta, true, false)
 			if porta:
-				# Teleporta a Pomni para a posição da porta + um deslocamento para a frente dela
-				# Usa -Z da base global da porta normalizada para garantir que o 'Scale' da porta não empurre a Pomni mais longe do que o esperado
 				global_position = porta.global_position + (porta.global_transform.basis.z.normalized() * 1.5)
 				
-				# Faz a Pomni olhar para as costas da porta (para frente, afastando-se dela)
 				visual_model.global_rotation.y = porta.global_rotation.y
 				
-				# ATUALIZA AS TRAVAS PARA A NOVA POSICAO DO TELEPORTE!
 				z_inicial = global_position.z
 				x_inicial = global_position.x
 
 	# Conecta os sinais das curvas do Parque de Diversões de forma automática
 	call_deferred("_conectar_areas_parque")
 	
-	# Habilita a colisão do soco (Godot 4 exige que fique ativado para detectar)
 	var hitbox = find_child("HitboxSoco", true, false)
 	if hitbox:
 		for child in hitbox.get_children():
@@ -915,7 +908,6 @@ func handle_path_movement(delta: float) -> void:
 		velocity.x = direction * current_speed
 		velocity.y = 0.0
 		
-		# NOVO: Mantém a câmera sempre atrás da Pomni enquanto ela estiver no caminho (visão em 3ª pessoa)
 		if _camera_pivot:
 			var scene_name = str(get_tree().current_scene.name) if get_tree().current_scene else ""
 			var is_perseguicao = "Perseguicao" in scene_name

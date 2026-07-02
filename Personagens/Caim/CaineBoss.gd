@@ -174,7 +174,7 @@ func _fazer_objetos_cairem_na_pomni() -> void:
 			# 1º GLOINK: Cai EXATAMENTE na cabeça da Pomni para forçá-la a andar
 			pass
 		else:
-			# 2º e 3º GLOINKS: Caem em posições X totalmente aleatórias dentro da tela
+			# outros GLOINKS: Caem em posições X totalmente aleatórias dentro da tela
 			# Puxamos os limites laterais direto da Pomni!
 			var limite_esq = pomni_ref.posicao_x_min
 			var limite_dir = pomni_ref.posicao_x_max

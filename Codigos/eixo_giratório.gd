@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var alvo_do_farol: PathFollow3D # Arraste o nó PathFollow3D aqui no Inspetor!
+@export var alvo_do_farol: PathFollow3D
 @export var velocidade_patrulha: float = 8.0
 @export var velocidade_perseguicao: float = 4.5
 @export var dano_do_morcego: int = 25
@@ -66,7 +66,7 @@ func _ready():
 		morcego.add_child(particulas_ataque)
 
 func _process(delta):
-	# --- LÓGICA DO CAMINHO PERFEITO E PERSEGUIÇÃO ---
+	# --- LÓGICA DO CAMINHO E PERSEGUIÇÃO ---
 	if alvo_do_farol != null:
 		if ja_foi_vista and pomni_na_luz != null:
 			# A luz persegue a Pomni!
@@ -103,7 +103,7 @@ func _process(delta):
 		var forward_dir = -luz.global_transform.basis.z
 		var angulo_graus = rad_to_deg(forward_dir.angle_to(dir_to_pomni))
 		
-		# Pega a largura do cone da lâmpada (no nosso caso, 6.0)
+		# Pega a largura do cone da lâmpada
 		var limite_angulo = luz.spot_angle if "spot_angle" in luz else 6.0
 		
 		if angulo_graus <= limite_angulo:

@@ -9,11 +9,6 @@ var speed: float = 9 # Um pouco mais rápido que a Pomni (que tem run_speed = 8.
 @onready var visual_model: Node3D = $Anjo
 @onready var collision: CollisionShape3D = $CollisionShape3D
 
-func _ready():
-	# Configura a colisão para detectar a Pomni
-	# Se a Pomni for um CharacterBody3D, podemos apenas detectar colisão no move_and_slide
-	pass
-
 func iniciar_no_caminho(path_follow: PathFollow3D):
 	if trilho_anjo:
 		trilho_anjo.queue_free()

@@ -23,7 +23,6 @@ func _ready():
 			angulo_alvo_y = 0.0
 	elif "Parte3" in path_str:
 		if "Bloco_Virada5" in path_str:
-			# A Parte3 tem uma rotação suave de ~6 graus, então 90 graus é o ideal relativo
 			angulo_alvo_y = 90.0
 		elif "Bloco_Virada6" in path_str:
 			angulo_alvo_y = 180.0

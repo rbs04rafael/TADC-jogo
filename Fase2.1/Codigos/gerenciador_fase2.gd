@@ -116,8 +116,6 @@ func _checar_inimigos():
 
 func _finalizar_fase():
 	print("Todas as abstrações foram derrotadas na Fase 2!")
-	# Transição ou fim de jogo aqui
-	# get_tree().change_scene_to_file("res://Fase2.1/Cenas/CenaQuarto.tscn") # Exemplo: ir pro quarto ao vencer
 
 func _gerar_colisoes_cenario(node: Node):
 	if node is MeshInstance3D:
